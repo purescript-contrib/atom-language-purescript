@@ -1,0 +1,10 @@
+'scopeName': 'source.purescript'
+'fileTypes': [
+  'purs'
+],
+'name': 'Purescript'
+'patterns': [
+  {
+    'include': 'source.haskell'
+  }
+]

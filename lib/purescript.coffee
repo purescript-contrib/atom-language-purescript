@@ -22,9 +22,3 @@ module.exports =
 
     errorMsgs.map((msg) -> errorMsgsView.add(msg))
     errorMsgsView.attach() if errorMsgs.length > 0
-
-  deactivate: ->
-    console.log 'deactivate'
-
-  serialize: ->
-    console.log 'serialize'

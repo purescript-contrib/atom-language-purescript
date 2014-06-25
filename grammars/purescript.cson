@@ -2,7 +2,7 @@
 'fileTypes': [
   'purs'
 ],
-'name': 'Purescript'
+'name': 'PureScript'
 'patterns': [
   {
     'include': 'source.haskell'

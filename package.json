@@ -11,7 +11,7 @@
     "url"  : "https://github.com/darinmorrison/atom-language-purescript/issues"
   },
   "dependencies" : {
-    "atom-message-panel" : "https://github.com/tcarlsen/atom-message-panel/archive/1.1.1.tar.gz",
+    "atom-message-panel" : "1.2.2",
     "underscore"         : ">= 1.6.0"
   },
   "main"         : "./index"

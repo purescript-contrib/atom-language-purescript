@@ -1,6 +1,6 @@
 {
   "name": "language-purescript",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "PureScript language support for the Atom editor",
   "license": "MIT",
   "repository": "https://github.com/darinmorrison/atom-language-purescript",
@@ -10,9 +10,9 @@
   "bugs": {
     "url": "https://github.com/darinmorrison/atom-language-purescript/issues"
   },
-  "dependencies" : {
-    "atom-message-panel" : "1.2.2",
-    "underscore" : ">= 1.6.0"
+  "dependencies": {
+    "atom-message-panel": "1.2.2",
+    "underscore": ">= 1.6.0"
   },
   "main": "./index"
 }

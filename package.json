@@ -1,18 +1,18 @@
 {
-  "name"         : "language-purescript",
-  "version"      : "0.2.0",
-  "description"  : "PureScript language support for the Atom editor",
-  "license"      : "MIT",
-  "repository"   : "https://github.com/darinmorrison/atom-language-purescript",
-  "engines"      : {
-    "atom" : ">= 0.105.0"
+  "name": "language-purescript",
+  "version": "0.3.0",
+  "description": "PureScript language support for the Atom editor",
+  "license": "MIT",
+  "repository": "https://github.com/darinmorrison/atom-language-purescript",
+  "engines": {
+    "atom": ">= 0.105.0"
   },
-  "bugs"         : {
-    "url"  : "https://github.com/darinmorrison/atom-language-purescript/issues"
+  "bugs": {
+    "url": "https://github.com/darinmorrison/atom-language-purescript/issues"
   },
-  "dependencies" : {
-    "atom-message-panel" : "https://github.com/tcarlsen/atom-message-panel/archive/1.1.1.tar.gz",
-    "underscore"         : ">= 1.6.0"
+  "dependencies": {
+    "atom-message-panel": "https://github.com/tcarlsen/atom-message-panel/archive/1.1.1.tar.gz",
+    "underscore": ">= 1.6.0"
   },
-  "main"         : "./index"
+  "main": "./index"
 }

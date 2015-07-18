@@ -103,7 +103,7 @@
   }
   {
     'name': 'meta.foreign.purescript'
-    'begin': '^(\\s*)(foreign)\\s+(import|export)\\b'
+    'begin': '^(\\s*)(foreign)\\s+(import)\\b'
     'end': '^(?!\\1[ \\t]|[ \\t]*$)'
     'beginCaptures':
       '2':
@@ -112,10 +112,7 @@
         'name': 'keyword.other.purescript'
     'patterns': [
       {
-        'match': '(?:un)?safe'
-        'captures':
-          '0':
-            'name': 'keyword.other.purescript'
+        'include': '#type_signature'
       }
       {
         'include': '$self'

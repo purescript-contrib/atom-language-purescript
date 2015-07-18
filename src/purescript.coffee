@@ -136,15 +136,13 @@ purescriptGrammar =
       ]
     ,
       name: 'meta.foreign'
-      begin: /{maybeBirdTrack}(\s*)(foreign)\s+(import|export)\b/
+      begin: /{maybeBirdTrack}(\s*)(foreign)\s+(import)\b/
       end: /{indentBlockEnd}/
       beginCaptures:
         2: name: 'keyword.other'
         3: name: 'keyword.other'
       patterns:[
-          match: /(?:un)?safe/
-          captures:
-            0: name: 'keyword.other'
+          include: '#type_signature'
         ,
           include: '$self'
       ]

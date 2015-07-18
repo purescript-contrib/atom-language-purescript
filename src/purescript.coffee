@@ -181,7 +181,7 @@ purescriptGrammar =
         ,
           match: /{ctor}/
           captures:
-            1: patterns: [include: '#type_ctor']
+            1: patterns: [include: '#data_ctor']
             2:
               name: 'meta.type-signature'
               patterns: [include: '#type_signature']
@@ -281,7 +281,7 @@ purescriptGrammar =
     ,
       include: '#function_type_declaration'
     ,
-      include: '#type_ctor'
+      include: '#data_ctor'
     ,
       include: '#comments'
     ,
@@ -455,7 +455,7 @@ purescriptGrammar =
     type_name:
       name: 'entity.name.type'
       match: /\b{className}\b/
-    type_ctor:
+    data_ctor:
       name: 'entity.name.tag'
       match: /\b{className}\b/
     generic_type:

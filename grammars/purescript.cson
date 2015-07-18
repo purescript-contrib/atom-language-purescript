@@ -174,7 +174,7 @@
           '1':
             'patterns': [
               {
-                'include': '#type_ctor'
+                'include': '#data_ctor'
               }
             ]
           '2':
@@ -322,7 +322,7 @@
     'include': '#function_type_declaration'
   }
   {
-    'include': '#type_ctor'
+    'include': '#data_ctor'
   }
   {
     'include': '#comments'
@@ -587,7 +587,7 @@
         'match': '\\b[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\b'
       }
     ]
-  'type_ctor':
+  'data_ctor':
     'patterns': [
       {
         'name': 'entity.name.tag.purescript'

@@ -271,13 +271,6 @@
     'match': '\\b([0-9]+|0([xX][0-9a-fA-F]+|[oO][0-7]+))\\b'
   }
   {
-    'name': 'meta.preprocessor.c.purescript'
-    'match': '^\\s*(#)\\s*\\w+'
-    'captures':
-      '1':
-        'name': 'punctuation.definition.preprocessor.c.purescript'
-  }
-  {
     'name': 'string.quoted.double.purescript'
     'begin': '"'
     'end': '"'

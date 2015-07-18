@@ -128,30 +128,6 @@ purescriptGrammar =
         1: name: 'storage.type.class'
       endCaptures:
         1: name: 'keyword.other'
-      patterns: [
-          name: 'support.class.prelude'
-          match: ///
-            \b
-            (Monad
-            |Functor
-            |Eq
-            |Ord
-            |Read
-            |Show
-            |Num
-            |(Frac|Ra)tional
-            |Enum
-            |Bounded
-            |Real(Frac|Float)?
-            |Integral
-            |Floating
-            )\b
-            ///
-        ,
-          include: '#type_name'
-        ,
-          include: '#generic_type'
-      ]
     ,
       name: 'meta.declaration.instance'
       begin: /\b(instance)\b/
@@ -324,36 +300,9 @@ purescriptGrammar =
     ,
       include: '#function_type_declaration'
     ,
-      match: /\b(Just|Left|Right|Nothing|True|False|LT|EQ|GT)\b/
-      name: 'support.tag'
-    ,
       include: '#type_ctor'
     ,
       include: '#comments'
-    ,
-      name: 'support.function.prelude'
-      match: ///
-        \b(abs|acos|acosh|all|and|any|appendFile|applyM|asTypeOf|asin|asinh
-        |atan|atan2|atanh|break|catch|ceiling|compare|concat|concatMap|const
-        |cos|cosh|curry|cycle|decodeFloat|div|divMod|drop|dropWhile|elem
-        |encodeFloat|enumFrom|enumFromThen|enumFromThenTo|enumFromTo
-        |error|even|exp|exponent|fail|filter|flip|floatDigits|floatRadix
-        |floatRange|floor|fmap|foldl|foldl1|foldr|foldr1|fromEnum|fromInteger
-        |fromIntegral|fromRational|fst|gcd|getChar|getContents|getLine|head
-        |id|init|interact|ioError|isDenormalized|isIEEE|isInfinite|isNaN
-        |isNegativeZero|iterate|last|lcm|length|lex|lines|log|logBase|lookup
-        |map|mapM|mapM_|max|maxBound|maximum|maybe|min|minBound|minimum|mod
-        |negate|not|notElem|null|odd|or|otherwise|pi|pred|print|product
-        |properFraction|putChar|putStr|putStrLn|quot|quotRem|read|readFile
-        |readIO|readList|readLn|readParen|reads|readsPrec|realToFrac|recip
-        |rem|repeat|replicate|return|reverse|round|scaleFloat|scanl|scanl1
-        |scanr|scanr1|seq|sequence|sequence_|show|showChar|showList|showParen
-        |showString|shows|showsPrec|significand|signum|sin|sinh|snd|span
-        |splitAt|sqrt|subtract|succ|sum|tail|take|takeWhile|tan|tanh|toEnum
-        |toInteger|toRational|truncate|uncurry|undefined|unlines|until
-        |unwords|unzip|unzip3|userError|words|writeFile|zip|zip3
-        |zipWith|zipWith3)\b
-        ///
     ,
       include: '#infix_op'
     ,
@@ -522,24 +471,6 @@ purescriptGrammar =
         ,
           name: 'keyword.other.big-arrow'
           match: /=>|⇒/
-        ,
-          name: 'support.class.prelude'
-          match: ///\b
-            (Int(eger)?
-            |Maybe
-            |Either
-            |Bool
-            |Float
-            |Double
-            |Char
-            |String
-            |Ordering
-            |ShowS
-            |ReadS
-            |FilePath
-            |IO(Error)?
-            )\b
-            ///
         ,
           include: '#generic_type'
         ,

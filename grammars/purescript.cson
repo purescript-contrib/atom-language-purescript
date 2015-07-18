@@ -31,14 +31,6 @@
         'name': 'punctuation.definition.entity.purescript'
   }
   {
-    'name': 'constant.language.unit.purescript'
-    'match': '\\(\\)'
-  }
-  {
-    'name': 'constant.language.empty-list.purescript'
-    'match': '\\[\\]'
-  }
-  {
     'begin': '(\\[)([\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)(\\|)'
     'end': '(\\|)(\\])'
     'beginCaptures':

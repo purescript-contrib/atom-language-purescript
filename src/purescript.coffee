@@ -86,12 +86,6 @@ purescriptGrammar =
       to be rewritten as an infix expression (4 `elem` [1..10]).
       ###
     ,
-      name: 'constant.language.unit'
-      match: /\(\)/
-    ,
-      name: 'constant.language.empty-list'
-      match: /\[\]/
-    ,
       begin: /(\[)({functionNameOne})(\|)/
       end: /(\|)(\])/
       beginCaptures:

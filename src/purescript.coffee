@@ -290,6 +290,9 @@ purescriptGrammar =
     ,
       include: '#infix_op'
     ,
+      name: 'keyword.other.arrow'
+      match: /\<-|-\>/
+    ,
       name: 'keyword.operator'
       match: /{operator}/
     ,

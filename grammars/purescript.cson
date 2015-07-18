@@ -336,6 +336,10 @@
     'include': '#infix_op'
   }
   {
+    'name': 'keyword.other.arrow.purescript'
+    'match': '\\<-|-\\>'
+  }
+  {
     'name': 'keyword.operator.purescript'
     'match': '[\\p{S}\\p{P}&&[^(),;\\[\\]`{}_"\']]+'
   }

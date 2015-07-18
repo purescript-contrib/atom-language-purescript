@@ -443,6 +443,9 @@ purescriptGrammar =
           name: 'keyword.other.big-arrow'
           match: /=>|⇒/
         ,
+          name: 'keyword.other.forall'
+          match: /forall/
+        ,
           include: '#generic_type'
         ,
           include: '#type_name'

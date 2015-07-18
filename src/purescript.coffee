@@ -449,8 +449,6 @@ purescriptGrammar =
         ,
           include: '#type_name'
         ,
-          include: '#unit'
-        ,
           include: '#comments'
       ]
     type_name:
@@ -459,9 +457,6 @@ purescriptGrammar =
     type_ctor:
       name: 'entity.name.tag'
       match: /\b{className}\b/
-    unit:
-      name: 'constant.language.unit'
-      match: /\(\)/
     generic_type:
       name: 'variable.other.generic-type'
       match: /\b{functionName}\b/

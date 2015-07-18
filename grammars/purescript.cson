@@ -22,20 +22,20 @@
   'maybeBirdTrack': '^'
 'patterns': [
   {
-    'name': 'keyword.operator.function.infix.haskell.purescript'
+    'name': 'keyword.operator.function.infix.purescript'
     'match': '(`)(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.)?[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(`)'
     'captures':
       '1':
-        'name': 'punctuation.definition.entity.haskell.purescript'
+        'name': 'punctuation.definition.entity.purescript'
       '2':
-        'name': 'punctuation.definition.entity.haskell.purescript'
+        'name': 'punctuation.definition.entity.purescript'
   }
   {
-    'name': 'constant.language.unit.haskell.purescript'
+    'name': 'constant.language.unit.purescript'
     'match': '\\(\\)'
   }
   {
-    'name': 'constant.language.empty-list.haskell.purescript'
+    'name': 'constant.language.empty-list.purescript'
     'match': '\\[\\]'
   }
   {
@@ -43,28 +43,28 @@
     'end': '(\\|)(\\])'
     'beginCaptures':
       '1':
-        'name': 'punctuation.definition.quasiquotes.begin.haskell.purescript'
+        'name': 'punctuation.definition.quasiquotes.begin.purescript'
       '2':
-        'name': 'entity.name.tag.haskell.purescript'
+        'name': 'entity.name.tag.purescript'
       '3':
-        'name': 'string.quoted.quasiquotes.haskell.purescript'
+        'name': 'string.quoted.quasiquotes.purescript'
     'endCaptures':
       '1':
-        'name': 'string.quoted.quasiquotes.haskell.purescript'
+        'name': 'string.quoted.quasiquotes.purescript'
       '2':
-        'name': 'punctuation.definition.quasiquotes.end.haskell.purescript'
-    'contentName': 'string.quoted.quasiquotes.haskell.purescript'
+        'name': 'punctuation.definition.quasiquotes.end.purescript'
+    'contentName': 'string.quoted.quasiquotes.purescript'
   }
   {
-    'name': 'meta.declaration.module.haskell.purescript'
+    'name': 'meta.declaration.module.purescript'
     'begin': '\\b(module)\\b'
     'end': '(where)'
     'beginCaptures':
       '1':
-        'name': 'keyword.other.haskell.purescript'
+        'name': 'keyword.other.purescript'
     'endCaptures':
       '1':
-        'name': 'keyword.other.haskell.purescript'
+        'name': 'keyword.other.purescript'
     'patterns': [
       {
         'include': '#comments'
@@ -82,18 +82,18 @@
     ]
   }
   {
-    'name': 'meta.declaration.class.haskell.purescript'
+    'name': 'meta.declaration.class.purescript'
     'begin': '\\b(class)\\b'
     'end': '\\b(where)\\b|$'
     'beginCaptures':
       '1':
-        'name': 'storage.type.class.haskell.purescript'
+        'name': 'storage.type.class.purescript'
     'endCaptures':
       '1':
-        'name': 'keyword.other.haskell.purescript'
+        'name': 'keyword.other.purescript'
     'patterns': [
       {
-        'name': 'support.class.prelude.haskell.purescript'
+        'name': 'support.class.prelude.purescript'
         'match': '\\b(Monad|Functor|Eq|Ord|Read|Show|Num|(Frac|Ra)tional|Enum|Bounded|Real(Frac|Float)?|Integral|Floating)\\b'
       }
       {
@@ -105,16 +105,16 @@
     ]
   }
   {
-    'name': 'meta.declaration.instance.haskell.purescript'
+    'name': 'meta.declaration.instance.purescript'
     'begin': '\\b(instance)\\b'
     'end': '\\b(where)\\b|$'
-    'contentName': 'meta.type-signature.haskell.purescript'
+    'contentName': 'meta.type-signature.purescript'
     'beginCaptures':
       '1':
-        'name': 'keyword.other.haskell.purescript'
+        'name': 'keyword.other.purescript'
     'endCaptures':
       '1':
-        'name': 'keyword.other.haskell.purescript'
+        'name': 'keyword.other.purescript'
     'patterns': [
       {
         'include': '#type_signature'
@@ -122,20 +122,20 @@
     ]
   }
   {
-    'name': 'meta.foreign.haskell.purescript'
+    'name': 'meta.foreign.purescript'
     'begin': '^(\\s*)(foreign)\\s+(import|export)\\b'
     'end': '^(?!\\1[ \\t]|[ \\t]*$)'
     'beginCaptures':
       '2':
-        'name': 'keyword.other.haskell.purescript'
+        'name': 'keyword.other.purescript'
       '3':
-        'name': 'keyword.other.haskell.purescript'
+        'name': 'keyword.other.purescript'
     'patterns': [
       {
         'match': '(?:un)?safe'
         'captures':
           '0':
-            'name': 'keyword.other.haskell.purescript'
+            'name': 'keyword.other.purescript'
       }
       {
         'include': '$self'
@@ -143,12 +143,12 @@
     ]
   }
   {
-    'name': 'meta.import.haskell.purescript'
+    'name': 'meta.import.purescript'
     'begin': '\\b(import)\\b'
     'end': '($|;|(?=--))'
     'beginCaptures':
       '1':
-        'name': 'keyword.other.haskell.purescript'
+        'name': 'keyword.other.purescript'
     'patterns': [
       {
         'include': '#module_name'
@@ -160,19 +160,19 @@
         'match': '\\b(qualified|as|hiding)\\b'
         'captures':
           '1':
-            'name': 'keyword.other.haskell.purescript'
+            'name': 'keyword.other.purescript'
       }
     ]
   }
   {
-    'name': 'meta.declaration.type.data.haskell.purescript'
+    'name': 'meta.declaration.type.data.purescript'
     'begin': '^(\\s)*(data|newtype)\\s+(.+?)\\s*(?=\\=|$)'
     'end': '^(?!\\1[ \\t]|[ \\t]*$)'
     'beginCaptures':
       '2':
-        'name': 'storage.type.data.haskell.purescript'
+        'name': 'storage.type.data.purescript'
       '3':
-        'name': 'meta.type-signature.haskell.purescript'
+        'name': 'meta.type-signature.purescript'
         'patterns': [
           {
             'include': '#type_signature'
@@ -189,7 +189,7 @@
         'match': '='
         'captures':
           '0':
-            'name': 'keyword.operator.assignment.haskell.purescript'
+            'name': 'keyword.operator.assignment.purescript'
       }
       {
         'match': '(?:(?:\\b([\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*)\\s+)(?:(?<ctorArgs>(?:(?!deriving)(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*|(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.)?[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*|(?:(?!deriving)(?:[\\w()\'→⇒\\[\\],]|->|=>)+\\s*)+))(?:\\s*(?:\\s+)\\s*\\g<ctorArgs>)?)?))'
@@ -201,7 +201,7 @@
               }
             ]
           '2':
-            'name': 'meta.type-signature.haskell.purescript'
+            'name': 'meta.type-signature.purescript'
             'patterns': [
               {
                 'include': '#type_signature'
@@ -212,21 +212,21 @@
         'match': '\\|'
         'captures':
           '0':
-            'name': 'punctuation.separator.pipe.haskell.purescript'
+            'name': 'punctuation.separator.pipe.purescript'
       }
       {
-        'name': 'meta.declaratyion.type.data.record.block.haskell.purescript'
+        'name': 'meta.declaratyion.type.data.record.block.purescript'
         'begin': '\\{'
         'beginCaptures':
           '0':
-            'name': 'keyword.operator.record.begin.haskell.purescript'
+            'name': 'keyword.operator.record.begin.purescript'
         'end': '\\}'
         'endCaptures':
           '0':
-            'name': 'keyword.operator.record.end.haskell.purescript'
+            'name': 'keyword.operator.record.end.purescript'
         'patterns': [
           {
-            'name': 'punctuation.separator.comma.haskell.purescript'
+            'name': 'punctuation.separator.comma.purescript'
             'match': ','
           }
           {
@@ -237,15 +237,15 @@
     ]
   }
   {
-    'name': 'meta.declaration.type.type.haskell.purescript'
+    'name': 'meta.declaration.type.type.purescript'
     'begin': '^(\\s)*(type)\\s+(.+?)\\s*(?=\\=|$)'
     'end': '^(?!\\1[ \\t]|[ \\t]*$)'
-    'contentName': 'meta.type-signature.haskell.purescript'
+    'contentName': 'meta.type-signature.purescript'
     'beginCaptures':
       '2':
-        'name': 'storage.type.data.haskell.purescript'
+        'name': 'storage.type.data.purescript'
       '3':
-        'name': 'meta.type-signature.haskell.purescript'
+        'name': 'meta.type-signature.purescript'
         'patterns': [
           {
             'include': '#type_signature'
@@ -259,7 +259,7 @@
         'match': '='
         'captures':
           '0':
-            'name': 'keyword.operator.assignment.haskell.purescript'
+            'name': 'keyword.operator.assignment.purescript'
       }
       {
         'include': '#type_signature'
@@ -267,27 +267,27 @@
     ]
   }
   {
-    'name': 'keyword.other.haskell.purescript'
+    'name': 'keyword.other.purescript'
     'match': '\\b(deriving|where|data|type|newtype)\\b'
   }
   {
-    'name': 'storage.type.haskell.purescript'
+    'name': 'storage.type.purescript'
     'match': '\\b(data|type|newtype)\\b'
   }
   {
-    'name': 'keyword.operator.haskell.purescript'
+    'name': 'keyword.operator.purescript'
     'match': '\\binfix[lr]?\\b'
   }
   {
-    'name': 'keyword.control.haskell.purescript'
+    'name': 'keyword.control.purescript'
     'match': '\\b(do|if|then|else|case|of|let|in|default)\\b'
   }
   {
-    'name': 'constant.numeric.float.haskell.purescript'
+    'name': 'constant.numeric.float.purescript'
     'match': '\\b([0-9]+\\.[0-9]+([eE][+-]?[0-9]+)?|[0-9]+[eE][+-]?[0-9]+)\\b'
   }
   {
-    'name': 'constant.numeric.haskell.purescript'
+    'name': 'constant.numeric.purescript'
     'match': '\\b([0-9]+|0([xX][0-9a-fA-F]+|[oO][0-7]+))\\b'
   }
   {
@@ -301,15 +301,15 @@
     'include': '#pragma'
   }
   {
-    'name': 'string.quoted.double.haskell.purescript'
+    'name': 'string.quoted.double.purescript'
     'begin': '"'
     'end': '"'
     'beginCaptures':
       '0':
-        'name': 'punctuation.definition.string.begin.haskell.purescript'
+        'name': 'punctuation.definition.string.begin.purescript'
     'endCaptures':
       '0':
-        'name': 'punctuation.definition.string.end.haskell.purescript'
+        'name': 'punctuation.definition.string.end.purescript'
     'patterns': [
       {
         'include': '#characters'
@@ -319,29 +319,29 @@
         'end': '\\\\'
         'beginCaptures':
           '0':
-            'name': 'markup.other.escape.newline.begin.haskell.purescript'
+            'name': 'markup.other.escape.newline.begin.purescript'
         'endCaptures':
           '0':
-            'name': 'markup.other.escape.newline.end.haskell.purescript'
+            'name': 'markup.other.escape.newline.end.purescript'
         'patterns': [
           {
             'match': '\\S+'
-            'name': 'invalid.illegal.character-not-allowed-here.haskell.purescript'
+            'name': 'invalid.illegal.character-not-allowed-here.purescript'
           }
         ]
       }
     ]
   }
   {
-    'name': 'markup.other.escape.newline.haskell.purescript'
+    'name': 'markup.other.escape.newline.purescript'
     'match': '\\\\$'
   }
   {
-    'name': 'string.quoted.single.haskell.purescript'
+    'name': 'string.quoted.single.purescript'
     'match': '(\')((?:[ -\\[\\]-~]|(\\\\(?:NUL|SOH|STX|ETX|EOT|ENQ|ACK|BEL|BS|HT|LF|VT|FF|CR|SO|SI|DLE|DC1|DC2|DC3|DC4|NAK|SYN|ETB|CAN|EM|SUB|ESC|FS|GS|RS|US|SP|DEL|[abfnrtv\\\\\\"\'\\&]))|(\\\\o[0-7]+)|(\\\\x[0-9A-Fa-f]+)|(\\^[A-Z@\\[\\]\\\\\\^_])))(\')'
     'captures':
       '1':
-        'name': 'punctuation.definition.string.begin.haskell.purescript'
+        'name': 'punctuation.definition.string.begin.purescript'
       '2':
         'patterns': [
           {
@@ -349,14 +349,14 @@
           }
         ]
       '7':
-        'name': 'punctuation.definition.string.end.haskell.purescript'
+        'name': 'punctuation.definition.string.end.purescript'
   }
   {
     'include': '#function_type_declaration'
   }
   {
     'match': '\\b(Just|Left|Right|Nothing|True|False|LT|EQ|GT)\\b'
-    'name': 'support.tag.haskell.purescript'
+    'name': 'support.tag.purescript'
   }
   {
     'include': '#type_ctor'
@@ -365,18 +365,18 @@
     'include': '#comments'
   }
   {
-    'name': 'support.function.prelude.haskell.purescript'
+    'name': 'support.function.prelude.purescript'
     'match': '\\b(abs|acos|acosh|all|and|any|appendFile|applyM|asTypeOf|asin|asinh|atan|atan2|atanh|break|catch|ceiling|compare|concat|concatMap|const|cos|cosh|curry|cycle|decodeFloat|div|divMod|drop|dropWhile|elem|encodeFloat|enumFrom|enumFromThen|enumFromThenTo|enumFromTo|error|even|exp|exponent|fail|filter|flip|floatDigits|floatRadix|floatRange|floor|fmap|foldl|foldl1|foldr|foldr1|fromEnum|fromInteger|fromIntegral|fromRational|fst|gcd|getChar|getContents|getLine|head|id|init|interact|ioError|isDenormalized|isIEEE|isInfinite|isNaN|isNegativeZero|iterate|last|lcm|length|lex|lines|log|logBase|lookup|map|mapM|mapM_|max|maxBound|maximum|maybe|min|minBound|minimum|mod|negate|not|notElem|null|odd|or|otherwise|pi|pred|print|product|properFraction|putChar|putStr|putStrLn|quot|quotRem|read|readFile|readIO|readList|readLn|readParen|reads|readsPrec|realToFrac|recip|rem|repeat|replicate|return|reverse|round|scaleFloat|scanl|scanl1|scanr|scanr1|seq|sequence|sequence_|show|showChar|showList|showParen|showString|shows|showsPrec|significand|signum|sin|sinh|snd|span|splitAt|sqrt|subtract|succ|sum|tail|take|takeWhile|tan|tanh|toEnum|toInteger|toRational|truncate|uncurry|undefined|unlines|until|unwords|unzip|unzip3|userError|words|writeFile|zip|zip3|zipWith|zipWith3)\\b'
   }
   {
     'include': '#infix_op'
   }
   {
-    'name': 'keyword.operator.haskell.purescript'
+    'name': 'keyword.operator.purescript'
     'match': '[\\p{S}\\p{P}&&[^(),;\\[\\]`{}_"\']]+'
   }
   {
-    'name': 'punctuation.separator.comma.haskell.purescript'
+    'name': 'punctuation.separator.comma.purescript'
     'match': ','
   }
 ]
@@ -384,16 +384,16 @@
   'block_comment':
     'patterns': [
       {
-        'name': 'comment.block.haddock.haskell.purescript'
+        'name': 'comment.block.haddock.purescript'
         'begin': '\\{-\\s*[|^]'
         'end': '-\\}'
         'applyEndPatternLast': 1
         'beginCaptures':
           '0':
-            'name': 'punctuation.definition.comment.haddock.haskell.purescript'
+            'name': 'punctuation.definition.comment.haddock.purescript'
         'endCaptures':
           '0':
-            'name': 'punctuation.definition.comment.haddock.haskell.purescript'
+            'name': 'punctuation.definition.comment.haddock.purescript'
         'patterns': [
           {
             'include': '#block_comment'
@@ -401,13 +401,13 @@
         ]
       }
       {
-        'name': 'comment.block.haskell.purescript'
+        'name': 'comment.block.purescript'
         'begin': '\\{-(?!#)'
         'end': '-\\}'
         'applyEndPatternLast': 1
         'beginCaptures':
           '0':
-            'name': 'punctuation.definition.comment.haskell.purescript'
+            'name': 'punctuation.definition.comment.purescript'
         'patterns': [
           {
             'include': '#block_comment'
@@ -422,17 +422,17 @@
         'end': '(?!\\G)'
         'beginCaptures':
           '1':
-            'name': 'punctuation.whitespace.comment.leading.haskell.purescript'
+            'name': 'punctuation.whitespace.comment.leading.purescript'
         'patterns': [
           {
-            'name': 'comment.line.double-dash.haddock.haskell.purescript'
+            'name': 'comment.line.double-dash.haddock.purescript'
             'begin': '(--+)\\s+([|^])'
             'end': '\\n'
             'beginCaptures':
               '1':
-                'name': 'punctuation.definition.comment.haskell.purescript'
+                'name': 'punctuation.definition.comment.purescript'
               '2':
-                'name': 'punctuation.definition.comment.haddock.haskell.purescript'
+                'name': 'punctuation.definition.comment.haddock.purescript'
           }
         ]
       }
@@ -441,15 +441,15 @@
         'end': '(?!\\G)'
         'beginCaptures':
           '1':
-            'name': 'punctuation.whitespace.comment.leading.haskell.purescript'
+            'name': 'punctuation.whitespace.comment.leading.purescript'
         'patterns': [
           {
-            'name': 'comment.line.double-dash.haskell.purescript'
+            'name': 'comment.line.double-dash.purescript'
             'begin': '--'
             'end': '\\n'
             'beginCaptures':
               '0':
-                'name': 'punctuation.definition.comment.haskell.purescript'
+                'name': 'punctuation.definition.comment.purescript'
           }
         ]
       }
@@ -463,26 +463,26 @@
         'match': '(?:[ -\\[\\]-~]|(\\\\(?:NUL|SOH|STX|ETX|EOT|ENQ|ACK|BEL|BS|HT|LF|VT|FF|CR|SO|SI|DLE|DC1|DC2|DC3|DC4|NAK|SYN|ETB|CAN|EM|SUB|ESC|FS|GS|RS|US|SP|DEL|[abfnrtv\\\\\\"\'\\&]))|(\\\\o[0-7]+)|(\\\\x[0-9A-Fa-f]+)|(\\^[A-Z@\\[\\]\\\\\\^_]))'
         'captures':
           '1':
-            'name': 'constant.character.escape.haskell.purescript'
+            'name': 'constant.character.escape.purescript'
           '2':
-            'name': 'constant.character.escape.octal.haskell.purescript'
+            'name': 'constant.character.escape.octal.purescript'
           '3':
-            'name': 'constant.character.escape.hexadecimal.haskell.purescript'
+            'name': 'constant.character.escape.hexadecimal.purescript'
           '4':
-            'name': 'constant.character.escape.control.haskell.purescript'
+            'name': 'constant.character.escape.control.purescript'
       }
     ]
   'infix_op':
     'patterns': [
       {
-        'name': 'entity.name.function.infix.haskell.purescript'
+        'name': 'entity.name.function.infix.purescript'
         'match': '(?:\\((?!--+\\))[\\p{S}\\p{P}&&[^(),;\\[\\]`{}_"\']]+\\))'
       }
     ]
   'module_exports':
     'patterns': [
       {
-        'name': 'meta.declaration.exports.haskell.purescript'
+        'name': 'meta.declaration.exports.purescript'
         'begin': '\\('
         'end': '\\)'
         'patterns': [
@@ -490,21 +490,21 @@
             'include': '#comments'
           }
           {
-            'name': 'entity.name.function.haskell.purescript'
+            'name': 'entity.name.function.purescript'
             'match': '\\b(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.)?[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*'
           }
           {
             'include': '#type_name'
           }
           {
-            'name': 'punctuation.separator.comma.haskell.purescript'
+            'name': 'punctuation.separator.comma.purescript'
             'match': ','
           }
           {
             'include': '#infix_op'
           }
           {
-            'name': 'meta.other.constructor-list.haskell.purescript'
+            'name': 'meta.other.constructor-list.purescript'
             'match': '\\(.*?\\)'
           }
         ]
@@ -513,20 +513,20 @@
   'module_name':
     'patterns': [
       {
-        'name': 'support.other.module.haskell.purescript'
+        'name': 'support.other.module.purescript'
         'match': '(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.)*[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.?'
       }
     ]
   'pragma':
     'patterns': [
       {
-        'name': 'meta.preprocessor.haskell.purescript'
+        'name': 'meta.preprocessor.purescript'
         'begin': '\\{-#'
         'end': '#-\\}'
         'patterns': [
           {
             'match': '\\b(LANGUAGE|UNPACK|INLINE)\\b'
-            'name': 'keyword.other.preprocessor.haskell.purescript'
+            'name': 'keyword.other.preprocessor.purescript'
           }
         ]
       }
@@ -534,15 +534,15 @@
   'function_type_declaration':
     'patterns': [
       {
-        'name': 'meta.function.type-declaration.haskell.purescript'
+        'name': 'meta.function.type-declaration.purescript'
         'begin': '(?:(?:^(\\s*))(?:(?:(?:(?<functionTypeDeclaration>(?:(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.)?[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*|(?:\\((?!--+\\))[\\p{S}\\p{P}&&[^(),;\\[\\]`{}_"\']]+\\)))(?:\\s*(?:,)\\s*\\g<functionTypeDeclaration>)?))(?:\\s*(::|∷)))))'
         'end': '^(?!\\1[ \\t]|[ \\t]*$)'
-        'contentName': 'meta.type-signature.haskell.purescript'
+        'contentName': 'meta.type-signature.purescript'
         'beginCaptures':
           '2':
             'patterns': [
               {
-                'name': 'entity.name.function.haskell.purescript'
+                'name': 'entity.name.function.purescript'
                 'match': '(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.)?[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*'
               }
               {
@@ -550,7 +550,7 @@
               }
             ]
           '3':
-            'name': 'keyword.other.double-colon.haskell.purescript'
+            'name': 'keyword.other.double-colon.purescript'
         'patterns': [
           {
             'include': '#type_signature'
@@ -561,15 +561,15 @@
   'record_field_declaration':
     'patterns': [
       {
-        'name': 'meta.record-field.type-declaration.haskell.purescript'
+        'name': 'meta.record-field.type-declaration.purescript'
         'begin': '(?:(?:(?<functionTypeDeclaration>(?:(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.)?[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*|(?:\\((?!--+\\))[\\p{S}\\p{P}&&[^(),;\\[\\]`{}_"\']]+\\)))(?:\\s*(?:,)\\s*\\g<functionTypeDeclaration>)?))(?:\\s*(::|∷)))'
         'end': '(?=(?:(?:(?<functionTypeDeclaration>(?:(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.)?[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*|(?:\\((?!--+\\))[\\p{S}\\p{P}&&[^(),;\\[\\]`{}_"\']]+\\)))(?:\\s*(?:,)\\s*\\g<functionTypeDeclaration>)?))(?:\\s*(::|∷)))|})'
-        'contentName': 'meta.type-signature.haskell.purescript'
+        'contentName': 'meta.type-signature.purescript'
         'beginCaptures':
           '1':
             'patterns': [
               {
-                'name': 'entity.other.attribute-name.haskell.purescript'
+                'name': 'entity.other.attribute-name.purescript'
                 'match': '(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.)?[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*'
               }
               {
@@ -577,7 +577,7 @@
               }
             ]
           '2':
-            'name': 'keyword.other.double-colon.haskell.purescript'
+            'name': 'keyword.other.double-colon.purescript'
         'patterns': [
           {
             'include': '#type_signature'
@@ -588,7 +588,7 @@
   'type_signature':
     'patterns': [
       {
-        'name': 'meta.class-constraints.haskell.purescript'
+        'name': 'meta.class-constraints.purescript'
         'match': '(?:(?:\\()(?:(?<classConstraints>(?:(?:(?:([\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*)\\s+)(?:(?<classConstraint>(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*|(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.)?[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)(?:\\s*(?:\\s+)\\s*\\g<classConstraint>)?))))(?:\\s*(?:,)\\s*\\g<classConstraints>)?))(?:\\))(?:\\s*(=>|⇒)))'
         'captures':
           '1':
@@ -598,10 +598,10 @@
               }
             ]
           '4':
-            'name': 'keyword.other.big-arrow.haskell.purescript'
+            'name': 'keyword.other.big-arrow.purescript'
       }
       {
-        'name': 'meta.class-constraints.haskell.purescript'
+        'name': 'meta.class-constraints.purescript'
         'match': '((?:(?:([\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*)\\s+)(?:(?<classConstraint>(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*|(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.)?[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)(?:\\s*(?:\\s+)\\s*\\g<classConstraint>)?))))\\s*(=>|⇒)'
         'captures':
           '1':
@@ -611,21 +611,21 @@
               }
             ]
           '4':
-            'name': 'keyword.other.big-arrow.haskell.purescript'
+            'name': 'keyword.other.big-arrow.purescript'
       }
       {
         'include': '#pragma'
       }
       {
-        'name': 'keyword.other.arrow.haskell.purescript'
+        'name': 'keyword.other.arrow.purescript'
         'match': '->|→'
       }
       {
-        'name': 'keyword.other.big-arrow.haskell.purescript'
+        'name': 'keyword.other.big-arrow.purescript'
         'match': '=>|⇒'
       }
       {
-        'name': 'support.class.prelude.haskell.purescript'
+        'name': 'support.class.prelude.purescript'
         'match': '\\b(Int(eger)?|Maybe|Either|Bool|Float|Double|Char|String|Ordering|ShowS|ReadS|FilePath|IO(Error)?)\\b'
       }
       {
@@ -644,41 +644,41 @@
   'type_name':
     'patterns': [
       {
-        'name': 'entity.name.type.haskell.purescript'
+        'name': 'entity.name.type.purescript'
         'match': '\\b[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\b'
       }
     ]
   'type_ctor':
     'patterns': [
       {
-        'name': 'entity.name.tag.haskell.purescript'
+        'name': 'entity.name.tag.purescript'
         'match': '\\b[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\b'
       }
     ]
   'unit':
     'patterns': [
       {
-        'name': 'constant.language.unit.haskell.purescript'
+        'name': 'constant.language.unit.purescript'
         'match': '\\(\\)'
       }
     ]
   'generic_type':
     'patterns': [
       {
-        'name': 'variable.other.generic-type.haskell.purescript'
+        'name': 'variable.other.generic-type.purescript'
         'match': '\\b(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.)?[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*\\b'
       }
     ]
   'class_constraint':
     'patterns': [
       {
-        'name': 'meta.class-constraint.haskell.purescript'
+        'name': 'meta.class-constraint.purescript'
         'match': '(?:(?:([\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*)\\s+)(?:(?<classConstraint>(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*|(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.)?[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)(?:\\s*(?:\\s+)\\s*\\g<classConstraint>)?)))'
         'captures':
           '1':
             'patterns': [
               {
-                'name': 'entity.other.inherited-class.haskell.purescript'
+                'name': 'entity.other.inherited-class.purescript'
                 'match': '\\b[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\b'
               }
             ]
@@ -708,28 +708,28 @@
   'deriving_keyword':
     'patterns': [
       {
-        'name': 'meta.deriving.haskell.purescript'
+        'name': 'meta.deriving.purescript'
         'match': '(deriving)'
         'captures':
           '1':
-            'name': 'keyword.other.haskell.purescript'
+            'name': 'keyword.other.purescript'
       }
     ]
   'deriving_list':
     'patterns': [
       {
-        'name': 'meta.deriving.haskell.purescript'
+        'name': 'meta.deriving.purescript'
         'begin': '(deriving)\\s*\\('
         'end': '\\)'
         'beginCaptures':
           '1':
-            'name': 'keyword.other.haskell.purescript'
+            'name': 'keyword.other.purescript'
         'patterns': [
           {
             'match': '\\b([\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*)\\b'
             'captures':
               '1':
-                'name': 'entity.other.inherited-class.haskell.purescript'
+                'name': 'entity.other.inherited-class.purescript'
           }
         ]
       }
@@ -737,12 +737,12 @@
   'deriving_simple':
     'patterns': [
       {
-        'name': 'meta.deriving.haskell.purescript'
+        'name': 'meta.deriving.purescript'
         'match': '(deriving)\\s*([\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*)'
         'captures':
           '1':
-            'name': 'keyword.other.haskell.purescript'
+            'name': 'keyword.other.purescript'
           '2':
-            'name': 'entity.other.inherited-class.haskell.purescript'
+            'name': 'entity.other.inherited-class.purescript'
       }
     ]

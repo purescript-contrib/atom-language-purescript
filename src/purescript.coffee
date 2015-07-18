@@ -75,41 +75,41 @@ purescriptGrammar =
     maybeBirdTrack: /^/
 
   patterns: [
-      name: 'keyword.operator.function.infix.haskell'
+      name: 'keyword.operator.function.infix'
       match: /(`){functionName}(`)/
       captures:
-        1: name: 'punctuation.definition.entity.haskell'
-        2: name: 'punctuation.definition.entity.haskell'
+        1: name: 'punctuation.definition.entity'
+        2: name: 'punctuation.definition.entity'
       ###
       In case this regex seems unusual for an infix operator, note
       that Haskell allows any ordinary function application (elem 4 [1..10])
       to be rewritten as an infix expression (4 `elem` [1..10]).
       ###
     ,
-      name: 'constant.language.unit.haskell'
+      name: 'constant.language.unit'
       match: /\(\)/
     ,
-      name: 'constant.language.empty-list.haskell'
+      name: 'constant.language.empty-list'
       match: /\[\]/
     ,
       begin: /(\[)({functionNameOne})(\|)/
       end: /(\|)(\])/
       beginCaptures:
-        1: name: 'punctuation.definition.quasiquotes.begin.haskell'
-        2: name: 'entity.name.tag.haskell'
-        3: name: 'string.quoted.quasiquotes.haskell'
+        1: name: 'punctuation.definition.quasiquotes.begin'
+        2: name: 'entity.name.tag'
+        3: name: 'string.quoted.quasiquotes'
       endCaptures:
-        1: name: 'string.quoted.quasiquotes.haskell'
-        2: name: 'punctuation.definition.quasiquotes.end.haskell'
-      contentName: 'string.quoted.quasiquotes.haskell'
+        1: name: 'string.quoted.quasiquotes'
+        2: name: 'punctuation.definition.quasiquotes.end'
+      contentName: 'string.quoted.quasiquotes'
     ,
-      name: 'meta.declaration.module.haskell'
+      name: 'meta.declaration.module'
       begin: /\b(module)\b/
       end: /(where)/
       beginCaptures:
-        1: name: 'keyword.other.haskell'
+        1: name: 'keyword.other'
       endCaptures:
-        1: name: 'keyword.other.haskell'
+        1: name: 'keyword.other'
       patterns: [
           include: '#comments'
         ,
@@ -121,15 +121,15 @@ purescriptGrammar =
           match: /[a-z]+/
       ]
     ,
-      name: 'meta.declaration.class.haskell'
+      name: 'meta.declaration.class'
       begin: /\b(class)\b/
       end: /\b(where)\b|$/
       beginCaptures:
-        1: name: 'storage.type.class.haskell'
+        1: name: 'storage.type.class'
       endCaptures:
-        1: name: 'keyword.other.haskell'
+        1: name: 'keyword.other'
       patterns: [
-          name: 'support.class.prelude.haskell'
+          name: 'support.class.prelude'
           match: ///
             \b
             (Monad
@@ -153,37 +153,37 @@ purescriptGrammar =
           include: '#generic_type'
       ]
     ,
-      name: 'meta.declaration.instance.haskell'
+      name: 'meta.declaration.instance'
       begin: /\b(instance)\b/
       end: /\b(where)\b|$/
-      contentName: 'meta.type-signature.haskell'
+      contentName: 'meta.type-signature'
       beginCaptures:
-        1: name: 'keyword.other.haskell'
+        1: name: 'keyword.other'
       endCaptures:
-        1: name: 'keyword.other.haskell'
+        1: name: 'keyword.other'
       patterns: [
           include: '#type_signature'
       ]
     ,
-      name: 'meta.foreign.haskell'
+      name: 'meta.foreign'
       begin: /{maybeBirdTrack}(\s*)(foreign)\s+(import|export)\b/
       end: /{indentBlockEnd}/
       beginCaptures:
-        2: name: 'keyword.other.haskell'
-        3: name: 'keyword.other.haskell'
+        2: name: 'keyword.other'
+        3: name: 'keyword.other'
       patterns:[
           match: /(?:un)?safe/
           captures:
-            0: name: 'keyword.other.haskell'
+            0: name: 'keyword.other'
         ,
           include: '$self'
       ]
     ,
-      name: 'meta.import.haskell'
+      name: 'meta.import'
       begin: /\b(import)\b/
       end: /($|;|(?=--))/
       beginCaptures:
-        1: name: 'keyword.other.haskell'
+        1: name: 'keyword.other'
       patterns: [
           include: '#module_name'
         ,
@@ -191,16 +191,16 @@ purescriptGrammar =
         ,
           match: /\b(qualified|as|hiding)\b/
           captures:
-            1: name: 'keyword.other.haskell'
+            1: name: 'keyword.other'
       ]
     ,
-      name: 'meta.declaration.type.data.haskell'
+      name: 'meta.declaration.type.data'
       begin: /{maybeBirdTrack}(\s)*(data|newtype)\s+({typeDecl})\s*(?=\=|$)/
       end: /{indentBlockEnd}/
       beginCaptures:
-        2: name: 'storage.type.data.haskell'
+        2: name: 'storage.type.data'
         3:
-          name: 'meta.type-signature.haskell'
+          name: 'meta.type-signature'
           patterns: [include: '#type_signature']
       patterns: [
           include: '#comments'
@@ -209,70 +209,70 @@ purescriptGrammar =
         ,
           match: /=/
           captures:
-            0: name: 'keyword.operator.assignment.haskell'
+            0: name: 'keyword.operator.assignment'
         ,
           match: /{ctor}/
           captures:
             1: patterns: [include: '#type_ctor']
             2:
-              name: 'meta.type-signature.haskell'
+              name: 'meta.type-signature'
               patterns: [include: '#type_signature']
         ,
           match: /\|/
           captures:
-            0: name: 'punctuation.separator.pipe.haskell'
+            0: name: 'punctuation.separator.pipe'
         ,
-          name: 'meta.declaratyion.type.data.record.block.haskell'
+          name: 'meta.declaratyion.type.data.record.block'
           begin: /\{/
           beginCaptures:
-            0: name: 'keyword.operator.record.begin.haskell'
+            0: name: 'keyword.operator.record.begin'
           end: /\}/
           endCaptures:
-            0: name: 'keyword.operator.record.end.haskell'
+            0: name: 'keyword.operator.record.end'
           patterns: [
-              name: 'punctuation.separator.comma.haskell'
+              name: 'punctuation.separator.comma'
               match: /,/
             ,
               include: '#record_field_declaration'
           ]
       ]
     ,
-      name: 'meta.declaration.type.type.haskell'
+      name: 'meta.declaration.type.type'
       begin: /{maybeBirdTrack}(\s)*(type)\s+({typeDecl})\s*(?=\=|$)/
       end: /{indentBlockEnd}/
-      contentName: 'meta.type-signature.haskell'
+      contentName: 'meta.type-signature'
       beginCaptures:
-        2: name: 'storage.type.data.haskell'
+        2: name: 'storage.type.data'
         3:
-          name: 'meta.type-signature.haskell'
+          name: 'meta.type-signature'
           patterns: [include: '#type_signature']
       patterns: [
           include: '#comments'
         ,
           match: /=/
           captures:
-            0: name: 'keyword.operator.assignment.haskell'
+            0: name: 'keyword.operator.assignment'
         ,
           include: '#type_signature'
       ]
     ,
-      name: 'keyword.other.haskell'
+      name: 'keyword.other'
       match: /\b(deriving|where|data|type|newtype)\b/
     ,
-      name: 'storage.type.haskell'
+      name: 'storage.type'
       match: /\b(data|type|newtype)\b/
     ,
-      name: 'keyword.operator.haskell'
+      name: 'keyword.operator'
       match: /\binfix[lr]?\b/
     ,
-      name: 'keyword.control.haskell'
+      name: 'keyword.control'
       match: /\b(do|if|then|else|case|of|let|in|default)\b/
     ,
-      name: 'constant.numeric.float.haskell'
+      name: 'constant.numeric.float'
       match: /\b([0-9]+\.[0-9]+([eE][+-]?[0-9]+)?|[0-9]+[eE][+-]?[0-9]+)\b/
       # Floats are always decimal
     ,
-      name: 'constant.numeric.haskell'
+      name: 'constant.numeric'
       match: /\b([0-9]+|0([xX][0-9a-fA-F]+|[oO][0-7]+))\b/
     ,
       name: 'meta.preprocessor.c'
@@ -286,52 +286,52 @@ purescriptGrammar =
     ,
       include: '#pragma'
     ,
-      name: 'string.quoted.double.haskell'
+      name: 'string.quoted.double'
       begin: /"/
       end: /"/
       beginCaptures:
-        0: name: 'punctuation.definition.string.begin.haskell'
+        0: name: 'punctuation.definition.string.begin'
       endCaptures:
-        0: name: 'punctuation.definition.string.end.haskell'
+        0: name: 'punctuation.definition.string.end'
       patterns: [
           include: '#characters'
         ,
           begin: /\\\s/
           end: /\\/
           beginCaptures:
-            0: name: 'markup.other.escape.newline.begin.haskell'
+            0: name: 'markup.other.escape.newline.begin'
           endCaptures:
-            0: name: 'markup.other.escape.newline.end.haskell'
+            0: name: 'markup.other.escape.newline.end'
           patterns: [
               match: /\S+/
-              name: 'invalid.illegal.character-not-allowed-here.haskell'
+              name: 'invalid.illegal.character-not-allowed-here'
           ]
       ]
     ,
-      name: 'markup.other.escape.newline.haskell'
+      name: 'markup.other.escape.newline'
       match: /\\$/
     ,
-      name: 'string.quoted.single.haskell'
+      name: 'string.quoted.single'
       match: /(')({character})(')/
       captures:
-        1: name: 'punctuation.definition.string.begin.haskell'
+        1: name: 'punctuation.definition.string.begin'
         2:
           patterns:[
             include: '#characters'
           ]
         # {character} macro has 4 capture groups, here 3-6
-        7: name: 'punctuation.definition.string.end.haskell'
+        7: name: 'punctuation.definition.string.end'
     ,
       include: '#function_type_declaration'
     ,
       match: /\b(Just|Left|Right|Nothing|True|False|LT|EQ|GT)\b/
-      name: 'support.tag.haskell'
+      name: 'support.tag'
     ,
       include: '#type_ctor'
     ,
       include: '#comments'
     ,
-      name: 'support.function.prelude.haskell'
+      name: 'support.function.prelude'
       match: ///
         \b(abs|acos|acosh|all|and|any|appendFile|applyM|asTypeOf|asin|asinh
         |atan|atan2|atanh|break|catch|ceiling|compare|concat|concatMap|const
@@ -357,33 +357,33 @@ purescriptGrammar =
     ,
       include: '#infix_op'
     ,
-      name: 'keyword.operator.haskell'
+      name: 'keyword.operator'
       match: /{operator}/
     ,
-      name: 'punctuation.separator.comma.haskell'
+      name: 'punctuation.separator.comma'
       match: /,/
   ]
   repository:
     block_comment:
       patterns: [
-          name: 'comment.block.haddock.haskell'
+          name: 'comment.block.haddock'
           begin: /\{-\s*[|^]/
           end: /-\}/
           applyEndPatternLast: 1
           beginCaptures:
-            0: name: 'punctuation.definition.comment.haddock.haskell'
+            0: name: 'punctuation.definition.comment.haddock'
           endCaptures:
-            0: name: 'punctuation.definition.comment.haddock.haskell'
+            0: name: 'punctuation.definition.comment.haddock'
           patterns: [
               include: '#block_comment'
           ]
         ,
-          name: 'comment.block.haskell'
+          name: 'comment.block'
           begin: /\{-(?!#)/
           end: /-\}/
           applyEndPatternLast: 1
           beginCaptures:
-            0: name: 'punctuation.definition.comment.haskell'
+            0: name: 'punctuation.definition.comment'
           patterns: [
               include: '#block_comment'
           ]
@@ -393,14 +393,14 @@ purescriptGrammar =
           begin: /({maybeBirdTrack}[ \t]+)?(?=--+\s+[|^])/
           end: /(?!\G)/
           beginCaptures:
-            1: name: 'punctuation.whitespace.comment.leading.haskell'
+            1: name: 'punctuation.whitespace.comment.leading'
           patterns: [
-              name: 'comment.line.double-dash.haddock.haskell'
+              name: 'comment.line.double-dash.haddock'
               begin: /(--+)\s+([|^])/
               end: /\n/
               beginCaptures:
-                1: name: 'punctuation.definition.comment.haskell'
-                2: name: 'punctuation.definition.comment.haddock.haskell'
+                1: name: 'punctuation.definition.comment'
+                2: name: 'punctuation.definition.comment.haddock'
           ]
         ,
           ###
@@ -411,13 +411,13 @@ purescriptGrammar =
           begin: /({maybeBirdTrack}[ \t]+)?(?=--+(?!{operatorChar}))/
           end: /(?!\G)/
           beginCaptures:
-            1: name: 'punctuation.whitespace.comment.leading.haskell'
+            1: name: 'punctuation.whitespace.comment.leading'
           patterns: [
-              name: 'comment.line.double-dash.haskell'
+              name: 'comment.line.double-dash'
               begin: /--/
               end: /\n/
               beginCaptures:
-                0: name: 'punctuation.definition.comment.haskell'
+                0: name: 'punctuation.definition.comment'
           ]
         ,
           include: '#block_comment'
@@ -425,105 +425,105 @@ purescriptGrammar =
     characters:
       match: /{character}/
       captures:
-        1: name: 'constant.character.escape.haskell'
-        2: name: 'constant.character.escape.octal.haskell'
-        3: name: 'constant.character.escape.hexadecimal.haskell'
-        4: name: 'constant.character.escape.control.haskell'
+        1: name: 'constant.character.escape'
+        2: name: 'constant.character.escape.octal'
+        3: name: 'constant.character.escape.hexadecimal'
+        4: name: 'constant.character.escape.control'
     infix_op:
-      name: 'entity.name.function.infix.haskell'
+      name: 'entity.name.function.infix'
       match: /{operatorFun}/
     module_exports:
-      name: 'meta.declaration.exports.haskell'
+      name: 'meta.declaration.exports'
       begin: /\(/
       end: /\)/
       patterns: [
           include: '#comments'
         ,
-          name: 'entity.name.function.haskell'
+          name: 'entity.name.function'
           match: /\b{functionName}/
         ,
           include: '#type_name'
         ,
-          name: 'punctuation.separator.comma.haskell'
+          name: 'punctuation.separator.comma'
           match: /,/
         ,
           include: '#infix_op'
         ,
-          name: 'meta.other.constructor-list.haskell'
+          name: 'meta.other.constructor-list'
           match: /\(.*?\)/
       ]
     module_name:
-      name: 'support.other.module.haskell'
+      name: 'support.other.module'
       match: /(?:{className}\.)*{className}\.?/
     pragma:
-      name: 'meta.preprocessor.haskell'
+      name: 'meta.preprocessor'
       begin: /\{-#/
       end: /#-\}/
       patterns: [
           match: /\b(LANGUAGE|UNPACK|INLINE)\b/
-          name: 'keyword.other.preprocessor.haskell'
+          name: 'keyword.other.preprocessor'
       ]
     function_type_declaration:
-      name: 'meta.function.type-declaration.haskell'
+      name: 'meta.function.type-declaration'
       begin: concat /{maybeBirdTrack}(\s*)/,/{functionTypeDeclaration}/
       end: /{indentBlockEnd}/
-      contentName: 'meta.type-signature.haskell'
+      contentName: 'meta.type-signature'
       beginCaptures:
         2:
           patterns: [
-              name: 'entity.name.function.haskell'
+              name: 'entity.name.function'
               match: /{functionName}/
             ,
               include: '#infix_op'
           ]
-        3: name: 'keyword.other.double-colon.haskell'
+        3: name: 'keyword.other.double-colon'
       patterns: [
           include: '#type_signature'
       ]
     record_field_declaration:
-      name: 'meta.record-field.type-declaration.haskell'
+      name: 'meta.record-field.type-declaration'
       begin: /{functionTypeDeclaration}/
       end: /(?={functionTypeDeclaration}|})/
-      contentName: 'meta.type-signature.haskell'
+      contentName: 'meta.type-signature'
       beginCaptures:
         1:
           patterns: [
-              name: 'entity.other.attribute-name.haskell'
+              name: 'entity.other.attribute-name'
               match: /{functionName}/
             ,
               include: '#infix_op'
           ]
-        2: name: 'keyword.other.double-colon.haskell'
+        2: name: 'keyword.other.double-colon'
       patterns: [
           include: '#type_signature'
       ]
     type_signature:
       patterns: [
-          name: 'meta.class-constraints.haskell'
+          name: 'meta.class-constraints'
           match: concat /\(/,
             list('classConstraints',/{classConstraint}/,/,/),
             /\)/, /\s*(=>|⇒)/
           captures:
             1: patterns: [{include: '#class_constraint'}]
             #2,3 are from classConstraint
-            4: name: 'keyword.other.big-arrow.haskell'
+            4: name: 'keyword.other.big-arrow'
         ,
-          name: 'meta.class-constraints.haskell'
+          name: 'meta.class-constraints'
           match: /({classConstraint})\s*(=>|⇒)/
           captures:
             1: patterns: [{include: '#class_constraint'}]
             #2,3 are from classConstraint
-            4: name: 'keyword.other.big-arrow.haskell'
+            4: name: 'keyword.other.big-arrow'
         ,
           include: '#pragma'
         ,
-          name: 'keyword.other.arrow.haskell'
+          name: 'keyword.other.arrow'
           match: /->|→/
         ,
-          name: 'keyword.other.big-arrow.haskell'
+          name: 'keyword.other.big-arrow'
           match: /=>|⇒/
         ,
-          name: 'support.class.prelude.haskell'
+          name: 'support.class.prelude'
           match: ///\b
             (Int(eger)?
             |Maybe
@@ -550,23 +550,23 @@ purescriptGrammar =
           include: '#comments'
       ]
     type_name:
-      name: 'entity.name.type.haskell'
+      name: 'entity.name.type'
       match: /\b{className}\b/
     type_ctor:
-      name: 'entity.name.tag.haskell'
+      name: 'entity.name.tag'
       match: /\b{className}\b/
     unit:
-      name: 'constant.language.unit.haskell'
+      name: 'constant.language.unit'
       match: /\(\)/
     generic_type:
-      name: 'variable.other.generic-type.haskell'
+      name: 'variable.other.generic-type'
       match: /\b{functionName}\b/
     class_constraint:
-      name: 'meta.class-constraint.haskell'
+      name: 'meta.class-constraint'
       match: /{classConstraint}/
       captures:
         1: patterns: [
-          name: 'entity.other.inherited-class.haskell'
+          name: 'entity.other.inherited-class'
           match: /\b{className}\b/
         ]
         2: patterns: [
@@ -583,26 +583,26 @@ purescriptGrammar =
           include: '#deriving_keyword'
       ]
     deriving_keyword:
-      name: 'meta.deriving.haskell'
+      name: 'meta.deriving'
       match: /(deriving)/
       captures:
-        1: name: 'keyword.other.haskell'
+        1: name: 'keyword.other'
     deriving_list:
-      name: 'meta.deriving.haskell'
+      name: 'meta.deriving'
       begin: /(deriving)\s*\(/
       end: /\)/
       beginCaptures:
-        1: name: 'keyword.other.haskell'
+        1: name: 'keyword.other'
       patterns: [
           match: /\b({className})\b/
           captures:
-            1: name: 'entity.other.inherited-class.haskell'
+            1: name: 'entity.other.inherited-class'
       ]
     deriving_simple:
-      name: 'meta.deriving.haskell'
+      name: 'meta.deriving'
       match: /(deriving)\s*({className})/
       captures:
-        1: name: 'keyword.other.haskell'
-        2: name: 'entity.other.inherited-class.haskell'
+        1: name: 'keyword.other'
+        2: name: 'entity.other.inherited-class'
 
 makeGrammar purescriptGrammar, "grammars/purescript.cson"

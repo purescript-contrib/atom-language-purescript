@@ -609,7 +609,7 @@
           '1':
             'patterns': [
               {
-                'name': 'entity.other.inherited-class.purescript'
+                'name': 'entity.name.type.purescript'
                 'match': '\\b[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\b'
               }
             ]
@@ -660,7 +660,7 @@
             'match': '\\b([\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*)\\b'
             'captures':
               '1':
-                'name': 'entity.other.inherited-class.purescript'
+                'name': 'entity.name.type.purescript'
           }
         ]
       }
@@ -674,6 +674,6 @@
           '1':
             'name': 'keyword.other.purescript'
           '2':
-            'name': 'entity.other.inherited-class.purescript'
+            'name': 'entity.name.type.purescript'
       }
     ]

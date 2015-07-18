@@ -465,7 +465,7 @@ purescriptGrammar =
       match: /{classConstraint}/
       captures:
         1: patterns: [
-          name: 'entity.other.inherited-class'
+          name: 'entity.name.type'
           match: /\b{className}\b/
         ]
         2: patterns: [
@@ -495,13 +495,13 @@ purescriptGrammar =
       patterns: [
           match: /\b({className})\b/
           captures:
-            1: name: 'entity.other.inherited-class'
+            1: name: 'entity.name.type'
       ]
     deriving_simple:
       name: 'meta.deriving'
       match: /(deriving)\s*({className})/
       captures:
         1: name: 'keyword.other'
-        2: name: 'entity.other.inherited-class'
+        2: name: 'entity.name.type'
 
 makeGrammar purescriptGrammar, "grammars/purescript.cson"

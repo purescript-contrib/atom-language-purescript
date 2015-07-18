@@ -278,9 +278,6 @@
         'name': 'punctuation.definition.preprocessor.c.purescript'
   }
   {
-    'include': '#pragma'
-  }
-  {
     'name': 'string.quoted.double.purescript'
     'begin': '"'
     'end': '"'
@@ -489,20 +486,6 @@
         'match': '(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.)*[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.?'
       }
     ]
-  'pragma':
-    'patterns': [
-      {
-        'name': 'meta.preprocessor.purescript'
-        'begin': '\\{-#'
-        'end': '#-\\}'
-        'patterns': [
-          {
-            'match': '\\b(LANGUAGE|UNPACK|INLINE)\\b'
-            'name': 'keyword.other.preprocessor.purescript'
-          }
-        ]
-      }
-    ]
   'function_type_declaration':
     'patterns': [
       {
@@ -584,9 +567,6 @@
             ]
           '4':
             'name': 'keyword.other.big-arrow.purescript'
-      }
-      {
-        'include': '#pragma'
       }
       {
         'name': 'keyword.other.arrow.purescript'

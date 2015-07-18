@@ -254,8 +254,6 @@ purescriptGrammar =
       preprocessor to be run on a source file.
       ###
     ,
-      include: '#pragma'
-    ,
       name: 'string.quoted.double'
       begin: /"/
       end: /"/
@@ -398,14 +396,6 @@ purescriptGrammar =
     module_name:
       name: 'support.other.module'
       match: /(?:{className}\.)*{className}\.?/
-    pragma:
-      name: 'meta.preprocessor'
-      begin: /\{-#/
-      end: /#-\}/
-      patterns: [
-          match: /\b(LANGUAGE|UNPACK|INLINE)\b/
-          name: 'keyword.other.preprocessor'
-      ]
     function_type_declaration:
       name: 'meta.function.type-declaration'
       begin: concat /{maybeBirdTrack}(\s*)/,/{functionTypeDeclaration}/
@@ -457,8 +447,6 @@ purescriptGrammar =
             1: patterns: [{include: '#class_constraint'}]
             #2,3 are from classConstraint
             4: name: 'keyword.other.big-arrow'
-        ,
-          include: '#pragma'
         ,
           name: 'keyword.other.arrow'
           match: /->|→/

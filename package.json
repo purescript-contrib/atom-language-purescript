@@ -12,7 +12,12 @@
   },
   "dependencies": {
     "atom-message-panel": "1.2.2",
-    "underscore": ">= 1.6.0"
+    "underscore": ">= 1.6.0",
+    "coffee-script": "~1.9.0",
+    "season": "~2.0.0"
+  },
+  "scripts": {
+    "build": "coffee src/purescript.coffee"
   },
   "main": "./index"
 }

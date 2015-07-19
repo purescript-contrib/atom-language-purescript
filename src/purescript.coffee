@@ -1,3 +1,6 @@
+# Run this file to regenerate the grammars/purescript.cson file, as follows:
+# $ ./node_modules/.bin/coffee src/purescript.coffee
+
 makeGrammar = require './syntax-tools'
 
 toString = (rx) ->

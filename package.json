@@ -17,7 +17,7 @@
     "season": "~2.0.0"
   },
   "scripts": {
-    "postinstall": "coffee src/purescript.coffee"
+    "build": "coffee src/purescript.coffee"
   },
   "main": "./index"
 }

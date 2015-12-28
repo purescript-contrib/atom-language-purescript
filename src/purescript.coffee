@@ -249,6 +249,14 @@ purescriptGrammar =
       name: 'constant.numeric'
       match: /\b([0-9]+|0([xX][0-9a-fA-F]+|[oO][0-7]+))\b/
     ,
+      name: 'string.quoted.triple'
+      begin: /"""/
+      end: /"""/
+      beginCaptures:
+        0: name: 'punctuation.definition.string.begin'
+      endCaptures:
+        0: name: 'punctuation.definition.string.end'
+    ,
       name: 'string.quoted.double'
       begin: /"/
       end: /"/

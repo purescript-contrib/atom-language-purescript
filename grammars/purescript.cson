@@ -273,6 +273,17 @@
     'match': '\\b([0-9]+|0([xX][0-9a-fA-F]+|[oO][0-7]+))\\b'
   }
   {
+    'name': 'string.quoted.triple.purescript'
+    'begin': '"""'
+    'end': '"""'
+    'beginCaptures':
+      '0':
+        'name': 'punctuation.definition.string.begin.purescript'
+    'endCaptures':
+      '0':
+        'name': 'punctuation.definition.string.end.purescript'
+  }
+  {
     'name': 'string.quoted.double.purescript'
     'begin': '"'
     'end': '"'

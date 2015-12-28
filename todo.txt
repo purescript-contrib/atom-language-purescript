@@ -1,4 +1,3 @@
-Triple-quoted strings
 Records:
   construction
   construction sugar? {foo:_}

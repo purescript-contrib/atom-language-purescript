@@ -63,11 +63,10 @@ purescriptGrammar =
       concat list('functionTypeDeclaration',/{functionName}|{operatorFun}/,/,/),
         /\s*(::|∷)/
     ctorArgs: ///
-      (?!deriving)
       (?:
       {className}     #proper type
       |{functionName} #type variable
-      |(?:(?!deriving)(?:[\w()'→⇒\[\],]|->|=>)+\s*)+ #anything goes!
+      |(?:(?:[\w()'→⇒\[\],]|->|=>)+\s*)+ #anything goes!
       )
       ///
     ctor: concat /\b({className})\s+/,
@@ -179,8 +178,6 @@ purescriptGrammar =
       patterns: [
           include: '#comments'
         ,
-          include: '#deriving'
-        ,
           match: /=/
           captures:
             0: name: 'keyword.operator.assignment'
@@ -231,7 +228,7 @@ purescriptGrammar =
       ]
     ,
       name: 'keyword.other'
-      match: /\b(deriving|where|data|type|newtype)\b/
+      match: /\b(derive|where|data|type|newtype)\b/
     ,
       name: 'storage.type'
       match: /\b(data|type|newtype)\b/
@@ -494,35 +491,5 @@ purescriptGrammar =
           ,
             include: '#generic_type'
         ]
-    deriving:
-      patterns: [
-          include: '#deriving_list'
-        ,
-          include: '#deriving_simple'
-        ,
-          include: '#deriving_keyword'
-      ]
-    deriving_keyword:
-      name: 'meta.deriving'
-      match: /(deriving)/
-      captures:
-        1: name: 'keyword.other'
-    deriving_list:
-      name: 'meta.deriving'
-      begin: /(deriving)\s*\(/
-      end: /\)/
-      beginCaptures:
-        1: name: 'keyword.other'
-      patterns: [
-          match: /\b({className})\b/
-          captures:
-            1: name: 'entity.name.type'
-      ]
-    deriving_simple:
-      name: 'meta.deriving'
-      match: /(deriving)\s*({className})/
-      captures:
-        1: name: 'keyword.other'
-        2: name: 'entity.name.type'
 
 makeGrammar purescriptGrammar, "grammars/purescript.cson"

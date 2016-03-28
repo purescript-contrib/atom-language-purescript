@@ -61,7 +61,7 @@ purescriptGrammar =
       list('classConstraint',/{className}|{functionName}/,/\s+/)
     functionTypeDeclaration:
       concat list('functionTypeDeclaration',/{functionName}|{operatorFun}/,/,/),
-        /\s*(::|∷)/
+        /\s*(::|∷ )/
     ctorArgs: ///
       (?:
       {className}     #proper type
@@ -401,7 +401,7 @@ purescriptGrammar =
       match: /(?:{className}\.)*{className}\.?/
     function_type_declaration:
       name: 'meta.function.type-declaration'
-      begin: concat /{maybeBirdTrack}(\s*)/,/{functionTypeDeclaration}/
+      begin: concat /{maybeBirdTrack}(\s*)/,/{functionTypeDeclaration}/,/(?!.*<-)/
       end: /{indentBlockEnd}/
       contentName: 'meta.type-signature'
       beginCaptures:

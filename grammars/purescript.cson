@@ -108,19 +108,26 @@
   }
   {
     'name': 'meta.foreign.purescript'
-    'begin': '^(\\s*)(foreign)\\s+(import)\\b'
+    'begin': '^(\\s*)(foreign)\\s+(import)\\s+(?:(?:(?<functionTypeDeclaration>(?:(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.)?[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*|(?:\\((?!--+\\))[\\p{S}\\p{P}&&[^(),;\\[\\]`{}_"\']]+\\)))(?:\\s*(?:,)\\s*\\g<functionTypeDeclaration>)?))(?:\\s*(::|∷ )))?'
     'end': '^(?!\\1[ \\t]|[ \\t]*$)'
+    'contentName': 'meta.type-signature.purescript'
     'beginCaptures':
       '2':
         'name': 'keyword.other.purescript'
       '3':
         'name': 'keyword.other.purescript'
+      '4':
+        'patterns': [
+          {
+            'name': 'entity.name.function.purescript'
+            'match': '(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.)?[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*'
+          }
+        ]
+      '5':
+        'name': 'keyword.other.double-colon.purescript'
     'patterns': [
       {
         'include': '#type_signature'
-      }
-      {
-        'include': '$self'
       }
     ]
   }
@@ -259,7 +266,7 @@
   }
   {
     'name': 'keyword.control.purescript'
-    'match': '\\b(do|if|then|else|case|of|let|in|default)\\b'
+    'match': '\\b(do|if|then|else|case|of|let|in)\\b'
   }
   {
     'name': 'constant.numeric.float.purescript'
@@ -333,6 +340,38 @@
   }
   {
     'include': '#function_type_declaration'
+  }
+  {
+    'match': '\\((?<paren>(?:[^()]|\\(\\g<paren>\\))*)(::|∷)(?<paren2>(?:[^()]|\\(\\g<paren2>\\))*)\\)'
+    'captures':
+      '1':
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
+      '2':
+        'name': 'keyword.other.double-colon.purescript'
+      '3':
+        'name': 'meta.type-signature.purescript'
+        'patterns': [
+          {
+            'include': '#type_signature'
+          }
+        ]
+  }
+  {
+    'match': '(::|∷)((?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*|(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.)?[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*|\\->|=>|[→⇒()\\[\\]]|\\s)*)'
+    'captures':
+      '1':
+        'name': 'keyword.other.double-colon.purescript'
+      '2':
+        'name': 'meta.type-signature.purescript'
+        'patterns': [
+          {
+            'include': '#type_signature'
+          }
+        ]
   }
   {
     'include': '#data_ctor'

@@ -141,15 +141,21 @@ purescriptGrammar =
       ]
     ,
       name: 'meta.foreign'
-      begin: /{maybeBirdTrack}(\s*)(foreign)\s+(import)\b/
+      # functionTypeDeclaration so it can be wrapped to the next line without losing most highlighting
+      begin: /{maybeBirdTrack}(\s*)(foreign)\s+(import)\s+{functionTypeDeclaration}?/
       end: /{indentBlockEnd}/
+      contentName: 'meta.type-signature'
       beginCaptures:
         2: name: 'keyword.other'
         3: name: 'keyword.other'
+        4:
+          patterns: [
+              name: 'entity.name.function'
+              match: /{functionName}/
+          ]
+        5: name: 'keyword.other.double-colon'
       patterns:[
           include: '#type_signature'
-        ,
-          include: '$self'
       ]
     ,
       name: 'meta.import'
@@ -237,7 +243,7 @@ purescriptGrammar =
       match: /\binfix[lr]?\b/
     ,
       name: 'keyword.control'
-      match: /\b(do|if|then|else|case|of|let|in|default)\b/
+      match: /\b(do|if|then|else|case|of|let|in)\b/
     ,
       name: 'constant.numeric.float'
       match: /\b([0-9]+\.[0-9]+([eE][+-]?[0-9]+)?|[0-9]+[eE][+-]?[0-9]+)\b/
@@ -291,6 +297,18 @@ purescriptGrammar =
         7: name: 'punctuation.definition.string.end'
     ,
       include: '#function_type_declaration'
+    ,
+      # Note recursive regex matching nested parens
+      match: '\\((?<paren>(?:[^()]|\\(\\g<paren>\\))*)(::|∷)(?<paren2>(?:[^()]|\\(\\g<paren2>\\))*)\\)'
+      captures:
+        1: patterns: [include: '$self']
+        2: name: 'keyword.other.double-colon'
+        3: {name: 'meta.type-signature', patterns: [include: '#type_signature']}
+    ,
+      match: '(::|∷)((?:{className}|{functionName}|\\->|=>|[→⇒()\\[\\]]|\\s)*)'
+      captures:
+        1: name: 'keyword.other.double-colon'
+        2: {name: 'meta.type-signature', patterns: [include: '#type_signature']}
     ,
       include: '#data_ctor'
     ,

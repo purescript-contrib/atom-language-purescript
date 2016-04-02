@@ -1,6 +1,6 @@
 {
   "name": "language-purescript",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "PureScript language support for the Atom editor",
   "license": "MIT",
   "repository": "https://github.com/darinmorrison/atom-language-purescript",

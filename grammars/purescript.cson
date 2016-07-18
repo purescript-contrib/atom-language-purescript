@@ -31,23 +31,6 @@
         'name': 'punctuation.definition.entity.purescript'
   }
   {
-    'begin': '(\\[)([\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)(\\|)'
-    'end': '(\\|)(\\])'
-    'beginCaptures':
-      '1':
-        'name': 'punctuation.definition.quasiquotes.begin.purescript'
-      '2':
-        'name': 'entity.name.tag.purescript'
-      '3':
-        'name': 'string.quoted.quasiquotes.purescript'
-    'endCaptures':
-      '1':
-        'name': 'string.quoted.quasiquotes.purescript'
-      '2':
-        'name': 'punctuation.definition.quasiquotes.end.purescript'
-    'contentName': 'string.quoted.quasiquotes.purescript'
-  }
-  {
     'name': 'meta.declaration.module.purescript'
     'begin': '\\b(module)\\b'
     'end': '(where)'
@@ -671,7 +654,7 @@
             'patterns': [
               {
                 'name': 'entity.name.type.purescript'
-                'match': '\\b[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\b'
+                'match': '\\b[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*'
               }
             ]
           '2':

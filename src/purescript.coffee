@@ -88,17 +88,6 @@ purescriptGrammar =
       to be rewritten as an infix expression (4 `elem` [1..10]).
       ###
     ,
-      begin: /(\[)({functionNameOne})(\|)/
-      end: /(\|)(\])/
-      beginCaptures:
-        1: name: 'punctuation.definition.quasiquotes.begin'
-        2: name: 'entity.name.tag'
-        3: name: 'string.quoted.quasiquotes'
-      endCaptures:
-        1: name: 'string.quoted.quasiquotes'
-        2: name: 'punctuation.definition.quasiquotes.end'
-      contentName: 'string.quoted.quasiquotes'
-    ,
       name: 'meta.declaration.module'
       begin: /\b(module)\b/
       end: /(where)/

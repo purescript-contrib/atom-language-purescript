@@ -489,20 +489,20 @@ purescriptGrammar =
       ]
     type_name:
       name: 'entity.name.type'
-      match: /\b{className}\b/
+      match: /\b{className}/
     data_ctor:
       name: 'entity.name.tag'
-      match: /\b{className}\b/
+      match: /\b{className}/
     generic_type:
       name: 'variable.other.generic-type'
-      match: /\b{functionName}\b/
+      match: /\b{functionName}/
     class_constraint:
       name: 'meta.class-constraint'
       match: /{classConstraint}/
       captures:
         1: patterns: [
           name: 'entity.name.type'
-          match: /\b{className}\b/
+          match: /\b{className}/
         ]
         2: patterns: [
             include: '#type_name'

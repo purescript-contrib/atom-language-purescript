@@ -396,7 +396,7 @@
       }
       {
         'name': 'comment.block.purescript'
-        'begin': '\\{-(?!#)'
+        'begin': '\\{-'
         'end': '-\\}'
         'applyEndPatternLast': 1
         'beginCaptures':

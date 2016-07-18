@@ -327,7 +327,7 @@ purescriptGrammar =
           ]
         ,
           name: 'comment.block'
-          begin: /\{-(?!#)/
+          begin: /\{-/
           end: /-\}/
           applyEndPatternLast: 1
           beginCaptures:

@@ -223,13 +223,10 @@ purescriptGrammar =
       ]
     ,
       name: 'keyword.other'
-      match: /\b(derive|where|data|type|newtype)\b/
+      match: /\b(derive|where|data|type|newtype|infix[lr]?)\b/
     ,
       name: 'storage.type'
       match: /\b(data|type|newtype)\b/
-    ,
-      name: 'keyword.operator'
-      match: /\binfix[lr]?\b/
     ,
       name: 'keyword.control'
       match: /\b(do|if|then|else|case|of|let|in)\b/

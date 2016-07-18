@@ -237,15 +237,11 @@
   }
   {
     'name': 'keyword.other.purescript'
-    'match': '\\b(derive|where|data|type|newtype)\\b'
+    'match': '\\b(derive|where|data|type|newtype|infix[lr]?)\\b'
   }
   {
     'name': 'storage.type.purescript'
     'match': '\\b(data|type|newtype)\\b'
-  }
-  {
-    'name': 'keyword.operator.purescript'
-    'match': '\\binfix[lr]?\\b'
   }
   {
     'name': 'keyword.control.purescript'

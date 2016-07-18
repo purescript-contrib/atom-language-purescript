@@ -157,7 +157,7 @@ purescriptGrammar =
         ,
           include: '#module_exports'
         ,
-          match: /\b(qualified|as|hiding)\b/
+          match: /\b(as|hiding)\b/
           captures:
             1: name: 'keyword.other'
       ]

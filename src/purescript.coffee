@@ -149,7 +149,7 @@ purescriptGrammar =
     ,
       name: 'meta.import'
       begin: /\b(import)\b/
-      end: /($|;|(?=--))/
+      end: /($|(?=--))/
       beginCaptures:
         1: name: 'keyword.other'
       patterns: [

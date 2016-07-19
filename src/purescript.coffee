@@ -89,7 +89,7 @@ purescriptGrammar =
       ###
     ,
       name: 'meta.declaration.module'
-      begin: /\b(module)\b/
+      begin: /\b(module)(?!')\b/
       end: /(where)/
       beginCaptures:
         1: name: 'keyword.other'
@@ -107,7 +107,7 @@ purescriptGrammar =
       ]
     ,
       name: 'meta.declaration.typeclass'
-      begin: /\b(class)\b/
+      begin: /\b(class)(?!')\b/
       end: /\b(where)\b|$/
       beginCaptures:
         1: name: 'storage.type.class'
@@ -118,7 +118,7 @@ purescriptGrammar =
       ]
     ,
       name: 'meta.declaration.instance'
-      begin: /\b(instance)\b/
+      begin: /\b(instance)(?!')\b/
       end: /\b(where)\b|$/
       contentName: 'meta.type-signature'
       beginCaptures:
@@ -148,7 +148,7 @@ purescriptGrammar =
       ]
     ,
       name: 'meta.import'
-      begin: /\b(import)\b/
+      begin: /\b(import)(?!')\b/
       end: /($|(?=--))/
       beginCaptures:
         1: name: 'keyword.other'

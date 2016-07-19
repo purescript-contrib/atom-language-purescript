@@ -32,7 +32,7 @@
   }
   {
     'name': 'meta.declaration.module.purescript'
-    'begin': '\\b(module)\\b'
+    'begin': '\\b(module)(?!\')\\b'
     'end': '(where)'
     'beginCaptures':
       '1':
@@ -58,7 +58,7 @@
   }
   {
     'name': 'meta.declaration.typeclass.purescript'
-    'begin': '\\b(class)\\b'
+    'begin': '\\b(class)(?!\')\\b'
     'end': '\\b(where)\\b|$'
     'beginCaptures':
       '1':
@@ -74,7 +74,7 @@
   }
   {
     'name': 'meta.declaration.instance.purescript'
-    'begin': '\\b(instance)\\b'
+    'begin': '\\b(instance)(?!\')\\b'
     'end': '\\b(where)\\b|$'
     'contentName': 'meta.type-signature.purescript'
     'beginCaptures':
@@ -116,7 +116,7 @@
   }
   {
     'name': 'meta.import.purescript'
-    'begin': '\\b(import)\\b'
+    'begin': '\\b(import)(?!\')\\b'
     'end': '($|(?=--))'
     'beginCaptures':
       '1':

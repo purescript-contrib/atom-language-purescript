@@ -88,17 +88,6 @@ purescriptGrammar =
       to be rewritten as an infix expression (4 `elem` [1..10]).
       ###
     ,
-      begin: /(\[)({functionNameOne})(\|)/
-      end: /(\|)(\])/
-      beginCaptures:
-        1: name: 'punctuation.definition.quasiquotes.begin'
-        2: name: 'entity.name.tag'
-        3: name: 'string.quoted.quasiquotes'
-      endCaptures:
-        1: name: 'string.quoted.quasiquotes'
-        2: name: 'punctuation.definition.quasiquotes.end'
-      contentName: 'string.quoted.quasiquotes'
-    ,
       name: 'meta.declaration.module'
       begin: /\b(module)\b/
       end: /(where)/
@@ -160,7 +149,7 @@ purescriptGrammar =
     ,
       name: 'meta.import'
       begin: /\b(import)\b/
-      end: /($|;|(?=--))/
+      end: /($|(?=--))/
       beginCaptures:
         1: name: 'keyword.other'
       patterns: [
@@ -168,7 +157,7 @@ purescriptGrammar =
         ,
           include: '#module_exports'
         ,
-          match: /\b(qualified|as|hiding)\b/
+          match: /\b(as|hiding)\b/
           captures:
             1: name: 'keyword.other'
       ]
@@ -234,16 +223,13 @@ purescriptGrammar =
       ]
     ,
       name: 'keyword.other'
-      match: /\b(derive|where|data|type|newtype)\b/
+      match: /\b(derive|where|data|type|newtype|infix[lr]?)(?!')\b/
     ,
       name: 'storage.type'
-      match: /\b(data|type|newtype)\b/
-    ,
-      name: 'keyword.operator'
-      match: /\binfix[lr]?\b/
+      match: /\b(data|type|newtype)(?!')\b/
     ,
       name: 'keyword.control'
-      match: /\b(do|if|then|else|case|of|let|in)\b/
+      match: /\b(do|if|then|else|case|of|let|in)(?!')\b/
     ,
       name: 'constant.numeric.float'
       match: /\b([0-9]+\.[0-9]+([eE][+-]?[0-9]+)?|[0-9]+[eE][+-]?[0-9]+)\b/
@@ -341,7 +327,7 @@ purescriptGrammar =
           ]
         ,
           name: 'comment.block'
-          begin: /\{-(?!#)/
+          begin: /\{-/
           end: /-\}/
           applyEndPatternLast: 1
           beginCaptures:
@@ -489,20 +475,20 @@ purescriptGrammar =
       ]
     type_name:
       name: 'entity.name.type'
-      match: /\b{className}\b/
+      match: /\b{className}/
     data_ctor:
       name: 'entity.name.tag'
-      match: /\b{className}\b/
+      match: /\b{className}/
     generic_type:
       name: 'variable.other.generic-type'
-      match: /\b{functionName}\b/
+      match: /\b{functionName}/
     class_constraint:
       name: 'meta.class-constraint'
       match: /{classConstraint}/
       captures:
         1: patterns: [
           name: 'entity.name.type'
-          match: /\b{className}\b/
+          match: /\b{className}/
         ]
         2: patterns: [
             include: '#type_name'

@@ -442,14 +442,14 @@ purescriptGrammar =
           name: 'meta.class-constraints'
           match: concat /\(/,
             list('classConstraints',/{classConstraint}/,/,/),
-            /\)/, /\s*(=>|<=|⇒)/
+            /\)/, /\s*(=>|<=|⇐|⇒)/
           captures:
             1: patterns: [{include: '#class_constraint'}]
             #2,3 are from classConstraint
             4: name: 'keyword.other.big-arrow'
         ,
           name: 'meta.class-constraints'
-          match: /({classConstraint})\s*(=>|<=|⇒)/
+          match: /({classConstraint})\s*(=>|<=|⇐|⇒)/
           captures:
             1: patterns: [{include: '#class_constraint'}]
             #2,3 are from classConstraint
@@ -462,10 +462,10 @@ purescriptGrammar =
           match: /=>|⇒/
         ,
           name: 'keyword.other.big-arrow-left'
-          match: /<=/
+          match: /<=|⇐/
         ,
           name: 'keyword.other.forall'
-          match: /forall/
+          match: /forall|∀/
         ,
           include: '#generic_type'
         ,

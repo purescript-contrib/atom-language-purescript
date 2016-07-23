@@ -237,7 +237,7 @@
   }
   {
     'name': 'keyword.other.purescript'
-    'match': '\\b(derive|where|data|type|newtype|infix[lr]?)(?!\')\\b'
+    'match': '\\b(derive|where|data|type|newtype|infix[lr]?|foreign)(?!\')\\b'
   }
   {
     'name': 'storage.type.purescript'

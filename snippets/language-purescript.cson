@@ -1,0 +1,43 @@
+'.source.purescript':
+  'Case':
+    'prefix': 'case'
+    'body': 'case ${1:expression} of\n  ${2:pattern} -> ${3:expression}'
+  'Class':
+    'prefix': 'class'
+    'body': 'class ${1:Class} ${2:a} where\n  '
+  'Data':
+    'prefix': 'data'
+    'body': 'data ${1:Name} = ${2:$1}'
+  'Derive':
+    'prefix': 'derive'
+    'body': 'derive instance ${1:name} :: ${2:Class} ${3:Type}'
+  'Forall':
+    'prefix': 'forall'
+    'body': 'forall ${1:a}.'
+  'Foreign':
+    'prefix': 'foreign'
+    'body': 'foreign import'
+  'If':
+    'prefix': 'if'
+    'body': 'if ${1:condition} then ${2:branch} else ${3:branch}'
+  'Import':
+    'prefix': 'import'
+    'body': 'import ${1:Prelude}'
+  'Instance':
+    'prefix': 'instance'
+    'body': 'instance ${1:name} :: ${2:Class} ${3:Type}'
+  'Let':
+    'prefix': 'let'
+    'body': 'let ${1:binding} = ${2:expression}'
+  'Module':
+    'prefix': 'module'
+    'body': 'module ${1:Main} where'
+  'Newtype':
+    'prefix': 'new'
+    'body': 'newtype ${1:Name} = ${2:Type}'
+  'Type':
+    'prefix': 'type'
+    'body': 'type ${1:Name} = ${2:Type}'
+  'Where':
+    'prefix': 'where'
+    'body': 'where\n  '

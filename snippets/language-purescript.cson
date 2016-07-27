@@ -33,7 +33,7 @@
     'prefix': 'module'
     'body': 'module ${1:Main} where'
   'Newtype':
-    'prefix': 'new'
+    'prefix': 'newtype'
     'body': 'newtype ${1:Name} = ${2:Type}'
   'Type':
     'prefix': 'type'

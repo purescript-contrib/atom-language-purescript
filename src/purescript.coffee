@@ -60,7 +60,7 @@ purescriptGrammar =
     classConstraint: concat /({className})\s+/,
       list('classConstraint',/{className}|{functionName}/,/\s+/)
     functionTypeDeclaration:
-      concat list('functionTypeDeclaration',/{functionName}|{operatorFun}/,/,/),
+      concat list('functionTypeDeclaration',/{functionName}/,/,/),
         /\s*(::|∷ )/
     ctorArgs: ///
       (?:

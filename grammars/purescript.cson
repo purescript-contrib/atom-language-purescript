@@ -529,9 +529,6 @@
                 'name': 'entity.name.function.purescript'
                 'match': '(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.)?[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*'
               }
-              {
-                'include': '#infix_op'
-              }
             ]
           '3':
             'name': 'keyword.other.double-colon.purescript'
@@ -555,9 +552,6 @@
               {
                 'name': 'entity.other.attribute-name.purescript'
                 'match': '(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.)?[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*'
-              }
-              {
-                'include': '#infix_op'
               }
             ]
           '2':

@@ -416,8 +416,6 @@ purescriptGrammar =
           patterns: [
               name: 'entity.name.function'
               match: /{functionName}/
-            ,
-              include: '#infix_op'
           ]
         3: name: 'keyword.other.double-colon'
       patterns: [
@@ -433,8 +431,6 @@ purescriptGrammar =
           patterns: [
               name: 'entity.other.attribute-name'
               match: /{functionName}/
-            ,
-              include: '#infix_op'
           ]
         2: name: 'keyword.other.double-colon'
       patterns: [

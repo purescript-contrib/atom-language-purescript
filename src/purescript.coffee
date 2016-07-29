@@ -33,7 +33,7 @@ purescriptGrammar =
     className: /{classNameOne}(?:\.{classNameOne})*/
     operatorChar: /[\p{S}\p{P}&&[^(),;\[\]`{}_"']]/
     ###
-    In case this regex seems overly general, note that Haskell
+    In case this regex seems overly general, note that PureScript
     permits the definition of new operators which can be nearly any string
     of punctuation characters, such as $%^&*.
     ###
@@ -84,8 +84,8 @@ purescriptGrammar =
         2: name: 'punctuation.definition.entity'
       ###
       In case this regex seems unusual for an infix operator, note
-      that Haskell allows any ordinary function application (elem 4 [1..10])
-      to be rewritten as an infix expression (4 `elem` [1..10]).
+      that PureScript allows any ordinary function application (elem 4 (1..10))
+      to be rewritten as an infix expression (4 `elem` (1..10)).
       ###
     ,
       name: 'meta.declaration.module'

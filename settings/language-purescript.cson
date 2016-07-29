@@ -1,3 +1,4 @@
 '.source.purescript':
   'editor':
+    'autoIndentOnPaste': false
     'commentStart': '-- '

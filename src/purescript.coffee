@@ -318,7 +318,7 @@ purescriptGrammar =
     block_comment:
       patterns: [
           name: 'comment.block.haddock'
-          begin: /\{-\s*[|^]/
+          begin: /\{-\s*\|/
           end: /-\}/
           applyEndPatternLast: 1
           beginCaptures:
@@ -341,13 +341,13 @@ purescriptGrammar =
       ]
     comments:
       patterns: [
-          begin: /({maybeBirdTrack}[ \t]+)?(?=--+\s+[|^])/
+          begin: /({maybeBirdTrack}[ \t]+)?(?=--+\s+\|)/
           end: /(?!\G)/
           beginCaptures:
             1: name: 'punctuation.whitespace.comment.leading'
           patterns: [
               name: 'comment.line.double-dash.haddock'
-              begin: /(--+)\s+([|^])/
+              begin: /(--+)\s+(\|)/
               end: /\n/
               beginCaptures:
                 1: name: 'punctuation.definition.comment'

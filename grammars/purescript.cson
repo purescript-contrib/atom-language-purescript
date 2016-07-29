@@ -383,7 +383,7 @@
     'patterns': [
       {
         'name': 'comment.block.haddock.purescript'
-        'begin': '\\{-\\s*[|^]'
+        'begin': '\\{-\\s*\\|'
         'end': '-\\}'
         'applyEndPatternLast': 1
         'beginCaptures':
@@ -416,7 +416,7 @@
   'comments':
     'patterns': [
       {
-        'begin': '(^[ \\t]+)?(?=--+\\s+[|^])'
+        'begin': '(^[ \\t]+)?(?=--+\\s+\\|)'
         'end': '(?!\\G)'
         'beginCaptures':
           '1':
@@ -424,7 +424,7 @@
         'patterns': [
           {
             'name': 'comment.line.double-dash.haddock.purescript'
-            'begin': '(--+)\\s+([|^])'
+            'begin': '(--+)\\s+(\\|)'
             'end': '\\n'
             'beginCaptures':
               '1':

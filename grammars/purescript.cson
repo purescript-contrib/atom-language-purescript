@@ -382,16 +382,16 @@
   'block_comment':
     'patterns': [
       {
-        'name': 'comment.block.haddock.purescript'
+        'name': 'comment.block.documentation.purescript'
         'begin': '\\{-\\s*\\|'
         'end': '-\\}'
         'applyEndPatternLast': 1
         'beginCaptures':
           '0':
-            'name': 'punctuation.definition.comment.haddock.purescript'
+            'name': 'punctuation.definition.comment.documentation.purescript'
         'endCaptures':
           '0':
-            'name': 'punctuation.definition.comment.haddock.purescript'
+            'name': 'punctuation.definition.comment.documentation.purescript'
         'patterns': [
           {
             'include': '#block_comment'
@@ -423,14 +423,14 @@
             'name': 'punctuation.whitespace.comment.leading.purescript'
         'patterns': [
           {
-            'name': 'comment.line.double-dash.haddock.purescript'
+            'name': 'comment.line.double-dash.documentation.purescript'
             'begin': '(--+)\\s+(\\|)'
             'end': '\\n'
             'beginCaptures':
               '1':
                 'name': 'punctuation.definition.comment.purescript'
               '2':
-                'name': 'punctuation.definition.comment.haddock.purescript'
+                'name': 'punctuation.definition.comment.documentation.purescript'
           }
         ]
       }

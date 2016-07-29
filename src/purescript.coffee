@@ -317,14 +317,14 @@ purescriptGrammar =
   repository:
     block_comment:
       patterns: [
-          name: 'comment.block.haddock'
+          name: 'comment.block.documentation'
           begin: /\{-\s*\|/
           end: /-\}/
           applyEndPatternLast: 1
           beginCaptures:
-            0: name: 'punctuation.definition.comment.haddock'
+            0: name: 'punctuation.definition.comment.documentation'
           endCaptures:
-            0: name: 'punctuation.definition.comment.haddock'
+            0: name: 'punctuation.definition.comment.documentation'
           patterns: [
               include: '#block_comment'
           ]
@@ -346,12 +346,12 @@ purescriptGrammar =
           beginCaptures:
             1: name: 'punctuation.whitespace.comment.leading'
           patterns: [
-              name: 'comment.line.double-dash.haddock'
+              name: 'comment.line.double-dash.documentation'
               begin: /(--+)\s+(\|)/
               end: /\n/
               beginCaptures:
                 1: name: 'punctuation.definition.comment'
-                2: name: 'punctuation.definition.comment.haddock'
+                2: name: 'punctuation.definition.comment.documentation'
           ]
         ,
           ###

@@ -33,7 +33,7 @@ purescriptGrammar =
     className: /{classNameOne}(?:\.{classNameOne})*/
     operatorChar: /[\p{S}\p{P}&&[^(),;\[\]`{}_"']]/
     ###
-    In case this regex seems overly general, note that Haskell
+    In case this regex seems overly general, note that PureScript
     permits the definition of new operators which can be nearly any string
     of punctuation characters, such as $%^&*.
     ###
@@ -60,7 +60,7 @@ purescriptGrammar =
     classConstraint: concat /({className})\s+/,
       list('classConstraint',/{className}|{functionName}/,/\s+/)
     functionTypeDeclaration:
-      concat list('functionTypeDeclaration',/{functionName}|{operatorFun}/,/,/),
+      concat list('functionTypeDeclaration',/{functionName}/,/,/),
         /\s*(::|∷ )/
     ctorArgs: ///
       (?:
@@ -84,8 +84,8 @@ purescriptGrammar =
         2: name: 'punctuation.definition.entity'
       ###
       In case this regex seems unusual for an infix operator, note
-      that Haskell allows any ordinary function application (elem 4 [1..10])
-      to be rewritten as an infix expression (4 `elem` [1..10]).
+      that PureScript allows any ordinary function application (elem 4 (1..10))
+      to be rewritten as an infix expression (4 `elem` (1..10)).
       ###
     ,
       name: 'meta.declaration.module'
@@ -317,14 +317,14 @@ purescriptGrammar =
   repository:
     block_comment:
       patterns: [
-          name: 'comment.block.haddock'
-          begin: /\{-\s*[|^]/
+          name: 'comment.block.documentation'
+          begin: /\{-\s*\|/
           end: /-\}/
           applyEndPatternLast: 1
           beginCaptures:
-            0: name: 'punctuation.definition.comment.haddock'
+            0: name: 'punctuation.definition.comment.documentation'
           endCaptures:
-            0: name: 'punctuation.definition.comment.haddock'
+            0: name: 'punctuation.definition.comment.documentation'
           patterns: [
               include: '#block_comment'
           ]
@@ -341,17 +341,17 @@ purescriptGrammar =
       ]
     comments:
       patterns: [
-          begin: /({maybeBirdTrack}[ \t]+)?(?=--+\s+[|^])/
+          begin: /({maybeBirdTrack}[ \t]+)?(?=--+\s+\|)/
           end: /(?!\G)/
           beginCaptures:
             1: name: 'punctuation.whitespace.comment.leading'
           patterns: [
-              name: 'comment.line.double-dash.haddock'
-              begin: /(--+)\s+([|^])/
+              name: 'comment.line.double-dash.documentation'
+              begin: /(--+)\s+(\|)/
               end: /\n/
               beginCaptures:
                 1: name: 'punctuation.definition.comment'
-                2: name: 'punctuation.definition.comment.haddock'
+                2: name: 'punctuation.definition.comment.documentation'
           ]
         ,
           ###
@@ -416,8 +416,6 @@ purescriptGrammar =
           patterns: [
               name: 'entity.name.function'
               match: /{functionName}/
-            ,
-              include: '#infix_op'
           ]
         3: name: 'keyword.other.double-colon'
       patterns: [
@@ -433,8 +431,6 @@ purescriptGrammar =
           patterns: [
               name: 'entity.other.attribute-name'
               match: /{functionName}/
-            ,
-              include: '#infix_op'
           ]
         2: name: 'keyword.other.double-colon'
       patterns: [

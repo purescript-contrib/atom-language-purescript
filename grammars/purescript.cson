@@ -90,6 +90,28 @@
     ]
   }
   {
+    'name': 'meta.foreign.data.purescript'
+    'begin': '^(\\s*)(foreign)\\s+(import)\\s+(data)\\s+([\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)\\s*(::|∷)'
+    'end': '^(?!\\1[ \\t]|[ \\t]*$)'
+    'contentName': 'meta.kind-signature.purescript'
+    'beginCaptures':
+      '2':
+        'name': 'keyword.other.purescript'
+      '3':
+        'name': 'keyword.other.purescript'
+      '4':
+        'name': 'keyword.other.purescript'
+      '5':
+        'name': 'entity.name.type.purescript'
+      '6':
+        'name': 'keyword.other.double-colon.purescript'
+    'patterns': [
+      {
+        'include': '#kind_signature'
+      }
+    ]
+  }
+  {
     'name': 'meta.foreign.purescript'
     'begin': '^(\\s*)(foreign)\\s+(import)\\s+(?:(?:(?<functionTypeDeclaration>(?:(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.)?[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)(?:\\s*(?:,)\\s*\\g<functionTypeDeclaration>)?))(?:\\s*(::|∷ )))?'
     'end': '^(?!\\1[ \\t]|[ \\t]*$)'
@@ -561,6 +583,25 @@
             'include': '#type_signature'
           }
         ]
+      }
+    ]
+  'kind_signature':
+    'patterns': [
+      {
+        'name': 'keyword.other.star.purescript'
+        'match': '\\*'
+      }
+      {
+        'name': 'keyword.other.exclaimation-point.purescript'
+        'match': '!'
+      }
+      {
+        'name': 'keyword.other.pound-sign.purescript'
+        'match': '#'
+      }
+      {
+        'name': 'keyword.other.arrow.purescript'
+        'match': '->|→'
       }
     ]
   'type_signature':

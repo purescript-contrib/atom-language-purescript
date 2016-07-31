@@ -129,9 +129,23 @@ purescriptGrammar =
           include: '#type_signature'
       ]
     ,
+      name: 'meta.foreign.data'
+      begin: /^(\s*)(foreign)\s+(import)\s+(data)\s+({classNameOne})\s*(::|∷)/
+      end: /{indentBlockEnd}/
+      contentName: 'meta.kind-signature'
+      beginCaptures:
+        2: name: 'keyword.other'
+        3: name: 'keyword.other'
+        4: name: 'keyword.other'
+        5: name: 'entity.name.type'
+        6: name: 'keyword.other.double-colon'
+      patterns:[
+          include: '#kind_signature'
+      ]
+    ,
       name: 'meta.foreign'
       # functionTypeDeclaration so it can be wrapped to the next line without losing most highlighting
-      begin: /{maybeBirdTrack}(\s*)(foreign)\s+(import)\s+{functionTypeDeclaration}?/
+      begin: /^(\s*)(foreign)\s+(import)\s+{functionTypeDeclaration}?/
       end: /{indentBlockEnd}/
       contentName: 'meta.type-signature'
       beginCaptures:
@@ -435,6 +449,20 @@ purescriptGrammar =
         2: name: 'keyword.other.double-colon'
       patterns: [
           include: '#type_signature'
+      ]
+    kind_signature:
+      patterns: [
+          name: 'keyword.other.star'
+          match: /\*/
+        ,
+          name: 'keyword.other.exclaimation-point'
+          match: /!/
+        ,
+          name: 'keyword.other.pound-sign'
+          match: /#/
+        ,
+          name: 'keyword.other.arrow'
+          match: /->|→/
       ]
     type_signature:
       patterns: [

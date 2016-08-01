@@ -262,7 +262,7 @@
     'match': '\\b(derive|where|data|type|newtype|infix[lr]?|foreign)(?!\')\\b'
   }
   {
-    'name': 'invalid.illegal.typed-hole.purescript'
+    'name': 'entity.name.function.typed-hole.purescript'
     'match': '\\?(?:[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*|[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)'
   }
   {

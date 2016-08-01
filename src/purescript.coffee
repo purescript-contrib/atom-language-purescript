@@ -239,7 +239,7 @@ purescriptGrammar =
       name: 'keyword.other'
       match: /\b(derive|where|data|type|newtype|infix[lr]?|foreign)(?!')\b/
     ,
-      name: 'invalid.illegal.typed-hole'
+      name: 'entity.name.function.typed-hole'
       match: /\?(?:{functionNameOne}|{classNameOne})/
     ,
       name: 'storage.type'

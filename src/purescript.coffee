@@ -305,6 +305,21 @@ purescriptGrammar =
         2: name: 'keyword.other.double-colon'
         3: {name: 'meta.type-signature', patterns: [include: '#type_signature']}
     ,
+      begin: ///
+        ^
+        ( \s* )
+        (?: ( :: | ∷ ) )
+        ///
+      beginCaptures:
+        2: name: 'keyword.other.double-colon'
+      end: ///
+        ^
+        (?! \1 {indentChar}* | {indentChar}* $ )
+        ///
+      patterns: [
+          include: '#type_signature'
+      ]
+    ,
       include: '#data_ctor'
     ,
       include: '#comments'
@@ -414,7 +429,13 @@ purescriptGrammar =
       match: /(?:{className}\.)*{className}\.?/
     function_type_declaration:
       name: 'meta.function.type-declaration'
-      begin: /^(\s*)({functionNameOne})\s*(?:(::|∷)(?!.*<-)|$)/
+      begin: ///
+        ^
+        ( \s* )
+        ( {functionNameOne} )
+        \s*
+        (?: ( :: | ∷ ) (?! .* <- ) )
+        ///
       end: /{indentBlockEnd}/
       contentName: 'meta.type-signature'
       beginCaptures:

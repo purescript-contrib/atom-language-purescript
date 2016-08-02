@@ -365,6 +365,18 @@
         ]
   }
   {
+    'begin': '^(\\s*)(?:(::|∷))'
+    'beginCaptures':
+      '2':
+        'name': 'keyword.other.double-colon.purescript'
+    'end': '^(?!\\1[ \\t]*|[ \\t]*$)'
+    'patterns': [
+      {
+        'include': '#type_signature'
+      }
+    ]
+  }
+  {
     'include': '#data_ctor'
   }
   {
@@ -527,7 +539,7 @@
     'patterns': [
       {
         'name': 'meta.function.type-declaration.purescript'
-        'begin': '^(\\s*)([\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)\\s*(?:(::|∷)(?!.*<-)|$)'
+        'begin': '^(\\s*)([\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)\\s*(?:(::|∷)(?!.*<-))'
         'end': '^(?!\\1[ \\t]|[ \\t]*$)'
         'contentName': 'meta.type-signature.purescript'
         'beginCaptures':

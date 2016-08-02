@@ -60,8 +60,7 @@ purescriptGrammar =
     classConstraint: concat /({className})\s+/,
       list('classConstraint',/{className}|{functionName}/,/\s+/)
     functionTypeDeclaration:
-      concat list('functionTypeDeclaration',/{functionName}/,/,/),
-        /\s*(::|∷ )/
+      /({functionNameOne})\s*(::|∷)/
     ctorArgs: ///
       (?:
       {className}     #proper type
@@ -130,7 +129,7 @@ purescriptGrammar =
       ]
     ,
       name: 'meta.foreign.data'
-      begin: /^(\s*)(foreign)\s+(import)\s+(data)\s+({classNameOne})\s*(::|∷)/
+      begin: /^(\s*)(foreign)\s+(import)\s+(data)\s+({classNameOne})/
       end: /{indentBlockEnd}/
       contentName: 'meta.kind-signature'
       beginCaptures:
@@ -139,25 +138,23 @@ purescriptGrammar =
         4: name: 'keyword.other'
         5: name: 'entity.name.type'
         6: name: 'keyword.other.double-colon'
-      patterns:[
+      patterns: [
+          include: '#double_colon'
+        ,
           include: '#kind_signature'
       ]
     ,
       name: 'meta.foreign'
-      # functionTypeDeclaration so it can be wrapped to the next line without losing most highlighting
-      begin: /^(\s*)(foreign)\s+(import)\s+{functionTypeDeclaration}?/
+      begin: /^(\s*)(foreign)\s+(import)\s+({functionNameOne})/
       end: /{indentBlockEnd}/
       contentName: 'meta.type-signature'
       beginCaptures:
         2: name: 'keyword.other'
         3: name: 'keyword.other'
-        4:
-          patterns: [
-              name: 'entity.name.function'
-              match: /{functionName}/
-          ]
-        5: name: 'keyword.other.double-colon'
-      patterns:[
+        4: name: 'entity.name.function'
+      patterns: [
+          include: '#double_colon'
+        ,
           include: '#type_signature'
       ]
     ,
@@ -308,11 +305,6 @@ purescriptGrammar =
         2: name: 'keyword.other.double-colon'
         3: {name: 'meta.type-signature', patterns: [include: '#type_signature']}
     ,
-      match: '(::|∷)((?:{className}|{functionName}|\\->|=>|[→⇒()\\[\\]]|\\s)*)'
-      captures:
-        1: name: 'keyword.other.double-colon'
-        2: {name: 'meta.type-signature', patterns: [include: '#type_signature']}
-    ,
       include: '#data_ctor'
     ,
       include: '#comments'
@@ -422,17 +414,15 @@ purescriptGrammar =
       match: /(?:{className}\.)*{className}\.?/
     function_type_declaration:
       name: 'meta.function.type-declaration'
-      begin: concat /{maybeBirdTrack}(\s*)/,/{functionTypeDeclaration}/,/(?!.*<-)/
+      begin: /^(\s*)({functionNameOne})\s*(?:(::|∷)(?!.*<-)|$)/
       end: /{indentBlockEnd}/
       contentName: 'meta.type-signature'
       beginCaptures:
-        2:
-          patterns: [
-              name: 'entity.name.function'
-              match: /{functionName}/
-          ]
+        2: name: 'entity.name.function'
         3: name: 'keyword.other.double-colon'
       patterns: [
+          include: '#double_colon'
+        ,
           include: '#type_signature'
       ]
     record_field_declaration:
@@ -509,6 +499,9 @@ purescriptGrammar =
     generic_type:
       name: 'variable.other.generic-type'
       match: /\b{functionName}/
+    double_colon:
+      name: 'keyword.other.double-colon'
+      match: ///(?: :: | ∷ )///
     class_constraint:
       name: 'meta.class-constraint'
       match: /{classConstraint}/

@@ -11,6 +11,9 @@
   'Derive':
     'prefix': 'derive'
     'body': 'derive instance ${1:name} :: ${2:Class} ${3:Type}'
+  'Do':
+    'prefix': 'do'
+    'body': 'do\n  '
   'Forall':
     'prefix': 'forall'
     'body': 'forall ${1:a}.'

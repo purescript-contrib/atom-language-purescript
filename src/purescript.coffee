@@ -199,19 +199,7 @@ purescriptGrammar =
           captures:
             0: name: 'punctuation.separator.pipe'
         ,
-          name: 'meta.declaratyion.type.data.record.block'
-          begin: /\{/
-          beginCaptures:
-            0: name: 'keyword.operator.record.begin'
-          end: /\}/
-          endCaptures:
-            0: name: 'keyword.operator.record.end'
-          patterns: [
-              name: 'punctuation.separator.comma'
-              match: /,/
-            ,
-              include: '#record_field_declaration'
-          ]
+          include: '#record_types'
       ]
     ,
       name: 'meta.declaration.type.type'
@@ -224,13 +212,15 @@ purescriptGrammar =
           name: 'meta.type-signature'
           patterns: [include: '#type_signature']
       patterns: [
-          include: '#comments'
-        ,
           match: /=/
           captures:
             0: name: 'keyword.operator.assignment'
         ,
           include: '#type_signature'
+        ,
+          include: '#record_types'
+        ,
+          include: '#comments'
       ]
     ,
       name: 'keyword.other'
@@ -363,6 +353,26 @@ purescriptGrammar =
               include: '#block_comment'
           ]
       ]
+    record_types:
+      patterns: [
+        name: 'meta.type.record'
+        begin: '\\{'
+        beginCaptures:
+          0:
+            name: 'keyword.operator.type.record.begin.purescript'
+        end: '\\}'
+        endCaptures:
+          0:
+            name: 'keyword.operator.type.record.end.purescript'
+        patterns: [
+            name: 'punctuation.separator.comma.purescript'
+            match: ','
+          , 
+            include: '#record_field_declaration'
+          ,
+            include: '#comments'
+         ]
+    ]
     comments:
       patterns: [
           begin: /({maybeBirdTrack}[ \t]+)?(?=--+\s+\|)/
@@ -463,6 +473,8 @@ purescriptGrammar =
         2: name: 'keyword.other.double-colon'
       patterns: [
           include: '#type_signature'
+        ,
+          include: '#record_types'
       ]
     kind_signature:
       patterns: [

@@ -205,24 +205,7 @@
             'name': 'punctuation.separator.pipe.purescript'
       }
       {
-        'name': 'meta.declaratyion.type.data.record.block.purescript'
-        'begin': '\\{'
-        'beginCaptures':
-          '0':
-            'name': 'keyword.operator.record.begin.purescript'
-        'end': '\\}'
-        'endCaptures':
-          '0':
-            'name': 'keyword.operator.record.end.purescript'
-        'patterns': [
-          {
-            'name': 'punctuation.separator.comma.purescript'
-            'match': ','
-          }
-          {
-            'include': '#record_field_declaration'
-          }
-        ]
+        'include': '#record_types'
       }
     ]
   }
@@ -243,9 +226,6 @@
         ]
     'patterns': [
       {
-        'include': '#comments'
-      }
-      {
         'match': '='
         'captures':
           '0':
@@ -253,6 +233,12 @@
       }
       {
         'include': '#type_signature'
+      }
+      {
+        'include': '#record_types'
+      }
+      {
+        'include': '#comments'
       }
     ]
   }
@@ -437,6 +423,32 @@
         ]
       }
     ]
+  'record_types':
+    'patterns': [
+      {
+        'begin': '\\{'
+        'beginCaptures':
+          '0':
+            'name': 'keyword.operator.type.record.begin.purescript'
+        'end': '\\}'
+        'endCaptures':
+          '0':
+            'name': 'keyword.operator.type.record.end.purescript'
+        'name': 'meta.type.record.purescript'
+        'patterns': [
+          {
+            'name': 'punctuation.separator.comma.purescript'
+            'match': ','
+          }
+          {
+            'include': '#record_field_declaration'
+          }
+          {
+            'include': '#comments'
+          }
+        ]
+      }
+    ]
   'comments':
     'patterns': [
       {
@@ -581,6 +593,9 @@
         'patterns': [
           {
             'include': '#type_signature'
+          }
+          {
+            'include': '#record_types'
           }
         ]
       }

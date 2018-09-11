@@ -256,7 +256,7 @@
   }
   {
     'name': 'keyword.control.purescript'
-    'match': '\\b(do|if|then|else|case|of|let|in)(?!\')\\b'
+    'match': '\\b(do|ado|if|then|else|case|of|let|in)(?!\')\\b'
   }
   {
     'name': 'constant.numeric.float.purescript'

@@ -233,7 +233,7 @@ purescriptGrammar =
       match: /\b(data|type|newtype)(?!')\b/
     ,
       name: 'keyword.control'
-      match: /\b(do|if|then|else|case|of|let|in)(?!')\b/
+      match: /\b(do|ado|if|then|else|case|of|let|in)(?!')\b/
     ,
       name: 'constant.numeric.float'
       match: /\b([0-9]+\.[0-9]+([eE][+-]?[0-9]+)?|[0-9]+[eE][+-]?[0-9]+)\b/
@@ -367,7 +367,7 @@ purescriptGrammar =
         patterns: [
             name: 'punctuation.separator.comma.purescript'
             match: ','
-          , 
+          ,
             include: '#record_field_declaration'
           ,
             include: '#comments'

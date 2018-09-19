@@ -74,11 +74,13 @@
   }
   {
     'name': 'meta.declaration.instance.purescript'
-    'begin': '\\b(instance)(?!\')\\b'
+    'begin': '\\b(else\\s+)?(instance)(?!\')\\b'
     'end': '\\b(where)\\b|$'
     'contentName': 'meta.type-signature.purescript'
     'beginCaptures':
       '1':
+        'name': 'keyword.other.purescript'
+      '2':
         'name': 'keyword.other.purescript'
     'endCaptures':
       '1':

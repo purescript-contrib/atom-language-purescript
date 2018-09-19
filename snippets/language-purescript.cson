@@ -1,4 +1,7 @@
 '.source.purescript':
+  'ADo':
+    'prefix': 'ado'
+    'body': 'ado\n  '
   'Case':
     'prefix': 'case'
     'body': 'case ${1:expression} of\n  ${2:pattern} -> ${3:expression}'

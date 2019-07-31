@@ -237,14 +237,14 @@ purescriptGrammar =
       match: /\b(do|ado|if|then|else|case|of|let|in)(?!')\b/
     ,
       name: 'constant.numeric.float'
-      match: /\b((([0-9]+_?)+[0-9]+|[0-9]+)\.[0-9]+([eE][+-]?[0-9]+)?|[0-9]+[eE][+-]?[0-9]+)\b/
+      match: /\b(([0-9]+_?)*[0-9]+\.[0-9]+([eE][+-]?[0-9]+)?|[0-9]+[eE][+-]?[0-9]+)\b/
       # Floats are always decimal
     ,
       name: 'constant.language.boolean'
       match: /\b(true|false)\b/
     ,
       name: 'constant.numeric'
-      match: /\b(([0-9]+_?)+[0-9]+|[0-9]+|0([xX][0-9a-fA-F]+|[oO][0-7]+))\b/
+      match: /\b(([0-9]+_?)*[0-9]+|0([xX][0-9a-fA-F]+|[oO][0-7]+))\b/
     ,
       name: 'string.quoted.triple'
       begin: /"""/

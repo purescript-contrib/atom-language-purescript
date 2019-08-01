@@ -262,7 +262,7 @@
   }
   {
     'name': 'constant.numeric.float.purescript'
-    'match': '\\b([0-9]+\\.[0-9]+([eE][+-]?[0-9]+)?|[0-9]+[eE][+-]?[0-9]+)\\b'
+    'match': '\\b(([0-9]+_?)*[0-9]+\\.[0-9]+([eE][+-]?[0-9]+)?|[0-9]+[eE][+-]?[0-9]+)\\b'
   }
   {
     'name': 'constant.language.boolean.purescript'
@@ -270,7 +270,7 @@
   }
   {
     'name': 'constant.numeric.purescript'
-    'match': '\\b([0-9]+|0([xX][0-9a-fA-F]+|[oO][0-7]+))\\b'
+    'match': '\\b(([0-9]+_?)*[0-9]+|0([xX][0-9a-fA-F]+|[oO][0-7]+))\\b'
   }
   {
     'name': 'string.quoted.triple.purescript'

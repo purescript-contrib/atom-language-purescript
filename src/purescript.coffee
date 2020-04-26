@@ -245,6 +245,7 @@ purescriptGrammar =
             (?:\\b[0-9]+(\\.)[0-9]+[eE][+-]?[0-9]+\\b)| # 1.1E+3
             (?:\\b[0-9]+[eE][+-]?[0-9]+\\b)|            # 1E+3
             (?:\\b[0-9]+(\\.)[0-9]+\\b)|                # 1.1
+            (?:\\b[0-9]+\\b(?!\\.))                     # 1
           )(?!\\$)
         '''
       captures:
@@ -266,6 +267,7 @@ purescriptGrammar =
       name: 'constant.language.boolean'
       match: /\b(true|false)\b/
     ,
+      # I think this now just matches when underscores are present
       name: 'constant.numeric'
       match: /\b(([0-9]+_?)*[0-9]+|0([xX][0-9a-fA-F]+|[oO][0-7]+))\b/
     ,

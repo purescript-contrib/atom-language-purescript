@@ -236,9 +236,32 @@ purescriptGrammar =
       name: 'keyword.control'
       match: /\b(do|ado|if|then|else|case|of|let|in)(?!')\b/
     ,
-      name: 'constant.numeric.float'
-      match: /\b(([0-9]+_?)*[0-9]+\.[0-9]+([eE][+-]?[0-9]+)?|[0-9]+[eE][+-]?[0-9]+)\b/
-      # Floats are always decimal
+      name: 'constant.numeric.hex.purescript',
+      match: '\\b(?<!\\$)0(x|X)[0-9a-fA-F]+\\b(?!\\$)'
+    ,
+      name: 'constant.numeric.decimal.purescript'
+      match: '''(?x)
+          (?<!\\$)(?:
+            (?:\\b[0-9]+(\\.)[0-9]+[eE][+-]?[0-9]+\\b)| # 1.1E+3
+            (?:\\b[0-9]+[eE][+-]?[0-9]+\\b)|            # 1E+3
+            (?:\\b[0-9]+(\\.)[0-9]+\\b)|                # 1.1
+          )(?!\\$)
+        '''
+      captures:
+        0:
+          name: 'constant.numeric.decimal.purescript'
+        1:
+          name: 'meta.delimiter.decimal.period.purescript'
+        2:
+          name: 'meta.delimiter.decimal.period.purescript'
+        3:
+          name: 'meta.delimiter.decimal.period.purescript'
+        4:
+          name: 'meta.delimiter.decimal.period.purescript'
+        5:
+          name: 'meta.delimiter.decimal.period.purescript'
+        6:
+          name: 'meta.delimiter.decimal.period.purescript'
     ,
       name: 'constant.language.boolean'
       match: /\b(true|false)\b/

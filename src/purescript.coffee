@@ -88,7 +88,7 @@ purescriptGrammar =
       ###
     ,
       name: 'meta.declaration.module'
-      begin: /\b(module)(?!')\b/
+      begin: /^\s*\b(module)(?!')\b/
       end: /(where)/
       beginCaptures:
         1: name: 'keyword.other'
@@ -106,7 +106,7 @@ purescriptGrammar =
       ]
     ,
       name: 'meta.declaration.typeclass'
-      begin: /\b(class)(?!')\b/
+      begin: /^\s*\b(class)(?!')\b/
       end: /\b(where)\b|$/
       beginCaptures:
         1: name: 'storage.type.class'
@@ -116,13 +116,14 @@ purescriptGrammar =
         include: '#type_signature'
       ]
     ,
-      name: 'meta.declaration.instance'
-      begin: /\b(else\s+)?(instance)(?!')\b/
+      name: 'meta.declaration.instance'      
+      begin: /^\s*\b(else\s+)?(derive\s+)?(instance)(?!')\b/
       end: /\b(where)\b|$/
       contentName: 'meta.type-signature'
       beginCaptures:
         1: name: 'keyword.other'
         2: name: 'keyword.other'
+        3: name: 'keyword.other'
       endCaptures:
         1: name: 'keyword.other'
       patterns: [
@@ -160,7 +161,7 @@ purescriptGrammar =
       ]
     ,
       name: 'meta.import'
-      begin: /\b(import)(?!')\b/
+      begin: /^\s*\b(import)(?!')\b/
       end: /($|(?=--))/
       beginCaptures:
         1: name: 'keyword.other'
@@ -224,17 +225,20 @@ purescriptGrammar =
           include: '#comments'
       ]
     ,
-      name: 'keyword.other'
-      match: /\b(derive|where|data|type|newtype|infix[lr]?|foreign)(?!')\b/
+      name: 'keyword.other'      
+      match: /^\s*\b(derive|where|data|type|newtype|infix[lr]?|foreign(\s+import)?(\s+data)?)(?!')\b/
     ,
       name: 'entity.name.function.typed-hole'
       match: /\?(?:{functionNameOne}|{classNameOne})/
     ,
       name: 'storage.type'
-      match: /\b(data|type|newtype)(?!')\b/
+      match: /^\s*\b(data|type|newtype)(?!')\b/
     ,
       name: 'keyword.control'
-      match: /\b(do|ado|if|then|else|case|of|let|in)(?!')\b/
+      # match only if a keyword is not followed by:
+      # ' - names with prime symbol
+      #  `:` or `=` -  records define/update
+      match: /\b(do|ado|if|then|else|case|of|let|in)(?!('|\s*(:|=)))\b/
     ,
       name: 'constant.numeric.hex.purescript',
       match: '\\b(?<!\\$)0(x|X)[0-9a-fA-F]+\\b(?!\\$)'

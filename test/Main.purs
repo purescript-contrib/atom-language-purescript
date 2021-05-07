@@ -49,7 +49,7 @@ class Functor v <= Mountable vnode where
 
 
 derive instance newtypeMySub :: Newtype (MySub vnode msg) _
-
+derive newtype instance semiringScore :: Semiring Score
 
 derive instance genericCmd :: Generic PhonerCmd _
 instance encodeCmd :: EncodeJson PhonerCmd where
@@ -81,6 +81,7 @@ else instance showBoolean :: MyShow Boolean where
 else instance showA :: MyShow a where
   myShow _ = "Invalid"
 
+else newtype instance showA :: MyShow a where
 
 -- Records with fields that are reserved words
 

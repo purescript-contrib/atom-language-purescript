@@ -117,13 +117,14 @@ purescriptGrammar =
       ]
     ,
       name: 'meta.declaration.instance'      
-      begin: /^\s*\b(else\s+)?(derive\s+)?(instance)(?!')\b/
+      begin: /^\s*\b(else\s+)?(derive\s+)?(newtype\s+)?(instance)(?!')\b/
       end: /\b(where)\b|$/
       contentName: 'meta.type-signature'
       beginCaptures:
         1: name: 'keyword.other'
         2: name: 'keyword.other'
         3: name: 'keyword.other'
+        4: name: 'keyword.other'
       endCaptures:
         1: name: 'keyword.other'
       patterns: [

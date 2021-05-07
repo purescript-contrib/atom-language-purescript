@@ -74,7 +74,7 @@
   }
   {
     'name': 'meta.declaration.instance.purescript'
-    'begin': '^\\s*\\b(else\\s+)?(derive\\s+)?(instance)(?!\')\\b'
+    'begin': '^\\s*\\b(else\\s+)?(derive\\s+)?(newtype\\s+)?(instance)(?!\')\\b'
     'end': '\\b(where)\\b|$'
     'contentName': 'meta.type-signature.purescript'
     'beginCaptures':
@@ -83,6 +83,8 @@
       '2':
         'name': 'keyword.other.purescript'
       '3':
+        'name': 'keyword.other.purescript'
+      '4':
         'name': 'keyword.other.purescript'
     'endCaptures':
       '1':

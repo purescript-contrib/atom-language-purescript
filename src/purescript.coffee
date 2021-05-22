@@ -61,6 +61,10 @@ purescriptGrammar =
       list('classConstraint',/{className}|{functionName}/,/\s+/)
     functionTypeDeclaration:
       /({functionNameOne})\s*(::|∷)/
+    # record field may be quoted string
+    recordFieldQuoted: /"(?:{className}|{functionNameOne})"/
+    recordFieldDeclaration:
+      /((?:{recordFieldQuoted})|{functionNameOne})\s*(::|∷)/
     ctorArgs: ///
       (?:
       {className}     #proper type
@@ -74,281 +78,67 @@ purescriptGrammar =
     indentChar: /[ \t]/
     indentBlockEnd: /^(?!\1{indentChar}|{indentChar}*$)/
     maybeBirdTrack: /^/
+    doubleColon: ///(?: :: | ∷ )///
 
   patterns: [
-      name: 'keyword.operator.function.infix'
-      match: /(`){functionName}(`)/
-      captures:
-        1: name: 'punctuation.definition.entity'
-        2: name: 'punctuation.definition.entity'
-      ###
-      In case this regex seems unusual for an infix operator, note
-      that PureScript allows any ordinary function application (elem 4 (1..10))
-      to be rewritten as an infix expression (4 `elem` (1..10)).
-      ###
+      include: '#module_declaration'
     ,
-      name: 'meta.declaration.module'
-      begin: /^\s*\b(module)(?!')\b/
-      end: /(where)/
-      beginCaptures:
-        1: name: 'keyword.other'
-      endCaptures:
-        1: name: 'keyword.other'
-      patterns: [
-          include: '#comments'
-        ,
-          include: '#module_name'
-        ,
-          include: '#module_exports'
-        ,
-          name: 'invalid'
-          match: /[a-z]+/
-      ]
+      include: '#module_import'
     ,
-      name: 'meta.declaration.typeclass'
-      begin: /^\s*\b(class)(?!')\b/
-      end: /\b(where)\b|$/
-      beginCaptures:
-        1: name: 'storage.type.class'
-      endCaptures:
-        1: name: 'keyword.other'
-      patterns: [
-        include: '#type_signature'
-      ]
+      include: '#type_kind_signature'
     ,
-      name: 'meta.declaration.instance'      
-      begin: /^\s*\b(else\s+)?(derive\s+)?(newtype\s+)?(instance)(?!')\b/
-      end: /\b(where)\b|$/
-      contentName: 'meta.type-signature'
-      beginCaptures:
-        1: name: 'keyword.other'
-        2: name: 'keyword.other'
-        3: name: 'keyword.other'
-        4: name: 'keyword.other'
-      endCaptures:
-        1: name: 'keyword.other'
-      patterns: [
-          include: '#type_signature'
-      ]
+      include: '#row_type_declaration'
     ,
-      name: 'meta.foreign.data'
-      begin: /^(\s*)(foreign)\s+(import)\s+(data)\s+({classNameOne})/
-      end: /{indentBlockEnd}/
-      contentName: 'meta.kind-signature'
-      beginCaptures:
-        2: name: 'keyword.other'
-        3: name: 'keyword.other'
-        4: name: 'keyword.other'
-        5: name: 'entity.name.type'
-        6: name: 'keyword.other.double-colon'
-      patterns: [
-          include: '#double_colon'
-        ,
-          include: '#kind_signature'
-      ]
+      include: '#type_synonym_declaration'
     ,
-      name: 'meta.foreign'
-      begin: /^(\s*)(foreign)\s+(import)\s+({functionNameOne})/
-      end: /{indentBlockEnd}/
-      contentName: 'meta.type-signature'
-      beginCaptures:
-        2: name: 'keyword.other'
-        3: name: 'keyword.other'
-        4: name: 'entity.name.function'
-      patterns: [
-          include: '#double_colon'
-        ,
-          include: '#type_signature'
-      ]
+      # data and newtype
+      include: '#data_type_declaration'
     ,
-      name: 'meta.import'
-      begin: /^\s*\b(import)(?!')\b/
-      end: /($|(?=--))/
-      beginCaptures:
-        1: name: 'keyword.other'
-      patterns: [
-          include: '#module_name'
-        ,
-          include: '#module_exports'
-        ,
-          match: /\b(as|hiding)\b/
-          captures:
-            1: name: 'keyword.other'
-      ]
+      include: '#typeclass_declaration'
     ,
-      name: 'meta.declaration.type.data'
-      begin: /{maybeBirdTrack}(\s)*(data|newtype)\s+({typeDecl})\s*(?=\=|$)/
-      end: /{indentBlockEnd}/
-      beginCaptures:
-        2: name: 'storage.type.data'
-        3:
-          name: 'meta.type-signature'
-          patterns: [include: '#type_signature']
-      patterns: [
-          include: '#comments'
-        ,
-          match: /=/
-          captures:
-            0: name: 'keyword.operator.assignment'
-        ,
-          match: /{ctor}/
-          captures:
-            1: patterns: [include: '#data_ctor']
-            2:
-              name: 'meta.type-signature'
-              patterns: [include: '#type_signature']
-        ,
-          match: /\|/
-          captures:
-            0: name: 'punctuation.separator.pipe'
-        ,
-          include: '#record_types'
-      ]
+      include: '#instance_declaration'
     ,
-      name: 'meta.declaration.type.type'
-      begin: /{maybeBirdTrack}(\s)*(type)\s+({typeDecl})\s*(?=\=|$)/
-      end: /{indentBlockEnd}/
-      contentName: 'meta.type-signature'
-      beginCaptures:
-        2: name: 'storage.type.data'
-        3:
-          name: 'meta.type-signature'
-          patterns: [include: '#type_signature']
-      patterns: [
-          match: /=/
-          captures:
-            0: name: 'keyword.operator.assignment'
-        ,
-          include: '#type_signature'
-        ,
-          include: '#record_types'
-        ,
-          include: '#comments'
-      ]
+      include: '#derive_declaration'
     ,
-      name: 'keyword.other'      
-      match: /^\s*\b(derive|where|data|type|newtype|infix[lr]?|foreign(\s+import)?(\s+data)?)(?!')\b/
+      include: '#infix_op_declaration'
     ,
-      name: 'entity.name.function.typed-hole'
-      match: /\?(?:{functionNameOne}|{classNameOne})/
+      include: '#foreign_import_data'
     ,
-      name: 'storage.type'
-      match: /^\s*\b(data|type|newtype)(?!')\b/
-    ,
-      name: 'keyword.control'
-      # match only if a keyword is not followed by:
-      # ' - names with prime symbol
-      #  `:` or `=` -  records define/update
-      match: /\b(do|ado|if|then|else|case|of|let|in)(?!('|\s*(:|=)))\b/
-    ,
-      name: 'constant.numeric.hex.purescript',
-      match: '\\b(?<!\\$)0(x|X)[0-9a-fA-F]+\\b(?!\\$)'
-    ,
-      name: 'constant.numeric.decimal.purescript'
-      match: '''(?x)
-          (?<!\\$)(?:
-            (?:\\b[0-9]+(\\.)[0-9]+[eE][+-]?[0-9]+\\b)| # 1.1E+3
-            (?:\\b[0-9]+[eE][+-]?[0-9]+\\b)|            # 1E+3
-            (?:\\b[0-9]+(\\.)[0-9]+\\b)|                # 1.1
-            (?:\\b[0-9]+\\b(?!\\.))                     # 1
-          )(?!\\$)
-        '''
-      captures:
-        0:
-          name: 'constant.numeric.decimal.purescript'
-        1:
-          name: 'meta.delimiter.decimal.period.purescript'
-        2:
-          name: 'meta.delimiter.decimal.period.purescript'
-        3:
-          name: 'meta.delimiter.decimal.period.purescript'
-        4:
-          name: 'meta.delimiter.decimal.period.purescript'
-        5:
-          name: 'meta.delimiter.decimal.period.purescript'
-        6:
-          name: 'meta.delimiter.decimal.period.purescript'
-    ,
-      name: 'constant.language.boolean'
-      match: /\b(true|false)\b/
-    ,
-      # I think this now just matches when underscores are present
-      name: 'constant.numeric'
-      match: /\b(([0-9]+_?)*[0-9]+|0([xX][0-9a-fA-F]+|[oO][0-7]+))\b/
-    ,
-      name: 'string.quoted.triple'
-      begin: /"""/
-      end: /"""/
-      beginCaptures:
-        0: name: 'punctuation.definition.string.begin'
-      endCaptures:
-        0: name: 'punctuation.definition.string.end'
-    ,
-      name: 'string.quoted.double'
-      begin: /"/
-      end: /"/
-      beginCaptures:
-        0: name: 'punctuation.definition.string.begin'
-      endCaptures:
-        0: name: 'punctuation.definition.string.end'
-      patterns: [
-          include: '#characters'
-        ,
-          begin: /\\\s/
-          end: /\\/
-          beginCaptures:
-            0: name: 'markup.other.escape.newline.begin'
-          endCaptures:
-            0: name: 'markup.other.escape.newline.end'
-          patterns: [
-              match: /\S+/
-              name: 'invalid.illegal.character-not-allowed-here'
-          ]
-      ]
-    ,
-      name: 'markup.other.escape.newline'
-      match: /\\$/
-    ,
-      name: 'string.quoted.single'
-      match: /(')({character})(')/
-      captures:
-        1: name: 'punctuation.definition.string.begin'
-        2:
-          patterns:[
-            include: '#characters'
-          ]
-        # {character} macro has 4 capture groups, here 3-6
-        7: name: 'punctuation.definition.string.end'
+      include: '#foreign_import'
     ,
       include: '#function_type_declaration'
     ,
-      # Note recursive regex matching nested parens
-      match: '\\((?<paren>(?:[^()]|\\(\\g<paren>\\))*)(::|∷)(?<paren2>(?:[^()]|\\(\\g<paren2>\\))*)\\)'
-      captures:
-        1: patterns: [include: '$self']
-        2: name: 'keyword.other.double-colon'
-        3: {name: 'meta.type-signature', patterns: [include: '#type_signature']}
+      include: '#typed_hole'
     ,
-      begin: ///
-        ^
-        ( \s* )
-        (?: ( :: | ∷ ) )
-        ///
-      beginCaptures:
-        2: name: 'keyword.other.double-colon'
-      end: ///
-        ^
-        (?! \1 {indentChar}* | {indentChar}* $ )
-        ///
-      patterns: [
-          include: '#type_signature'
-      ]
+      include: '#keywords_orphan'
+    ,
+      include: "#control_keywords"
+    ,
+      include: '#function_infix'
     ,
       include: '#data_ctor'
     ,
-      include: '#comments'
-    ,
       include: '#infix_op'
+    ,
+      include: '#constants_numeric_decimal'
+    ,
+      include: '#constant_numeric'
+    ,
+      include: '#constant_boolean'
+    ,
+      include: '#string_single_quoted'
+    ,
+      include: '#string_double_quoted'
+    ,
+      include: '#string_triple_quoted'
+    ,
+      include: '#markup_newline'
+    ,
+      include: '#double_colon_parens'
+    ,
+      include: '#double_colon_orphan'
+    ,
+      include: '#comments'
     ,
       name: 'keyword.other.arrow'
       match: /\<-|-\>/
@@ -360,6 +150,414 @@ purescriptGrammar =
       match: /,/
   ]
   repository:
+    module_declaration:
+      patterns: [
+        name: 'meta.declaration.module'
+        begin: /^\s*\b(module)(?!')\b/
+        end: /(\bwhere\b)/
+        beginCaptures:
+          1: name: 'keyword.other'
+        endCaptures:
+          1: name: 'keyword.other'
+        patterns: [
+            include: '#comments'
+          ,
+            include: '#module_name'
+          ,
+            include: '#module_exports'
+          ,
+            name: 'invalid'
+            match: /[a-z]+/
+        ]
+      ]
+
+    function_infix:
+      patterns: [
+        name: 'keyword.operator.function.infix'
+        match: /(`){functionName}(`)/
+        captures:
+          1: name: 'punctuation.definition.entity'
+          2: name: 'punctuation.definition.entity'
+        ###
+        In case this regex seems unusual for an infix operator, note
+        that PureScript allows any ordinary function application (elem 4 (1..10))
+        to be rewritten as an infix expression (4 `elem` (1..10)).
+        ###
+      ]
+
+    typeclass_declaration:
+      patterns: [
+        name: 'meta.declaration.typeclass'
+        begin: /^\s*\b(class)(?!')\b/
+        end: /(\bwhere\b|(?=^\S))/
+        beginCaptures:
+          1: name: 'storage.type.class'
+        endCaptures:
+          1: name: 'keyword.other'
+        patterns: [
+          include: '#type_signature'
+
+        ]
+      ]
+
+    instance_declaration:
+      patterns: [
+        name: 'meta.declaration.instance'
+        begin: /^\s*\b(else\s+)?(newtype\s+)?(instance)(?!')\b/
+        end: /(\bwhere\b|(?=^\S))/
+        contentName: 'meta.type-signature'
+        beginCaptures:
+          1: name: 'keyword.other'
+          2: name: 'keyword.other'
+          3: name: 'keyword.other'
+          4: name: 'keyword.other'
+        endCaptures:
+          1: name: 'keyword.other'
+        patterns: [
+            include: '#type_signature'
+        ]
+      ]
+
+    derive_declaration:
+      patterns: [
+        name: 'meta.declaration.derive'
+        begin: /^\s*\b(derive)(\s+newtype)?(\s+instance)?(?!')\b/
+        end: /^(?=\S)/
+        contentName: 'meta.type-signature'
+        beginCaptures:
+          1: name: 'keyword.other'
+          2: name: 'keyword.other'
+          3: name: 'keyword.other'
+          4: name: 'keyword.other'
+        endCaptures:
+          1: name: 'keyword.other'
+        patterns: [
+            include: '#type_signature'
+        ]
+      ]
+
+    foreign_import_data:
+      patterns: [
+        name: 'meta.foreign.data'
+        begin: /^(\s*)(foreign)\s+(import)\s+(data)(?:\s+({classNameOne})\s*({doubleColon}))?/
+        end: /{indentBlockEnd}/
+        contentName: 'meta.kind-signature'
+        beginCaptures:
+          2: name: 'keyword.other'
+          3: name: 'keyword.other'
+          4: name: 'keyword.other'
+          5: name: 'entity.name.type'
+          6: name: 'keyword.other.double-colon'
+        patterns: [
+          include: '#comments'
+          ,
+          include: '#type_signature'
+        ]
+      ]
+
+    foreign_import:
+      patterns: [
+        name: 'meta.foreign'
+        begin: /^(\s*)(foreign)\s+(import)\s+({functionNameOne})/
+        end: /{indentBlockEnd}/
+        contentName: 'meta.type-signature'
+        beginCaptures:
+          2: name: 'keyword.other'
+          3: name: 'keyword.other'
+          4: name: 'entity.name.function'
+        patterns: [
+            include: '#double_colon'
+          ,
+            include: '#type_signature'
+        ]
+      ]
+
+    module_import:
+      patterns: [
+        name: 'meta.import'
+        begin: /^\s*\b(import)(?!')\b/
+        end: /^(?=\S)/
+        beginCaptures:
+          1: name: 'keyword.other'
+        patterns: [
+            include: '#module_name'
+          ,
+            include: '#comments'
+          ,
+            include: '#module_exports'
+          ,
+            match: /\b(as|hiding)\b/
+            captures:
+              1: name: 'keyword.other'
+        ]
+      ]
+
+    type_kind_signature:
+      patterns: [
+        name: 'meta.declaration.type.data.signature'
+        begin: /{maybeBirdTrack}(data|newtype)\s+({classNameOne})\s*({doubleColon})/
+        end: /(?=^\S)/
+        beginCaptures:
+          1: name: 'storage.type.data'
+          2:
+            name: 'meta.type-signature'
+            patterns: [include: '#type_signature']
+          3: name: 'keyword.other.double-colon'
+        patterns: [
+            include: '#comments'
+            include: '#type_signature'
+          ,
+            match: /=/
+            captures:
+              0: name: 'keyword.operator.assignment'
+          ,
+            match: /{ctor}/
+            captures:
+              1: patterns: [include: '#data_ctor']
+              2:
+                name: 'meta.type-signature'
+                patterns: [include: '#type_signature']
+          ,
+            match: /\|/
+            captures:
+              0: name: 'punctuation.separator.pipe'
+          ,
+            include: '#record_types'
+        ]
+      ]
+
+    data_type_declaration:
+      patterns: [
+        name: 'meta.declaration.type.data'
+        begin: /{maybeBirdTrack}(\s)*(data|newtype)\s+({typeDecl})\s*(?=\=|$)/
+        end: /{indentBlockEnd}/
+        beginCaptures:
+          2: name: 'storage.type.data'
+          3:
+            name: 'meta.type-signature'
+            patterns: [include: '#type_signature']
+        patterns: [
+            include: '#comments'
+          ,
+            match: /=/
+            captures:
+              0: name: 'keyword.operator.assignment'
+          ,
+            match: /{ctor}/
+            captures:
+              1: patterns: [include: '#data_ctor']
+              2:
+                name: 'meta.type-signature'
+                patterns: [include: '#type_signature']
+          ,
+            match: /\|/
+            captures:
+              0: name: 'punctuation.separator.pipe'
+          ,
+            include: '#record_types'
+        ]
+      ]
+
+    type_synonym_declaration:
+      patterns: [
+        name: 'meta.declaration.type.type'
+        begin: /{maybeBirdTrack}(\s)*(type)\s+({typeDecl})\s*(?=\=|$)/
+        end: /{indentBlockEnd}/
+        contentName: 'meta.type-signature'
+        beginCaptures:
+          2: name: 'storage.type.data'
+          3:
+            name: 'meta.type-signature'
+            patterns: [include: '#type_signature']
+        patterns: [
+            match: /=/
+            captures:
+              0: name: 'keyword.operator.assignment'
+          ,
+            include: '#type_signature'
+          ,
+            include: '#row_type'
+          ,
+            include: '#record_types'
+          ,
+            include: '#comments'
+        ]
+      ]
+
+    infix_op_declaration:
+      patterns: [
+        name: 'meta.infix.declaration'
+        begin: /^\b(infix[l|r]?)(?!')\b/
+        end: /($)/
+        beginCaptures:
+          1: name: 'keyword.other'
+        patterns: [
+            include: '#comments'
+          ,
+            include: '#type_name'
+          ,
+            name: 'constant.numeric'
+            match: /\d+/
+          ,
+            match: /({operator})/
+            captures:
+              1: name: 'keyword.other'
+          ,
+            match: /\b(as|type)\b/
+            captures:
+              1: name: 'keyword.other'
+        ]
+      ]
+
+    keywords_orphan:
+      patterns: [
+        name: 'keyword.other'
+        match: /^\s*\b(derive|where|data|type|newtype|foreign(\s+import)?(\s+data)?)(?!')\b/
+      ]
+
+    typed_hole:
+      patterns: [
+        name: 'entity.name.function.typed-hole'
+        match: /\?(?:{functionNameOne}|{classNameOne})/
+      ]
+
+    control_keywords:
+      patterns: [
+        name: 'keyword.control'
+        # match only if a keyword is not followed by:
+        # ' - names with prime symbol
+        #  `:` or `=` -  records define/update
+        match: /\b(do|ado|if|then|else|case|of|let|in)(?!('|\s*(:|=)))\b/
+      ]
+
+    constants_numeric_decimal:
+      patterns: [
+        name: 'constant.numeric.decimal.purescript'
+        match: '''(?x)
+            (?<!\\$)(?:
+              (?:\\b[0-9]+(\\.)[0-9]+[eE][+-]?[0-9]+\\b)| # 1.1E+3
+              (?:\\b[0-9]+[eE][+-]?[0-9]+\\b)|            # 1E+3
+              (?:\\b[0-9]+(\\.)[0-9]+\\b)|                # 1.1
+              (?:\\b[0-9]+\\b(?!\\.))                     # 1
+            )(?!\\$)
+          '''
+        captures:
+          0:
+            name: 'constant.numeric.decimal.purescript'
+          1:
+            name: 'meta.delimiter.decimal.period.purescript'
+          2:
+            name: 'meta.delimiter.decimal.period.purescript'
+          3:
+            name: 'meta.delimiter.decimal.period.purescript'
+          4:
+            name: 'meta.delimiter.decimal.period.purescript'
+          5:
+            name: 'meta.delimiter.decimal.period.purescript'
+          6:
+            name: 'meta.delimiter.decimal.period.purescript'
+      ]
+
+    constant_numeric:
+      patterns: [
+        # I think this now just matches when underscores are present
+        name: 'constant.numeric'
+        match: /\b(([0-9]+_?)*[0-9]+|0([xX][0-9a-fA-F]+|[oO][0-7]+))\b/
+      ]
+
+    constant_boolean:
+      patterns: [
+        name: 'constant.language.boolean'
+        match: /\b(true|false)(?!')\b/
+      ]
+
+    string_single_quoted:
+      patterns: [
+        name: 'string.quoted.single'
+        match: /(')({character})(')/
+        captures:
+          1: name: 'punctuation.definition.string.begin'
+          2:
+            patterns:[
+              include: '#characters'
+            ]
+          # {character} macro has 4 capture groups, here 3-6
+          7: name: 'punctuation.definition.string.end'
+      ]
+
+    string_double_quoted:
+      patterns: [
+        name: 'string.quoted.double'
+        begin: /"/
+        end: /"/
+        beginCaptures:
+          0: name: 'punctuation.definition.string.begin'
+        endCaptures:
+          0: name: 'punctuation.definition.string.end'
+        patterns: [
+            include: '#characters'
+          ,
+            begin: /\\\s/
+            end: /\\/
+            beginCaptures:
+              0: name: 'markup.other.escape.newline.begin'
+            endCaptures:
+              0: name: 'markup.other.escape.newline.end'
+            patterns: [
+                match: /\S+/
+                name: 'invalid.illegal.character-not-allowed-here'
+            ]
+        ]
+      ]
+
+    string_triple_quoted:
+      patterns: [
+        name: 'string.quoted.triple'
+        begin: /"""/
+        end: /"""/
+        beginCaptures:
+          0: name: 'punctuation.definition.string.begin'
+        endCaptures:
+          0: name: 'punctuation.definition.string.end'
+      ]
+
+    double_colon_parens:
+      patterns: [
+        # Note recursive regex matching nested parens
+        match: '\\((?<paren>(?:[^()]|\\(\\g<paren>\\))*)(::|∷)(?<paren2>(?:[^()]|\\(\\g<paren2>\\))*)\\)'
+        captures:
+          1: patterns: [
+              include: '$self'
+            ]
+          2: name: 'keyword.other.double-colon'
+          3: {name: 'meta.type-signature', patterns: [include: '#type_signature']}
+      ]
+
+    double_colon_orphan:
+      patterns: [
+        begin: ///
+          ^
+          ( \s* )
+          (?: ( :: | ∷ ) )
+          ///
+        beginCaptures:
+          2: name: 'keyword.other.double-colon'
+        end: ///
+          ^
+          (?! \1 {indentChar}* | {indentChar}* $ )
+          ///
+        patterns: [
+            include: '#type_signature'
+        ]
+      ]
+
+    markup_newline:
+      patterns: [
+        name: 'markup.other.escape.newline'
+        match: /\\$/
+      ]
+
+
     block_comment:
       patterns: [
           name: 'comment.block.documentation'
@@ -384,26 +582,7 @@ purescriptGrammar =
               include: '#block_comment'
           ]
       ]
-    record_types:
-      patterns: [
-        name: 'meta.type.record'
-        begin: '\\{'
-        beginCaptures:
-          0:
-            name: 'keyword.operator.type.record.begin.purescript'
-        end: '\\}'
-        endCaptures:
-          0:
-            name: 'keyword.operator.type.record.end.purescript'
-        patterns: [
-            name: 'punctuation.separator.comma.purescript'
-            match: ','
-          ,
-            include: '#record_field_declaration'
-          ,
-            include: '#comments'
-         ]
-    ]
+
     comments:
       patterns: [
           begin: /({maybeBirdTrack}[ \t]+)?(?=--+\s+\|)/
@@ -445,9 +624,11 @@ purescriptGrammar =
         2: name: 'constant.character.escape.octal'
         3: name: 'constant.character.escape.hexadecimal'
         4: name: 'constant.character.escape.control'
+
     infix_op:
       name: 'entity.name.function.infix'
       match: /{operatorFun}/
+
     module_exports:
       name: 'meta.declaration.exports'
       begin: /\(/
@@ -468,9 +649,11 @@ purescriptGrammar =
           name: 'meta.other.constructor-list'
           match: /\(.*?\)/
       ]
+
     module_name:
       name: 'support.other.module'
       match: /(?:{className}\.)*{className}\.?/
+
     function_type_declaration:
       name: 'meta.function.type-declaration'
       begin: ///
@@ -489,24 +672,76 @@ purescriptGrammar =
           include: '#double_colon'
         ,
           include: '#type_signature'
+        ,
+          include: '#record_types'
       ]
+
+    row_type:
+      patterns: [
+        name: 'meta.type.row'
+        begin: /(?<=(^|=)\s*)\(/
+        beginCaptures:
+          0:
+            name: 'keyword.operator.type.row.begin.purescript'
+        end: /\)(?=\s*($|--))/ #  add comment
+        endCaptures:
+          0:
+            name: 'keyword.operator.type.row.end.purescript'
+        patterns: [
+            name: 'punctuation.separator.comma.purescript'
+            match: ','
+          ,
+            include: '#record_field_declaration'
+          ,
+            include: '#comments'
+        ]
+      ]
+
+    record_types:
+      patterns: [
+        name: 'meta.type.record'
+        begin: '\\{'
+        beginCaptures:
+          0:
+            name: 'keyword.operator.type.record.begin.purescript'
+        end: '\\}'
+        endCaptures:
+          0:
+            name: 'keyword.operator.type.record.end.purescript'
+        patterns: [
+            name: 'punctuation.separator.comma.purescript'
+            match: ','
+          ,
+            include: '#record_field_declaration'
+          ,
+            include: '#comments'
+         ]
+      ]
+
     record_field_declaration:
       name: 'meta.record-field.type-declaration'
-      begin: /{functionTypeDeclaration}/
-      end: /(?={functionTypeDeclaration}|})/
+      begin: /{recordFieldDeclaration}/
+      end: /(?={recordFieldDeclaration}|}|\))/
       contentName: 'meta.type-signature'
       beginCaptures:
         1:
           patterns: [
               name: 'entity.other.attribute-name'
               match: /{functionName}/
+            ,
+              name: 'string.quoted.double'
+              match: /"{functionNameOne}|{classNameOne}"/
           ]
         2: name: 'keyword.other.double-colon'
       patterns: [
           include: '#type_signature'
         ,
+          include: '#comments'
+        ,
           include: '#record_types'
       ]
+
+    # this can probalby be removed as we can use type_signature instead
     kind_signature:
       patterns: [
           name: 'keyword.other.star'
@@ -540,10 +775,10 @@ purescriptGrammar =
             4: name: 'keyword.other.big-arrow'
         ,
           name: 'keyword.other.arrow'
-          match: /->|→/
+          match: /(?<!{operatorChar})(->|→)/
         ,
           name: 'keyword.other.big-arrow'
-          match: /=>|⇒/
+          match: /(?<!{operatorChar})(=>|⇒)/
         ,
           name: 'keyword.other.big-arrow-left'
           match: /<=|⇐/
@@ -556,6 +791,9 @@ purescriptGrammar =
           include: '#type_name'
         ,
           include: '#comments'
+        ,
+          name: 'keyword.other'
+          match: /{operator}/
       ]
     type_name:
       name: 'entity.name.type'

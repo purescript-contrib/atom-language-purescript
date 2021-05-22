@@ -5,42 +5,87 @@ module Main.App
   ) where
 
 
-import Prelude
+import Prelude -- can comment
+import Prelude hiding (div)
 
 import Data.String as String
-import Data.String (Pattern)
-import Data.String (Pattern(..), split)
+-- comment
+import Data.String (Pattern) -- comment
+import Data.String (Pattern(..), split) as String -- comment
+
+
+-- multi-line import
+import Data.String
+  ( Pattern(..), split -- comment
+
+  ) as String -- comment
+import Something (fd)
 
 
 -- Foreign import
 foreign
-foreign import
-foreign import data
-foreign import calculateInterest :: Number -> Number
-foreign import data F :: Type
+foreign import --comment
+foreign import data --comment
+foreign import calculateInterest :: Number -> Number --comment
+foreign import data F :: Type -> Type --comment
+
 
 
 -- Containers
 
 
-data D a = D1 a | D2 String
+data D a = D1 a | D2 String --comment
 
 
-type T = { a :: String }
+type T = { a :: String } --comment
 type T a = { n :: N a, b :: String }
 
 
 newtype N a = N a
 
 
--- infix -- TODO: as
+data Proxy :: forall k. k -> Type
+data Proxy a = Proxy
 
 
-infixr 0 apply as <|
+-- newtype with multi-line kind signature
+newtype MySub ::
+  forall k. (k -> Type) -> k -> Type --comment
+newtype MySub vnode msg =
+  MySub (SubRec vnode msg)
+
+
+-- infix operators
+infixr 0 apply as <| -- comment as <|
 infixl 0 applyFlipped as |>
 
 
--- Type class
+---
+data Sum a b
+  = Inl a
+  | Inr b --comment
+
+
+data Product a b = Product a b
+
+
+-- Type operators
+infixl 6 type Sum as :+: -- comment
+infixl 7 type Product as :*:
+
+
+
+-- type class signatures
+
+
+class Category :: forall k. (k -> k -> Type) -> Constraint
+class Semigroupoid a <= Category a where
+  identity :: forall t. a t t
+
+
+-- type class without where
+class ListToRow :: forall k. RowList k -> Row k -> Constraint
+class ListToRow list row | list -> row
 
 
 class Functor v <= Mountable vnode where
@@ -48,11 +93,46 @@ class Functor v <= Mountable vnode where
   unmount :: ∀ m. v m -> v m -> T Void E
 
 
-derive instance newtypeMySub :: Newtype (MySub vnode msg) _
+--orphan keyword
+class
+
+
+-- multi-line type def
+class Functor v
+  <= Mountable vnode where --comment
+  mount :: ∀ m. Element -> T Void (v m)
+  unmount :: ∀ m. v m -> v m -> T Void E
+
+
+instance
+
+
+instance listToRowCons
+  :: ( ListToRow tail tailRow
+     , Row.Cons label ty tailRow row ) --comment
+  => ListToRow (Cons label ty tail) row
+
+
+--orphan keyword
+derive
+derive instance newtypeMySub :: Newtype (MySub vnode msg) _ --comment
+derive newtype
 derive newtype instance semiringScore :: Semiring Score
 
-derive instance genericCmd :: Generic PhonerCmd _
-instance encodeCmd :: EncodeJson PhonerCmd where
+
+-- multi-line derive
+derive instance genericCmd
+  :: Generic PhonerCmd _
+
+
+-- TODO: multi-line, double-colons
+derive instance genericCmd ::
+  Generic PhonerCmd _
+
+
+-- multi-line instance
+instance encodeCmd
+  :: EncodeJson PhonerCmd where --comment
   encodeJson a = genericEncodeJson a
 
 
@@ -61,7 +141,8 @@ instance functorA :: Functor A where
 
 
 instance functorA :: Functor A where
-   map = split
+   map = split -- comment
+
 
 
 -- chained instances
@@ -75,20 +156,23 @@ instance showString :: MyShow String where
   myShow s = s
 
 
+-- chained instances
 else instance showBoolean :: MyShow Boolean where
-  myShow true = "true"
+  myShow true = "true" --comment
   myShow false = "false"
-else instance showA :: MyShow a where
+else  instance showA :: MyShow a where
   myShow _ = "Invalid"
-
 else newtype instance showA :: MyShow a where
+
+
 
 -- Records with fields that are reserved words
 
 
 type Rec =
-  { module :: String
-  , import :: String
+  { module :: String -- comment
+  , import :: Either Error (Array String)
+  -- comment
   , data :: String
   , newtype :: String
   }
@@ -124,10 +208,10 @@ rec =
 
 updateRec = rec
   { data = "data"
-  , type ="type"
+  , type ="type" -- comment
   , foreign = "foreign"
   , import = "import"
-  , infixl = "infixl"
+  , infixl = "infixl" -- comment
   , infixr = "infixr"
   , infix = "infix"
   , class = "class"
@@ -148,47 +232,93 @@ updateRec = rec
   }
 
 
+type RowLine = ( name :: String, age :: { nested :: Number } )
+
+
 -- quoted row type
-type QuotedRow =
+type QuotedRow a =
   ( "A" :: Int
-  , "B" :: Number
-  )
+  -- comment
+  , "B" :: { nested :: Number }
+  , a :: Int -- comment
+  | a
+  ) --som
 
--- quoted record type
+
+type NotRow a = Either Error (Array Int)
+
+
+-- record with quoted fields
 type Quoted =
-  { "A" :: Int
+  { "A" :: Int -- comment
+  , a :: Boolean
   , "B" :: Number
+  , b :: Int -- comment
+  , "x" :: SmallCap
   }
 
 
--- quoted row type
+-- inlined type def
+quoted ::
+  { "A" :: Int -- comment
+  , a :: Boolean
+  , "B" :: Number
+  , b :: Int -- comment
+  , "x" :: SmallCap
+  }
 quoted =
-  { "A": "a"
-  , "B": 1
+  { "A": "a" -- comment
+  , "B": fn (1 :: Int) x 2 -- typed param in parens
+  , "C": 1 :: Int -- typed param without parens (no proper highlight)
+  , a: 2
   }
+
+
+-- typed hole
+foo :: List Int -> List Int
+foo = map ?myHole
+
 
 
 -- Function, forall
 
 
--- do, where
-toStr :: forall a. a -> Effect Unit
+-- infix functions
+infixFun = 1 `add` 2
+
+
+-- function declaration, do, where
+toStr :: forall a. Functor a => a -> Effect Unit --comment
 toStr x = do
   log $ show num
-  log $ show str
+  log $ show $ 1 `add` 2
   where
-  num = 1
+  -- indented type signature
+  num :: Int
+  num = (something :: Int)
   str = "Str"
+
+
 
 
 addIf true = singleton
 addIf false = const []
 
 
--- let in, case of
-fn
+-- double colon inside quotes breaks proper highlight
+text = (" ::" + global)
+
+
+-- fn type signature without :: in the same line lacks highlighting
+-- it seems to be a bit harder case for proper handling
+-- maybe it's also a sign that it is better not to have it in the code :-)
+ fn
+  -- line orphan signature
   :: forall a. a -> String
+
+
 fn a =
+  -- let in, case of
   let b = "str"
   in case a of
     "1" -> b + "1"
@@ -212,8 +342,25 @@ case' = if true
   else "true"
 
 
---
+-- operators inside type signature ==>
 type Schema
-  = {
-    , widgets :: { id :: Int } ==> Array Widget
+  = { widgets :: { id :: Int } ==> Array Widget --comment
     }
+
+
+
+-- constants
+
+
+int = 1
+
+
+decimal = 41.0
+
+
+hex = 0xE0
+
+
+multiString = """
+WOW
+"""

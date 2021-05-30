@@ -120,6 +120,10 @@ derive newtype
 derive newtype instance semiringScore :: Semiring Score
 
 
+-- instance without name
+derive newtype instance Semiring Score
+
+
 -- multi-line derive
 derive instance genericCmd
   :: Generic PhonerCmd _
@@ -232,7 +236,17 @@ updateRec = rec
   }
 
 
-type RowLine = ( name :: String, age :: { nested :: Number } )
+-- row type parens are not highlighted as it doesn't seem necessary
+type RowLine a = ( name :: String, age :: { nested :: Number } | a )
+
+
+type RowRecord a
+  = Record
+      ( RowLine ( some :: Either Error (Array a) )
+      )
+
+
+type RowRecordLine = Record ( RowLine ( some :: String ) )
 
 
 -- quoted row type
@@ -274,6 +288,14 @@ quoted =
   }
 
 
+-- proxy
+proxy = Proxy :: Proxy Int -- k is Type
+
+
+intAtFoo :: forall r. Variant (foo :: Int | r)
+intAtFoo = inj (Proxy :: Proxy "foo") 42
+
+
 -- typed hole
 foo :: List Int -> List Int
 foo = map ?myHole
@@ -295,10 +317,8 @@ toStr x = do
   where
   -- indented type signature
   num :: Int
-  num = (something :: Int)
+  num = ((something :: Int) :: Int)
   str = "Str"
-
-
 
 
 addIf true = singleton
@@ -312,11 +332,9 @@ text = (" ::" + global)
 -- fn type signature without :: in the same line lacks highlighting
 -- it seems to be a bit harder case for proper handling
 -- maybe it's also a sign that it is better not to have it in the code :-)
- fn
+fn
   -- line orphan signature
   :: forall a. a -> String
-
-
 fn a =
   -- let in, case of
   let b = "str"

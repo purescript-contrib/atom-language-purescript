@@ -87,8 +87,6 @@ purescriptGrammar =
     ,
       include: '#type_kind_signature'
     ,
-      include: '#row_type_declaration'
-    ,
       include: '#type_synonym_declaration'
     ,
       # data and newtype
@@ -140,6 +138,8 @@ purescriptGrammar =
     ,
       include: '#comments'
     ,
+      include: '#double_colon_inlined_signature'
+    ,
       name: 'keyword.other.arrow'
       match: /\<-|-\>/
     ,
@@ -148,6 +148,7 @@ purescriptGrammar =
     ,
       name: 'punctuation.separator.comma'
       match: /,/
+
   ]
   repository:
     module_declaration:
@@ -521,16 +522,69 @@ purescriptGrammar =
           0: name: 'punctuation.definition.string.end'
       ]
 
+    # double_colon_parens:
+    #   patterns: [
+    #     # Note recursive regex matching nested parens
+    #     match: [
+    #       '\\(',
+    #       '(?<paren>(?:[^()]|\\(\\g<paren>\\))*)',
+    #       '(::|∷)',
+    #       '(?<paren2>(?:[^()]|\\(\\g<paren2>\\))*)',
+    #       '\\)'
+    #     ].join('')
+    #     captures:
+    #       1: patterns: [
+    #           include: '$self'
+    #         ]
+    #       2: name: 'keyword.other.double-colon'
+    #       3: {name: 'meta.type-signature', patterns: [include: '#type_signature']}
+    #   ]
+
+    double_colon_inlined_signature:
+      patterns: [
+        # Note recursive regex matching nested parens
+        match: [
+          # '\\(',
+          # '(?<paren>(?:[^()]|\\(\\g<paren>\\))*)',
+          '(::|∷)',
+          #'(?<paren2>(?:[^()]|\\(\\g<paren2>\\))*)',
+          '(.*)',
+          # '\\)'
+        ].join('')
+        captures:
+          # 1: patterns: [
+          #     include: '$self'
+          #   ]
+          1: name: 'keyword.other.double-colon'
+          2: {name: 'meta.type-signature', patterns: [include: '#type_signature']}
+      ]
+
     double_colon_parens:
       patterns: [
         # Note recursive regex matching nested parens
-        match: '\\((?<paren>(?:[^()]|\\(\\g<paren>\\))*)(::|∷)(?<paren2>(?:[^()]|\\(\\g<paren2>\\))*)\\)'
+        # Here we will only match parens with :: inside
+        match: [
+          '\\(',
+          # '(?<paren>(?:[^()]|\\(\\g<paren>\\))*)',
+          '(?<paren>(?:[^()]*(::|∷)[^()]*|\\(\\g<paren>\\)*))',
+          # '(::|∷)',
+          # '(?<paren2>(?:[^()]|\\(\\g<paren2>\\))*)',
+          '\\)'
+        ].join('')
+        # match: [
+        #   '\\((?<paren>(?:[^()]|\\(\\g<paren>\\))*)',
+        #   '(::|∷)',
+        #   '(?<paren2>(?:[^()]|\\(\\g<paren2>\\))*)',
+        #   '\\)'
+        # ].join('')
         captures:
           1: patterns: [
+            #   include: "#string_double_quoted"
+            # ,
+            #   include: '#double_colon_inlined_signature'
+            #,
               include: '$self'
             ]
-          2: name: 'keyword.other.double-colon'
-          3: {name: 'meta.type-signature', patterns: [include: '#type_signature']}
       ]
 
     double_colon_orphan:
@@ -679,19 +733,23 @@ purescriptGrammar =
     row_type:
       patterns: [
         name: 'meta.type.row'
-        begin: /(?<=(^|=)\s*)\(/
-        beginCaptures:
-          0:
-            name: 'keyword.operator.type.row.begin.purescript'
-        end: /\)(?=\s*($|--))/ #  add comment
-        endCaptures:
-          0:
-            name: 'keyword.operator.type.row.end.purescript'
+        # as row paren follows after = or type name or starts in a new line
+        begin: /(?<=(^|=|{classNameOne})\s*)\(/
+        # beginCaptures:
+        #   0: name: 'keyword.operator.type.row.begin.purescript'
+        end: /\)/
+        applyEndPatternsLast: true
+        # endCaptures:
+        #   0: name: 'keyword.operator.type.row.end.purescript'
         patterns: [
             name: 'punctuation.separator.comma.purescript'
             match: ','
           ,
+            include: '#row_type'
+          ,
             include: '#record_field_declaration'
+          ,
+            include: '#type_signature'
           ,
             include: '#comments'
         ]
@@ -734,6 +792,11 @@ purescriptGrammar =
           ]
         2: name: 'keyword.other.double-colon'
       patterns: [
+        #   # row type pipe
+        #   match: /\|(?=\s*{functionNameOne})/
+        #   captures:
+        #     0: name: 'punctuation.separator.pipe'
+        # ,
           include: '#type_signature'
         ,
           include: '#comments'
@@ -758,6 +821,8 @@ purescriptGrammar =
       ]
     type_signature:
       patterns: [
+          include: '#string_double_quoted'
+        ,
           name: 'meta.class-constraints'
           match: concat /\(/,
             list('classConstraints',/{classConstraint}/,/,/),

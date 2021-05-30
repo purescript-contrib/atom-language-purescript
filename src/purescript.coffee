@@ -321,7 +321,8 @@ purescriptGrammar =
           ,
             match: /\|/
             captures:
-              0: name: 'punctuation.separator.pipe'
+              # 0: name: 'punctuation.separator.pipe'
+              0: name: 'keyword.operator.pipe'
           ,
             include: '#record_types'
         ]
@@ -353,7 +354,8 @@ purescriptGrammar =
           ,
             match: /\|/
             captures:
-              0: name: 'punctuation.separator.pipe'
+              # 0: name: 'punctuation.separator.pipe'
+              0: name: 'keyword.operator.pipe'
           ,
             include: '#record_types'
         ]

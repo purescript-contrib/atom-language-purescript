@@ -84,8 +84,8 @@ purescriptGrammar =
       include: '#module_declaration'
     ,
       include: '#module_import'
-    ,
-      include: '#type_kind_signature'
+    # ,
+    #   include: '#type_kind_signature'
     ,
       include: '#type_synonym_declaration'
     ,
@@ -344,13 +344,13 @@ purescriptGrammar =
             match: /=/
             captures:
               0: name: 'keyword.operator.assignment'
-          ,
-            match: /{ctor}/
+          # ,
+            match: /(?<=(\||=)\s*)({classNameOne})/
             captures:
-              1: patterns: [include: '#data_ctor']
-              2:
-                name: 'meta.type-signature'
-                patterns: [include: '#type_signature']
+              2: patterns: [include: '#data_ctor']
+              # 2:
+              #   name: 'meta.type-signature'
+              #   patterns: [include: '#type_signature']
           ,
             match: /\|/
             captures:
@@ -358,6 +358,8 @@ purescriptGrammar =
               0: name: 'keyword.operator.pipe'
           ,
             include: '#record_types'
+          ,
+            include: '#type_signature'
         ]
       ]
 
@@ -736,7 +738,8 @@ purescriptGrammar =
       patterns: [
         name: 'meta.type.row'
         # as row paren follows after = or type name or starts in a new line
-        begin: /(?<=(^|=|{classNameOne})\s*)\(/
+        # begin: /(?<=(^|=|{classNameOne})\s*)\(/
+        begin: /\((?=\s*({functionNameOne}|"{functionNameOne}"|"{classNameOne}")\s*(::|∷))/
         # beginCaptures:
         #   0: name: 'keyword.operator.type.row.begin.purescript'
         end: /\)/
@@ -824,6 +827,8 @@ purescriptGrammar =
     type_signature:
       patterns: [
           include: '#string_double_quoted'
+        ,
+          include: '#row_type'
         ,
           name: 'meta.class-constraints'
           match: concat /\(/,

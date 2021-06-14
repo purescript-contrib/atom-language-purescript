@@ -34,7 +34,19 @@ foreign import data F :: Type -> Type --comment
 -- Containers
 
 
-data D a = D1 a | D2 String --comment
+data D a = D1 a | D2 (Array a) --comment
+
+
+-- some issues with proper highlighting inside parens
+data D1 a
+  = D1 a
+  | D2 (Array Some.Type)
+  | D3 (Either Aff.Error Db.Client)
+  | D4
+    (Array Some.Type) --comment
+  | D5 String
+      Int -- not proper
+  | S1 (forall f. f String -> f a)
 
 
 type T = { a :: String } --comment
@@ -249,12 +261,15 @@ type RowRecord a
 type RowRecordLine = Record ( RowLine ( some :: String ) )
 
 
+type EntireRecordCodec = T "Str" ( a :: String , "B" :: Boolean)
+
+
 -- quoted row type
 type QuotedRow a =
   ( "A" :: Int
   -- comment
   , "B" :: { nested :: Number }
-  , a :: Int -- comment
+  , a :: Some.Int -- comment
   | a
   ) --som
 
@@ -283,7 +298,7 @@ quoted ::
 quoted =
   { "A": "a" -- comment
   , "B": fn (1 :: Int) x 2 -- typed param in parens
-  , "C": 1 :: Int -- typed param without parens (no proper highlight)
+  , "C": 1 :: Int -- typed param without parens
   , a: 2
   }
 
@@ -325,7 +340,7 @@ addIf true = singleton
 addIf false = const []
 
 
--- double colon inside quotes breaks proper highlight
+-- double colon inside quoted string
 text = (" ::" + global)
 
 

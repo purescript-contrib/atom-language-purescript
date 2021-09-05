@@ -64,7 +64,7 @@ purescriptGrammar =
     # record field may be quoted string
     recordFieldQuoted: /"(?:{className}|{functionNameOne})"/
     recordFieldDeclaration:
-      /((?:{recordFieldQuoted})|{functionNameOne})\s*(::|∷)/
+      /((?:[ ,])(?:{recordFieldQuoted})|{functionNameOne})\s*(::|∷)/
     ctorArgs: ///
       (?:
       {className}     #proper type
@@ -251,8 +251,10 @@ purescriptGrammar =
           6: name: 'keyword.other.double-colon'
         patterns: [
           include: '#comments'
-          ,
+        ,
           include: '#type_signature'
+        ,
+          include: '#record_types'
         ]
       ]
 
@@ -270,6 +272,8 @@ purescriptGrammar =
             include: '#double_colon'
           ,
             include: '#type_signature'
+          ,
+            include: '#record_types'
         ]
       ]
 
@@ -282,6 +286,8 @@ purescriptGrammar =
           1: name: 'keyword.other'
         patterns: [
             include: '#module_name'
+          ,
+            include: "#string_double_quoted"
           ,
             include: '#comments'
           ,
@@ -381,9 +387,9 @@ purescriptGrammar =
           ,
             include: '#type_signature'
           ,
-            include: '#row_type'
-          ,
             include: '#record_types'
+          ,
+            include: '#row_types'
           ,
             include: '#comments'
         ]
@@ -732,31 +738,26 @@ purescriptGrammar =
           include: '#type_signature'
         ,
           include: '#record_types'
+        ,
+          include: '#row_types'
       ]
 
-    row_type:
+    row_types:
       patterns: [
         name: 'meta.type.row'
-        # as row paren follows after = or type name or starts in a new line
-        # begin: /(?<=(^|=|{classNameOne})\s*)\(/
-        begin: /\((?=\s*({functionNameOne}|"{functionNameOne}"|"{classNameOne}")\s*(::|∷))/
-        # beginCaptures:
-        #   0: name: 'keyword.operator.type.row.begin.purescript'
-        end: /\)/
-        applyEndPatternsLast: true
-        # endCaptures:
-        #   0: name: 'keyword.operator.type.row.end.purescript'
+        ###
+        For distinction of row type we use pattern with a space after/before a bracket,
+        because there doesn't seem to be a correct way to distinguish row type declaration
+        from another types put in brackets.
+        ###
+        begin: /\((?= \s*({functionNameOne}|"{functionNameOne}"|"{classNameOne}")\s*(::|∷))/
+        end: / \)/
+        #applyEndPatternsLast: true
         patterns: [
-            name: 'punctuation.separator.comma.purescript'
-            match: ','
-          ,
-            include: '#row_type'
-          ,
-            include: '#record_field_declaration'
-          ,
-            include: '#type_signature'
-          ,
-            include: '#comments'
+          #   name: 'punctuation.separator.comma.purescript'
+          #   match: ','
+          # ,
+           include: '#record_field_declaration'
         ]
       ]
 
@@ -784,7 +785,9 @@ purescriptGrammar =
     record_field_declaration:
       name: 'meta.record-field.type-declaration'
       begin: /{recordFieldDeclaration}/
-      end: /(?={recordFieldDeclaration}|}|\))/
+      # we use end pattern of " )" with space (as as row type ending)
+      end: /(?={recordFieldDeclaration}|}| \))/
+      # applyEndPatternsLast: true
       contentName: 'meta.type-signature'
       beginCaptures:
         1:
@@ -792,8 +795,9 @@ purescriptGrammar =
               name: 'entity.other.attribute-name'
               match: /{functionName}/
             ,
+              # match quoated props
               name: 'string.quoted.double'
-              match: /"{functionNameOne}|{classNameOne}"/
+              match: /\"({functionNameOne}|{classNameOne})\"/
           ]
         2: name: 'keyword.other.double-colon'
       patterns: [
@@ -802,11 +806,13 @@ purescriptGrammar =
         #   captures:
         #     0: name: 'punctuation.separator.pipe'
         # ,
+         include: '#record_types'
+        # ,
+        #   include: '#row_types'
+        ,
           include: '#type_signature'
         ,
           include: '#comments'
-        ,
-          include: '#record_types'
       ]
 
     # this can probalby be removed as we can use type_signature instead
@@ -826,10 +832,8 @@ purescriptGrammar =
       ]
     type_signature:
       patterns: [
-          include: '#string_double_quoted'
-        ,
-          include: '#row_type'
-        ,
+        #   include: '#row_types'
+        # ,
           name: 'meta.class-constraints'
           match: concat /\(/,
             list('classConstraints',/{classConstraint}/,/,/),
@@ -857,6 +861,8 @@ purescriptGrammar =
         ,
           name: 'keyword.other.forall'
           match: /forall|∀/
+        ,
+          include: '#string_double_quoted'
         ,
           include: '#generic_type'
         ,

@@ -30,6 +30,10 @@ foreign import calculateInterest :: Number -> Number --comment
 foreign import data F :: Type -> Type --comment
 
 
+-- import data with record type
+foreign import data R :: { prop :: String }
+
+
 
 -- Containers
 
@@ -37,7 +41,7 @@ foreign import data F :: Type -> Type --comment
 data D a = D1 a | D2 (Array a) --comment
 
 
--- some issues with proper highlighting inside parens
+--
 data D1 a
   = D1 a
   | D2 (Array Some.Type)
@@ -45,7 +49,7 @@ data D1 a
   | D4
     (Array Some.Type) --comment
   | D5 String
-      Int -- not proper
+      Int
   | S1 (forall f. f String -> f a)
 
 
@@ -114,6 +118,11 @@ class Functor v
   <= Mountable vnode where --comment
   mount :: ∀ m. Element -> T Void (v m)
   unmount :: ∀ m. v m -> v m -> T Void E
+
+
+-- class with type, breaks highlighting
+class RowTypeClass (rl :: RL.RowList Type) where
+  rowListCodec :: forall proxy. proxy rl -> Record ri -> CA.JPropCodec (Record ro)
 
 
 instance
@@ -185,9 +194,22 @@ else newtype instance showA :: MyShow a where
 -- Records with fields that are reserved words
 
 
-type Rec =
+-- quoted row type
+type QuotedRow a =
+  ( "A" :: Int
+  -- comment
+  , "B" :: { nested :: Number }
+  , c :: Either (Maybe Bad) Int
+  , d :: Some.Int -- comment
+  , e :: Some.Int -- comment
+  | a
+  ) --som
+
+
+data Rec =
   { module :: String -- comment
   , import :: Either Error (Array String)
+  , import2 :: Either (Maybe Bad) Good -- no proper
   -- comment
   , data :: String
   , newtype :: String
@@ -261,17 +283,7 @@ type RowRecord a
 type RowRecordLine = Record ( RowLine ( some :: String ) )
 
 
-type EntireRecordCodec = T "Str" ( a :: String , "B" :: Boolean)
-
-
--- quoted row type
-type QuotedRow a =
-  ( "A" :: Int
-  -- comment
-  , "B" :: { nested :: Number }
-  , a :: Some.Int -- comment
-  | a
-  ) --som
+type EntireRecordCodec = T "Str" ( a :: String , "B" :: Boolean )
 
 
 type NotRow a = Either Error (Array Int)
@@ -287,7 +299,7 @@ type Quoted =
   }
 
 
--- inlined type def
+-- inlined record type def
 quoted ::
   { "A" :: Int -- comment
   , a :: Boolean
@@ -303,11 +315,23 @@ quoted =
   }
 
 
+-- inlined record type def inside foreign import
+foreign import createSource ::
+  String ->
+  { onOpen :: Effect Unit
+  , onMessage :: SourceEvent -> Effect Unit
+  , onError :: SourceError -> Effect Unit
+  , withCredentials :: Boolean
+  } ->
+  Effect EventSource
+
+
 -- proxy
 proxy = Proxy :: Proxy Int -- k is Type
 
 
-intAtFoo :: forall r. Variant (foo :: Int | r)
+-- no proper for row
+intAtFoo :: forall r. Variant ( foo :: Int | r )
 intAtFoo = inj (Proxy :: Proxy "foo") 42
 
 
@@ -397,3 +421,6 @@ hex = 0xE0
 multiString = """
 WOW
 """
+
+-- after mult-line string
+class Foo (a :: Symbol)

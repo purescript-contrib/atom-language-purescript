@@ -419,8 +419,13 @@ hex = 0xE0
 
 
 multiString = """
-WOW
+
+ 'text' "WOW" text
+
 """
+
+multiStringOneLine = """ "WOW" text """
+
 
 -- after mult-line string
 class Foo (a :: Symbol)

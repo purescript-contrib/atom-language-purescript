@@ -124,11 +124,12 @@ purescriptGrammar =
     ,
       include: '#constant_boolean'
     ,
+      ### Triple quotes should come first to enclose inner quotes ###
+      include: '#string_triple_quoted'
+    ,
       include: '#string_single_quoted'
     ,
       include: '#string_double_quoted'
-    ,
-      include: '#string_triple_quoted'
     ,
       include: '#markup_newline'
     ,

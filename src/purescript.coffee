@@ -84,8 +84,6 @@ purescriptGrammar =
       include: '#module_declaration'
     ,
       include: '#module_import'
-    # ,
-    #   include: '#type_kind_signature'
     ,
       include: '#type_synonym_declaration'
     ,
@@ -137,7 +135,7 @@ purescriptGrammar =
     ,
       include: '#double_colon_orphan'
     ,
-      include: '#comments'
+     include: '#comments'
     ,
       include: '#double_colon_inlined_signature'
     ,
@@ -650,25 +648,29 @@ purescriptGrammar =
 
     comments:
       patterns: [
-          begin: /({maybeBirdTrack}[ \t]+)?(?=--+\s+\|)/
-          end: /(?!\G)/
-          beginCaptures:
-            1: name: 'punctuation.whitespace.comment.leading'
-          patterns: [
-              name: 'comment.line.double-dash.documentation'
-              begin: /(--+)\s+(\|)/
-              end: /\n/
-              beginCaptures:
-                1: name: 'punctuation.definition.comment'
-                2: name: 'punctuation.definition.comment.documentation'
-          ]
-        ,
+        #   begin: /({maybeBirdTrack}[ \t]+)?(?=--+\s*\|)/
+        #   #begin: / --/
+        #   # begin: /({maybeBirdTrack}[ \t]+)?(?=--+)/
+        #   end: /(?!\G)/
+        #   beginCaptures:
+        #     1: name: 'punctuation.whitespace.comment.leading'
+        #   patterns: [
+        #       name: 'comment.line.double-dash.documentation'
+        #       begin: /(--+)\s*(\|)/
+        #       # begin: /(--+)/
+        #       end: /\n/
+        #       beginCaptures:
+        #         1: name: 'punctuation.definition.comment'
+        #         2: name: 'punctuation.definition.comment.documentation'
+        #   ]
+        # ,
           ###
           Operators may begin with -- as long as they are not
           entirely composed of - characters. This means comments can't be
           immediately followed by an allowable operator character.
           ###
-          begin: /({maybeBirdTrack}[ \t]+)?(?=--+(?!{operatorChar}))/
+          # begin: /({maybeBirdTrack}[ \t]+)?(?=--+(?!{operatorChar}))/
+          begin: /({maybeBirdTrack}[ \t]+)?(?=--+)/
           end: /(?!\G)/
           beginCaptures:
             1: name: 'punctuation.whitespace.comment.leading'
@@ -765,7 +767,8 @@ purescriptGrammar =
     record_types:
       patterns: [
         name: 'meta.type.record'
-        begin: '\\{'
+        # start with {, but not block comment
+        begin: '\\{(?!-)'
         beginCaptures:
           0:
             name: 'keyword.operator.type.record.begin.purescript'
@@ -777,9 +780,9 @@ purescriptGrammar =
             name: 'punctuation.separator.comma.purescript'
             match: ','
           ,
-            include: '#record_field_declaration'
-          ,
             include: '#comments'
+          ,
+            include: '#record_field_declaration'
          ]
       ]
 

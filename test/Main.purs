@@ -1,3 +1,4 @@
+-- start
 {- Test file to visually assess syntax highlighting. -}
 module Main.App where
 module Main.App
@@ -35,6 +36,15 @@ foreign import data R :: { prop :: String }
 
 
 
+-- line comments with no space between first char
+--| some
+
+-- comments with operators after
+--# some
+--! some
+
+
+
 -- Containers
 
 
@@ -45,6 +55,7 @@ data D a = D1 a | D2 (Array a) --comment
 data D1 a
   = D1 a
   | D2 (Array Some.Type)
+  {- comment inside -}
   | D3 (Either Aff.Error Db.Client)
   | D4
     (Array Some.Type) --comment
@@ -72,8 +83,9 @@ newtype MySub vnode msg =
 
 
 -- infix operators
-infixr 0 apply as <| -- comment as <|
-infixl 0 applyFlipped as |>
+-- operators that contain -- within
+infixr 0 apply as :--> -- comment as :-->
+infixl 0 applyFlipped as <--:
 
 
 ---
@@ -109,7 +121,7 @@ class Functor v <= Mountable vnode where
   unmount :: ∀ m. v m -> v m -> T Void E
 
 
---orphan keyword
+--| orphan keyword
 class
 
 
@@ -199,6 +211,7 @@ type QuotedRow a =
   ( "A" :: Int
   -- comment
   , "B" :: { nested :: Number }
+  {- block comment inside -}
   , c :: Either (Maybe Bad) Int
   , d :: Some.Int -- comment
   , e :: Some.Int -- comment
@@ -209,7 +222,7 @@ type QuotedRow a =
 data Rec =
   { module :: String -- comment
   , import :: Either Error (Array String)
-  , import2 :: Either (Maybe Bad) Good -- no proper
+  , import2 :: Either (Maybe Bad) Good
   -- comment
   , data :: String
   , newtype :: String
@@ -330,7 +343,7 @@ foreign import createSource ::
 proxy = Proxy :: Proxy Int -- k is Type
 
 
--- no proper for row
+-- row type
 intAtFoo :: forall r. Variant ( foo :: Int | r )
 intAtFoo = inj (Proxy :: Proxy "foo") 42
 

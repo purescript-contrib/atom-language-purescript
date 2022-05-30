@@ -403,7 +403,7 @@ purescriptGrammar =
         patterns: [
             include: '#comments'
           ,
-            include: '#type_name'
+            include: '#data_ctor'
           ,
             name: 'constant.numeric'
             match: /\d+/
@@ -411,6 +411,11 @@ purescriptGrammar =
             match: /({operator})/
             captures:
               1: name: 'keyword.other'
+          ,
+            match: /\b(type)\s+({className})\b/
+            captures:
+              1: name: 'keyword.other'
+              2: name: 'entity.name.type'
           ,
             match: /\b(as|type)\b/
             captures:

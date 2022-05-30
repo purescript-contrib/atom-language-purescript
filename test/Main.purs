@@ -106,6 +106,9 @@ infixl 6 type Sum as :+: -- comment
 infixl 7 type Product as :*:
 
 
+-- Ctor operators
+infixl 2 Inl as $%
+infixr 2 Inr as %$
 
 -- type class signatures
 

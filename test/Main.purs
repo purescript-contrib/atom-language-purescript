@@ -1,4 +1,6 @@
 -- start
+
+
 {- Test file to visually assess syntax highlighting. -}
 module Main.App where
 module Main.App
@@ -38,6 +40,8 @@ foreign import data R :: { prop :: String }
 
 -- line comments with no space between first char
 --| some
+
+
 
 -- comments with operators after
 --# some
@@ -362,7 +366,7 @@ infixFun = 1 `add` 2
 
 
 -- function declaration, do, where
-toStr :: forall a. Functor a => a -> Effect Unit --comment
+toStr :: forall a. Functor a => { a :: a } -> Effect Unit --comment
 toStr x = do
   log $ show num
   log $ show $ 1 `add` 2
@@ -371,6 +375,16 @@ toStr x = do
   num :: Int
   num = ((something :: Int) :: Int)
   str = "Str"
+
+
+-- double_colon_inlined_signature
+gotConfig :: AVar { a :: Unit } <- AVar.empty
+
+
+SomeType :: ( a :: Int )
+
+
+AVar :: Type → Type
 
 
 addIf true = singleton
@@ -436,6 +450,7 @@ multiString = """
  'text' "WOW" text
 
 """
+
 
 multiStringOneLine = """ "WOW" text """
 

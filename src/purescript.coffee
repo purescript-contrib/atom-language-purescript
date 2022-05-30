@@ -87,7 +87,6 @@ purescriptGrammar =
     ,
       include: '#type_synonym_declaration'
     ,
-      # data and newtype
       include: '#data_type_declaration'
     ,
       include: '#typeclass_declaration'
@@ -116,6 +115,8 @@ purescriptGrammar =
     ,
       include: '#infix_op'
     ,
+      include: '#double_colon_inlined_signature'
+    ,
       include: '#constants_numeric_decimal'
     ,
       include: '#constant_numeric'
@@ -136,8 +137,6 @@ purescriptGrammar =
       include: '#double_colon_orphan'
     ,
      include: '#comments'
-    ,
-      include: '#double_colon_inlined_signature'
     ,
       name: 'keyword.other.arrow'
       match: /\<-|-\>/
@@ -551,7 +550,43 @@ purescriptGrammar =
 
     double_colon_inlined_signature:
       patterns: [
+        patterns: [
+          match: '(SomeType)\s*({doubleColon})(.*)'
+          captures:
+            1: name: 'meta.type-signature'
+            2: name: 'keyword.other.double-colon'
+            3: {name: 'meta.type-signature', patterns: [include: '#type_signature']}
+
+        ]
+      ,
+        patterns: [
+          match: '({doubleColon})(.*)(<-)'
+          captures:
+            1: name: 'keyword.other.double-colon'
+            2: {name: 'meta.type-signature', patterns: [ include: '#type_signature']}
+            3: name: 'keyword.other.double-colon'
+
+        ]
+      ,
+        patterns: [
+          match: '({doubleColon})(.*)'
+          captures:
+            1: name: 'keyword.other.double-colon'
+            2: {
+              name: 'meta.type-signature'
+              patterns: [
+                include: "#record_types"
+                include: '#type_signature'
+              ]
+            }
+
+        ]
+      ]
+
+    _double_colon_inlined_signature:
+      patterns: [
         # Note recursive regex matching nested parens
+        # match: '\\((?<paren>(?:[^()]|\\(\\g<paren>\\))*)(::|∷)(?<paren2>(?:[^()]|\\(\\g<paren2>\\))*)\\)'
         match: [
           # '\\(',
           # '(?<paren>(?:[^()]|\\(\\g<paren>\\))*)',
@@ -836,8 +871,10 @@ purescriptGrammar =
       ]
     type_signature:
       patterns: [
-        #   include: '#row_types'
-        # ,
+         include: "#record_types"
+        ,
+         include: '#row_types'
+        ,
           name: 'meta.class-constraints'
           match: concat /\(/,
             list('classConstraints',/{classConstraint}/,/,/),

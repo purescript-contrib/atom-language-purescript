@@ -110,6 +110,8 @@ infixl 7 type Product as :*:
 infixl 2 Inl as $%
 infixr 2 Inr as %$
 
+
+
 -- type class signatures
 
 
@@ -139,7 +141,7 @@ class Functor v
   unmount :: ∀ m. v m -> v m -> T Void E
 
 
--- class with type, breaks highlighting
+-- class with row type
 class RowTypeClass (rl :: RL.RowList Type) where
   rowListCodec :: forall proxy. proxy rl -> Record ri -> CA.JPropCodec (Record ro)
 
@@ -187,8 +189,6 @@ instance functorA :: Functor A where
 instance functorA :: Functor A where
    map = split -- comment
 
-
-
 -- chained instances
 
 
@@ -209,7 +209,6 @@ else  instance showA :: MyShow a where
 else newtype instance showA :: MyShow a where
 
 
-
 -- Records with fields that are reserved words
 
 
@@ -217,7 +216,8 @@ else newtype instance showA :: MyShow a where
 type QuotedRow a =
   ( "A" :: Int
   -- comment
-  , "B" :: { nested :: Number }
+  , "B" :: { nested :: Number, nested2 :: { x :: Maybe (Array Int) } | a }
+  , "C" :: { | (c :: Int) }
   {- block comment inside -}
   , c :: Either (Maybe Bad) Int
   , d :: Some.Int -- comment
@@ -290,8 +290,14 @@ updateRec = rec
   }
 
 
--- row type parens are not highlighted as it doesn't seem necessary
-type RowLine a = ( name :: String, age :: { nested :: Number } | a )
+type RowLineSpacing a = ( name :: String, age :: { nested :: Number } | a )
+
+
+--one line row type with no spaces after/before braces
+type RowLine a = (names :: Maybe (Array String), age :: { nested :: Number } | a)
+type RowLine a = { | }
+type RowLine a = { | a }
+type RowLine a = { | (a :: Maybe (Array a)) }
 
 
 type RowRecord a
@@ -331,6 +337,7 @@ quoted =
   { "A": "a" -- comment
   , "B": fn (1 :: Int) x 2 -- typed param in parens
   , "C": 1 :: Int -- typed param without parens
+  , "C": (1 :: Maybe (Array Int) ) x (1 :: Int)
   , a: 2
   }
 
@@ -348,6 +355,14 @@ foreign import createSource ::
 
 -- proxy
 proxy = Proxy :: Proxy Int -- k is Type
+
+
+-- orphan inline signature
+x = 1
+  ::
+    Int
+x = {a: 1} ::
+  { | (a :: Int) }
 
 
 -- row type
@@ -384,13 +399,17 @@ toStr x = do
 gotConfig :: AVar { a :: Unit } <- AVar.empty
 
 
-SomeType :: ( a :: Int )
+-- signatures in ide tooltips
+SomeType :: (a :: Int)
 
 
+-- we may not distinct Type names from type ctors
+-- so we highlight as ctors
 AVar :: Type → Type
 
 
-addIf true = singleton
+--
+-- addIf true = singleton
 addIf false = const []
 
 
@@ -447,6 +466,10 @@ decimal = 41.0
 
 hex = 0xE0
 
+-- quotes after type def
+px = Proxy :: Proxy """fdsfsdf
+  fdsfdsfsdf
+  """
 
 multiString = """
 

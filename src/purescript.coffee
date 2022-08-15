@@ -567,7 +567,7 @@ purescriptGrammar =
       #   ]
       # ,
         patterns: [
-          match: '({doubleColon})(.*)(?=<-|")'
+          match: '({doubleColon})(.*)(?=<-|""")'
           captures:
             1: name: 'keyword.other.double-colon'
             2: {name: 'meta.type-signature', patterns: [

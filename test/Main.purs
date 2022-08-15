@@ -189,6 +189,8 @@ instance functorA :: Functor A where
 instance functorA :: Functor A where
    map = split -- comment
 
+
+
 -- chained instances
 
 
@@ -207,6 +209,7 @@ else instance showBoolean :: MyShow Boolean where
 else  instance showA :: MyShow a where
   myShow _ = "Invalid"
 else newtype instance showA :: MyShow a where
+
 
 
 -- Records with fields that are reserved words
@@ -466,10 +469,19 @@ decimal = 41.0
 
 hex = 0xE0
 
+
+px = Proxy :: Proxy "fdsfsdf"
+
+
 -- quotes after type def
 px = Proxy :: Proxy """fdsfsdf
   fdsfdsfsdf
   """
+
+
+
+-- quotes after type def
+
 
 multiString = """
 

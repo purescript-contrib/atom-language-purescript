@@ -478,6 +478,7 @@ px = Proxy :: Proxy """fdsfsdf
   fdsfdsfsdf
   """
 
+px = Proxy :: Proxy """fdsfsdffdsfdsfsdf"""
 
 
 -- quotes after type def

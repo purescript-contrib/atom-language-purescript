@@ -567,7 +567,7 @@ purescriptGrammar =
       #   ]
       # ,
         patterns: [
-          match: '({doubleColon})(.*)(?=<-|""")'
+          match: '({doubleColon})(.*)(?=<-)'
           captures:
             1: name: 'keyword.other.double-colon'
             2: {name: 'meta.type-signature', patterns: [
@@ -577,17 +577,14 @@ purescriptGrammar =
         ]
       ,
         patterns: [
-          match: '({doubleColon})(.*)'
-          captures:
+          begin: '({doubleColon})'
+          end: /(?=^\S)/
+          beginCaptures:
             1: name: 'keyword.other.double-colon'
-            2: {
-              name: 'meta.type-signature'
-              patterns: [
-                include: "#record_types"
-                include: '#type_signature'
-              ]
-            }
-
+          patterns: [
+            include: "#record_types"
+            include: '#type_signature'
+          ]
         ]
       ]
     double_colon_orphan:

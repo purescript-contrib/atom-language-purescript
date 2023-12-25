@@ -155,7 +155,7 @@
     'patterns': [
       {
         'name': 'keyword.operator.function.infix.purescript'
-        'match': '(`)(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.)?[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(`)'
+        'match': '(`)(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.)?[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*.*(`)'
         'captures':
           '1':
             'name': 'punctuation.definition.entity.purescript'
@@ -482,7 +482,7 @@
           }
           {
             'name': 'constant.numeric.purescript'
-            'match': '\\d+'
+            'match': ' \\d+ '
           }
           {
             'match': '([\\p{S}\\p{P}&&[^(),;\\[\\]`{}_"\']]+)'
@@ -634,7 +634,7 @@
   'double_colon_parens':
     'patterns': [
       {
-        'match': '\\((?<paren>(?:[^()]|\\(\\g<paren>\\))*)(::|∷)(?<paren2>(?:[^()]|\\(\\g<paren2>\\))*)\\)'
+        'match': '\\((?<paren>(?:[^()]|\\(\\g<paren>\\))*)(::|∷)(?<paren2>(?:[^()}]|\\(\\g<paren2>\\))*)\\)'
         'captures':
           '1':
             'patterns': [
@@ -658,7 +658,7 @@
       {
         'patterns': [
           {
-            'match': '((?:::|∷))(.*)(?=<-|""")'
+            'match': '((?:::|∷))(.*)(?=<-| """| })'
             'captures':
               '1':
                 'name': 'keyword.other.double-colon.purescript'
@@ -675,7 +675,7 @@
       {
         'patterns': [
           {
-            'match': '((?:::|∷))(.*)'
+            'match': '((?:::|∷))(.*)(?!<-| """| })'
             'captures':
               '1':
                 'name': 'keyword.other.double-colon.purescript'

@@ -86,10 +86,10 @@ newtype MySub vnode msg =
   MySub (SubRec vnode msg)
 
 
--- infix operators
+-- infix operators (with numbers in hame)
 -- operators that contain -- within
-infixr 0 apply as :--> -- comment as :-->
-infixl 0 applyFlipped as <--:
+infixr 0 apply2 as :--> -- comment as :-->
+infixl 0 apply2Flipped as <--:
 
 
 ---
@@ -385,6 +385,10 @@ foo = map ?myHole
 -- infix functions
 infixFun = 1 `add` 2
 
+-- infix function with params -- no proper
+-- maybe no need because its weird
+infixFun = 1 `flip add` 2
+
 
 -- function declaration, do, where
 toStr :: forall a. Functor a => { a :: a } -> Effect Unit --comment
@@ -401,6 +405,17 @@ toStr x = do
 -- double_colon_inlined_signature
 gotConfig :: AVar { a :: Unit } <- AVar.empty
 
+
+-- no proper for params arrow first
+_run
+  :: forall m
+   . Functor m
+  => Config
+  -> SpecT Aff Unit m Unit
+  -> m TestEvents
+
+-- no proper fro colons in string inside parens
+x = ("func1 ::")
 
 -- signatures in ide tooltips
 SomeType :: (a :: Int)
@@ -479,6 +494,12 @@ px = Proxy :: Proxy """fdsfsdf
   """
 
 px = Proxy :: Proxy """fdsfsdffdsfdsfsdf"""
+
+
+px =
+  ({ x = Set.empty :: Set X { x :: Int } } /\ y)
+  where
+  y = 1
 
 
 -- quotes after type def

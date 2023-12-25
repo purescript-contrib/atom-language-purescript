@@ -171,7 +171,7 @@ purescriptGrammar =
     function_infix:
       patterns: [
         name: 'keyword.operator.function.infix'
-        match: /(`){functionName}(`)/
+        match: /(`){functionName}.*(`)/
         captures:
           1: name: 'punctuation.definition.entity'
           2: name: 'punctuation.definition.entity'
@@ -404,7 +404,7 @@ purescriptGrammar =
             include: '#data_ctor'
           ,
             name: 'constant.numeric'
-            match: /\d+/
+            match: / \d+ /
           ,
             match: /({operator})/
             captures:
@@ -541,7 +541,7 @@ purescriptGrammar =
           '\\(',
           '(?<paren>(?:[^()]|\\(\\g<paren>\\))*)',
           '(::|∷)',
-          '(?<paren2>(?:[^()]|\\(\\g<paren2>\\))*)',
+          '(?<paren2>(?:[^()}]|\\(\\g<paren2>\\))*)',
           '\\)'
         ].join('')
         captures:
@@ -565,25 +565,33 @@ purescriptGrammar =
       #   ]
       # ,
         patterns: [
-          match: '({doubleColon})(.*)(?=<-)'
+          match: '({doubleColon})(.*)(?=<-| """| })'
           captures:
             1: name: 'keyword.other.double-colon'
             2: {name: 'meta.type-signature', patterns: [
               include: '#type_signature'
-
             ]}
         ]
       ,
         patterns: [
-          begin: '({doubleColon})'
-          end: /(?=^\S)/
-          beginCaptures:
+          match: '({doubleColon})(.*)(?!<-| """| })'
+          captures:
             1: name: 'keyword.other.double-colon'
-          patterns: [
-            include: "#record_types"
-            include: '#type_signature'
-          ]
+            2: {name: 'meta.type-signature', patterns: [
+              include: '#type_signature'
+            ]}
         ]
+      # ,
+      #   patterns: [
+      #     begin: '({doubleColon})'
+      #     end: /(?=^\S)/
+      #     beginCaptures:
+      #       1: name: 'keyword.other.double-colon'
+      #     patterns: [
+      #       include: "#record_types"
+      #       include: '#type_signature'
+      #     ]
+      #   ]
       ]
     double_colon_orphan:
       patterns: [

@@ -31,7 +31,7 @@ foreign import --comment
 foreign import data --comment
 foreign import calculateInterest :: Number -> Number --comment
 foreign import data F :: Type -> Type --comment
-
+foreign import databaseName :: Db -> Name
 
 -- import data with record type
 foreign import data R :: { prop :: String }

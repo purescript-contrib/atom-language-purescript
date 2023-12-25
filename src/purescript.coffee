@@ -236,7 +236,7 @@ purescriptGrammar =
     foreign_import_data:
       patterns: [
         name: 'meta.foreign.data'
-        begin: /^(\s*)(foreign)\s+(import)\s+(data)(?:\s+({classNameOne})\s*({doubleColon}))?/
+        begin: /^(\s*)(foreign)\s+(import)\s+(data)\s(?:\s+({classNameOne})\s*({doubleColon}))?/
         end: /{indentBlockEnd}/
         contentName: 'meta.kind-signature'
         beginCaptures:

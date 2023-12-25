@@ -238,7 +238,7 @@
     'patterns': [
       {
         'name': 'meta.foreign.data.purescript'
-        'begin': '^(\\s*)(foreign)\\s+(import)\\s+(data)(?:\\s+([\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)\\s*((?:::|∷)))?'
+        'begin': '^(\\s*)(foreign)\\s+(import)\\s+(data)\\s(?:\\s+([\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)\\s*((?:::|∷)))?'
         'end': '^(?!\\1[ \\t]|[ \\t]*$)'
         'contentName': 'meta.kind-signature.purescript'
         'beginCaptures':

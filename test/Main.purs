@@ -340,7 +340,7 @@ quoted =
   { "A": "a" -- comment
   , "B": fn (1 :: Int) x 2 -- typed param in parens
   , "C": 1 :: Int -- typed param without parens
-  , "C": (1 :: Maybe (Array Int) ) x (1 :: Int)
+  , "C": (1 :: Maybe (Array Int) ) x (1 :: Proxy "xxx")
   , a: 2
   }
 
@@ -378,15 +378,10 @@ foo :: List Int -> List Int
 foo = map ?myHole
 
 
-
--- Function, forall
-
-
 -- infix functions
 infixFun = 1 `add` 2
 
--- infix function with params -- no proper
--- maybe no need because its weird
+-- infix function with params
 infixFun = 1 `flip add` 2
 
 
@@ -406,16 +401,11 @@ toStr x = do
 gotConfig :: AVar { a :: Unit } <- AVar.empty
 
 
--- no proper for params arrow first
-_run
-  :: forall m
-   . Functor m
-  => Config
-  -> SpecT Aff Unit m Unit
-  -> m TestEvents
 
--- no proper fro colons in string inside parens
+--  colons in string inside parens
 x = ("func1 ::")
+-- code coloring after end of quotes
+text = (" ::" + global)
 
 -- signatures in ide tooltips
 SomeType :: (a :: Int)
@@ -431,13 +421,9 @@ AVar :: Type → Type
 addIf false = const []
 
 
--- double colon inside quoted string
-text = (" ::" + global)
-
-
--- fn type signature without :: in the same line lacks highlighting
--- it seems to be a bit harder case for proper handling
--- maybe it's also a sign that it is better not to have it in the code :-)
+-- fn type signature without (arrow first style) :: in the same line lacks
+-- highlighting it seems to be a bit harder case for proper handling maybe it's
+-- also a sign that it is better not to have it in the code :-)
 fn
   -- line orphan signature
   :: forall a. a -> String
@@ -447,6 +433,20 @@ fn a =
   in case a of
     "1" -> b + "1"
     _ -> b + a
+
+-- arrow first signature multiline
+_run
+  :: forall m
+   . Functor m
+  => Config
+  -> SpecT Aff Unit m Unit
+  -> m TestEvents
+_run c s = some
+  where
+  -- arrow first signature indented
+  some
+    :: Int
+  some = 1
 
 
 -- if' fn and if statement with

@@ -58,6 +58,9 @@
     'include': '#function_type_declaration'
   }
   {
+    'include': '#function_type_declaration_arrow_first'
+  }
+  {
     'include': '#typed_hole'
   }
   {
@@ -634,7 +637,7 @@
   'double_colon_parens':
     'patterns': [
       {
-        'match': '\\((?<paren>(?:[^()]|\\(\\g<paren>\\))*)(::|∷)(?<paren2>(?:[^()}]|\\(\\g<paren2>\\))*)\\)'
+        'match': '\\((?<paren>(?:[^()"]|\\(\\g<paren>\\))*)(::|∷)(?<paren2>(?:[^()"}]|\\(\\g<paren2>\\))*)\\)'
         'captures':
           '1':
             'patterns': [
@@ -840,6 +843,32 @@
           '2':
             'name': 'entity.name.function.purescript'
           '3':
+            'name': 'keyword.other.double-colon.purescript'
+        'patterns': [
+          {
+            'include': '#double_colon'
+          }
+          {
+            'include': '#type_signature'
+          }
+          {
+            'include': '#record_types'
+          }
+          {
+            'include': '#row_types'
+          }
+        ]
+      }
+    ]
+  'function_type_declaration_arrow_first':
+    'patterns': [
+      {
+        'name': 'meta.function.type-declaration.purescript'
+        'begin': '^(\\s*)(?:\\s(::|∷)(?!.*<-))'
+        'end': '^(?!\\1[ \\t]|[ \\t]*$)'
+        'contentName': 'meta.type-signature.purescript'
+        'beginCaptures':
+          '2':
             'name': 'keyword.other.double-colon.purescript'
         'patterns': [
           {

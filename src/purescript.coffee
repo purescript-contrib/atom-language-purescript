@@ -76,6 +76,10 @@ purescriptGrammar =
       listMaybe('ctorArgs',/{ctorArgs}/,/\s+/)
     typeDecl: /.+?/
     indentChar: /[ \t]/
+    # In indent block here \1 means first captured group,
+    #
+    # So if the first capture block is (\s*) then end of indent block will be the line
+    # with less spaced then in captured block.
     indentBlockEnd: /^(?!\1{indentChar}|{indentChar}*$)/
     maybeBirdTrack: /^/
     doubleColon: ///(?: :: | ∷ )///
@@ -102,6 +106,8 @@ purescriptGrammar =
       include: '#foreign_import'
     ,
       include: '#function_type_declaration'
+    ,
+      include: '#function_type_declaration_arrow_first'
     ,
       include: '#typed_hole'
     ,
@@ -541,9 +547,9 @@ purescriptGrammar =
         # Note recursive regex matching nested parens
         match: [
           '\\(',
-          '(?<paren>(?:[^()]|\\(\\g<paren>\\))*)',
+          '(?<paren>(?:[^()"]|\\(\\g<paren>\\))*)',
           '(::|∷)',
-          '(?<paren2>(?:[^()}]|\\(\\g<paren2>\\))*)',
+          '(?<paren2>(?:[^()"}]|\\(\\g<paren2>\\))*)',
           '\\)'
         ].join('')
         captures:
@@ -747,7 +753,9 @@ purescriptGrammar =
         \s*
         (?: ( :: | ∷ ) (?! .* <- ) )
         ///
+
       end: /{indentBlockEnd}/
+      # end: /(?=^\S)/
       contentName: 'meta.type-signature'
       beginCaptures:
         2: name: 'entity.name.function'
@@ -762,6 +770,27 @@ purescriptGrammar =
           include: '#row_types'
       ]
 
+    function_type_declaration_arrow_first:
+      name: 'meta.function.type-declaration'
+      begin: ///
+        ^
+        ( \s* )
+        (?: \s ( :: | ∷ ) (?! .* <- ) )
+        ///
+      end: /{indentBlockEnd}/
+      # end: /(?=^\S)/
+      contentName: 'meta.type-signature'
+      beginCaptures:
+        2: name: 'keyword.other.double-colon'
+      patterns: [
+          include: '#double_colon'
+        ,
+          include: '#type_signature'
+        ,
+          include: '#record_types'
+        ,
+          include: '#row_types'
+      ]
     row_types:
       patterns: [
         name: 'meta.type.row'

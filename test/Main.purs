@@ -31,7 +31,7 @@ foreign import --comment
 foreign import data --comment
 foreign import calculateInterest :: Number -> Number --comment
 foreign import data F :: Type -> Type --comment
-
+foreign import databaseName :: Db -> Name
 
 -- import data with record type
 foreign import data R :: { prop :: String }
@@ -86,10 +86,10 @@ newtype MySub vnode msg =
   MySub (SubRec vnode msg)
 
 
--- infix operators
+-- infix operators (with numbers in hame)
 -- operators that contain -- within
-infixr 0 apply as :--> -- comment as :-->
-infixl 0 applyFlipped as <--:
+infixr 0 apply2 as :--> -- comment as :-->
+infixl 0 apply2Flipped as <--:
 
 
 ---
@@ -340,7 +340,7 @@ quoted =
   { "A": "a" -- comment
   , "B": fn (1 :: Int) x 2 -- typed param in parens
   , "C": 1 :: Int -- typed param without parens
-  , "C": (1 :: Maybe (Array Int) ) x (1 :: Int)
+  , "C": (1 :: Maybe (Array Int) ) x (1 :: Proxy "xxx")
   , a: 2
   }
 
@@ -378,12 +378,11 @@ foo :: List Int -> List Int
 foo = map ?myHole
 
 
-
--- Function, forall
-
-
 -- infix functions
 infixFun = 1 `add` 2
+
+-- infix function with params
+infixFun = 1 `flip add` 2
 
 
 -- function declaration, do, where
@@ -402,6 +401,12 @@ toStr x = do
 gotConfig :: AVar { a :: Unit } <- AVar.empty
 
 
+
+--  colons in string inside parens
+x = ("func1 ::")
+-- code coloring after end of quotes
+text = (" ::" + global)
+
 -- signatures in ide tooltips
 SomeType :: (a :: Int)
 
@@ -416,13 +421,9 @@ AVar :: Type → Type
 addIf false = const []
 
 
--- double colon inside quoted string
-text = (" ::" + global)
-
-
--- fn type signature without :: in the same line lacks highlighting
--- it seems to be a bit harder case for proper handling
--- maybe it's also a sign that it is better not to have it in the code :-)
+-- fn type signature without (arrow first style) :: in the same line lacks
+-- highlighting it seems to be a bit harder case for proper handling maybe it's
+-- also a sign that it is better not to have it in the code :-)
 fn
   -- line orphan signature
   :: forall a. a -> String
@@ -432,6 +433,20 @@ fn a =
   in case a of
     "1" -> b + "1"
     _ -> b + a
+
+-- arrow first signature multiline
+_run
+  :: forall m
+   . Functor m
+  => Config
+  -> SpecT Aff Unit m Unit
+  -> m TestEvents
+_run c s = some
+  where
+  -- arrow first signature indented
+  some
+    :: Int
+  some = 1
 
 
 -- if' fn and if statement with
@@ -478,6 +493,13 @@ px = Proxy :: Proxy """fdsfsdf
   fdsfdsfsdf
   """
 
+px = Proxy :: Proxy """fdsfsdffdsfdsfsdf"""
+
+
+px =
+  ({ x = Set.empty :: Set X { x :: Int } } /\ y)
+  where
+  y = 1
 
 
 -- quotes after type def

@@ -136,11 +136,13 @@ purescriptGrammar =
     ,
       include: '#markup_newline'
     ,
+      include: '#string_double_colon_parens'
+    ,
       include: '#double_colon_parens'
     ,
       include: '#double_colon_inlined'
-    ,
-      include: '#double_colon_orphan'
+    # ,
+    #   include: '#double_colon_orphan'
     ,
       include: '#comments'
     ,
@@ -504,7 +506,23 @@ purescriptGrammar =
           # {character} macro has 4 capture groups, here 3-6
           7: name: 'punctuation.definition.string.end'
       ]
-
+    # To match string that containt double colon as string, to play well with
+    # #double_colon_parens rule.
+    string_double_colon_parens:
+      patterns: [
+        match: [
+          '\\(',
+          '(.*?)'
+          '("{character}*(::|∷)({character})*")',
+        ].join('')
+        captures:
+          1: patterns: [
+              include: '$self'
+          ]
+          2: patterns: [
+              include: '$self'
+          ]
+      ]
     string_double_quoted:
       patterns: [
         name: 'string.quoted.double'
@@ -547,9 +565,9 @@ purescriptGrammar =
         # Note recursive regex matching nested parens
         match: [
           '\\(',
-          '(?<paren>(?:[^()"]|\\(\\g<paren>\\))*)',
+          '(?<paren>(?:[^()]|\\(\\g<paren>\\))*)',
           '(::|∷)',
-          '(?<paren2>(?:[^()"}]|\\(\\g<paren2>\\))*)',
+          '(?<paren2>(?:[^()}]|\\(\\g<paren2>\\))*)',
           '\\)'
         ].join('')
         captures:
@@ -573,7 +591,7 @@ purescriptGrammar =
       #   ]
       # ,
         patterns: [
-          match: '({doubleColon})(.*)(?=<-| """| })'
+          match: '({doubleColon})(.*?)(?=<-| """)'
           captures:
             1: name: 'keyword.other.double-colon'
             2: {name: 'meta.type-signature', patterns: [
@@ -582,24 +600,15 @@ purescriptGrammar =
         ]
       ,
         patterns: [
-          match: '({doubleColon})(.*)(?!<-| """| })'
-          captures:
+          begin: '({doubleColon})'
+          end: /(?=^(\s|\S))/
+          beginCaptures:
             1: name: 'keyword.other.double-colon'
-            2: {name: 'meta.type-signature', patterns: [
-              include: '#type_signature'
-            ]}
+          patterns: [
+            include: "#record_types"
+            include: '#type_signature'
+          ]
         ]
-      # ,
-      #   patterns: [
-      #     begin: '({doubleColon})'
-      #     end: /(?=^\S)/
-      #     beginCaptures:
-      #       1: name: 'keyword.other.double-colon'
-      #     patterns: [
-      #       include: "#record_types"
-      #       include: '#type_signature'
-      #     ]
-      #   ]
       ]
     double_colon_orphan:
       patterns: [
@@ -622,9 +631,9 @@ purescriptGrammar =
     # double_colon_orphan:
     #   patterns: [
     #     begin: ///
-    #       ^
     #       ( \s* )
     #       (?: ( :: | ∷ ) )
+    #       ( \s* )
     #       ///
     #     beginCaptures:
     #       2: name: 'keyword.other.double-colon'

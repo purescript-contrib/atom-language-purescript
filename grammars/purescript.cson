@@ -100,13 +100,13 @@
     'include': '#markup_newline'
   }
   {
+    'include': '#string_double_colon_parens'
+  }
+  {
     'include': '#double_colon_parens'
   }
   {
     'include': '#double_colon_inlined'
-  }
-  {
-    'include': '#double_colon_orphan'
   }
   {
     'include': '#comments'
@@ -585,6 +585,25 @@
             'name': 'punctuation.definition.string.end.purescript'
       }
     ]
+  'string_double_colon_parens':
+    'patterns': [
+      {
+        'match': '\\((.*?)("(?:[ -\\[\\]-~]|(\\\\(?:NUL|SOH|STX|ETX|EOT|ENQ|ACK|BEL|BS|HT|LF|VT|FF|CR|SO|SI|DLE|DC1|DC2|DC3|DC4|NAK|SYN|ETB|CAN|EM|SUB|ESC|FS|GS|RS|US|SP|DEL|[abfnrtv\\\\\\"\'\\&]))|(\\\\o[0-7]+)|(\\\\x[0-9A-Fa-f]+)|(\\^[A-Z@\\[\\]\\\\\\^_]))*(::|∷)((?:[ -\\[\\]-~]|(\\\\(?:NUL|SOH|STX|ETX|EOT|ENQ|ACK|BEL|BS|HT|LF|VT|FF|CR|SO|SI|DLE|DC1|DC2|DC3|DC4|NAK|SYN|ETB|CAN|EM|SUB|ESC|FS|GS|RS|US|SP|DEL|[abfnrtv\\\\\\"\'\\&]))|(\\\\o[0-7]+)|(\\\\x[0-9A-Fa-f]+)|(\\^[A-Z@\\[\\]\\\\\\^_])))*")'
+        'captures':
+          '1':
+            'patterns': [
+              {
+                'include': '$self'
+              }
+            ]
+          '2':
+            'patterns': [
+              {
+                'include': '$self'
+              }
+            ]
+      }
+    ]
   'string_double_quoted':
     'patterns': [
       {
@@ -637,7 +656,7 @@
   'double_colon_parens':
     'patterns': [
       {
-        'match': '\\((?<paren>(?:[^()"]|\\(\\g<paren>\\))*)(::|∷)(?<paren2>(?:[^()"}]|\\(\\g<paren2>\\))*)\\)'
+        'match': '\\((?<paren>(?:[^()]|\\(\\g<paren>\\))*)(::|∷)(?<paren2>(?:[^()}]|\\(\\g<paren2>\\))*)\\)'
         'captures':
           '1':
             'patterns': [
@@ -661,7 +680,7 @@
       {
         'patterns': [
           {
-            'match': '((?:::|∷))(.*)(?=<-| """| })'
+            'match': '((?:::|∷))(.*?)(?=<-| """)'
             'captures':
               '1':
                 'name': 'keyword.other.double-colon.purescript'
@@ -678,17 +697,16 @@
       {
         'patterns': [
           {
-            'match': '((?:::|∷))(.*)(?!<-| """| })'
-            'captures':
+            'begin': '((?:::|∷))'
+            'end': '(?=^(\\s|\\S))'
+            'beginCaptures':
               '1':
                 'name': 'keyword.other.double-colon.purescript'
-              '2':
-                'name': 'meta.type-signature.purescript'
-                'patterns': [
-                  {
-                    'include': '#type_signature'
-                  }
-                ]
+            'patterns': [
+              {
+                'include': '#type_signature'
+              }
+            ]
           }
         ]
       }

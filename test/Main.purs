@@ -33,20 +33,18 @@ foreign import calculateInterest :: Number -> Number --comment
 foreign import data F :: Type -> Type --comment
 foreign import databaseName :: Db -> Name
 
+
 -- import data with record type
 foreign import data R :: { prop :: String }
-
 
 
 -- line comments with no space between first char
 --| some
 
 
-
 -- comments with operators after
 --# some
 --! some
-
 
 
 -- Containers
@@ -109,7 +107,6 @@ infixl 7 type Product as :*:
 -- Ctor operators
 infixl 2 Inl as $%
 infixr 2 Inr as %$
-
 
 
 -- type class signatures
@@ -190,7 +187,6 @@ instance functorA :: Functor A where
    map = split -- comment
 
 
-
 -- chained instances
 
 
@@ -209,7 +205,6 @@ else instance showBoolean :: MyShow Boolean where
 else  instance showA :: MyShow a where
   myShow _ = "Invalid"
 else newtype instance showA :: MyShow a where
-
 
 
 -- Records with fields that are reserved words
@@ -328,23 +323,6 @@ type Quoted =
   }
 
 
--- inlined record type def
-quoted ::
-  { "A" :: Int -- comment
-  , a :: Boolean
-  , "B" :: Number
-  , b :: Int -- comment
-  , "x" :: SmallCap
-  }
-quoted =
-  { "A": "a" -- comment
-  , "B": fn (1 :: Int) x 2 -- typed param in parens
-  , "C": 1 :: Int -- typed param without parens
-  , "C": (1 :: Maybe (Array Int) ) x (1 :: Proxy "xxx")
-  , a: 2
-  }
-
-
 -- inlined record type def inside foreign import
 foreign import createSource ::
   String ->
@@ -356,23 +334,6 @@ foreign import createSource ::
   Effect EventSource
 
 
--- proxy
-proxy = Proxy :: Proxy Int -- k is Type
-
-
--- orphan inline signature
-x = 1
-  ::
-    Int
-x = {a: 1} ::
-  { | (a :: Int) }
-
-
--- row type
-intAtFoo :: forall r. Variant ( foo :: Int | r )
-intAtFoo = inj (Proxy :: Proxy "foo") 42
-
-
 -- typed hole
 foo :: List Int -> List Int
 foo = map ?myHole
@@ -380,6 +341,7 @@ foo = map ?myHole
 
 -- infix functions
 infixFun = 1 `add` 2
+
 
 -- infix function with params
 infixFun = 1 `flip add` 2
@@ -401,11 +363,74 @@ toStr x = do
 gotConfig :: AVar { a :: Unit } <- AVar.empty
 
 
+-- INLINE SIGNATURES
 
---  colons in string inside parens
-x = ("func1 ::")
+
+-- inlined record type def
+quoted ::
+  { "A" :: Int -- comment
+  , a :: Boolean
+  , "B" :: Number
+  , b :: Int -- comment
+  , "x" :: SmallCap
+  }
+quoted =
+  { "A": "a" -- comment
+  , "B": fn (1 :: Int) x 2 -- typed param in parens
+  , "C": 1 :: Proxy "xxx" -- typed param without parens
+  , "C": (1 :: Maybe (Array Int) ) x (1 :: Proxy "xxx")
+  , a: 2
+  }
+
+
+-- proxy
+p :: Proxy "xxx"
+p = Proxy
+
+
+proxy = Proxy :: Proxy Int -- k is Type
+
+
+-- orphan inline signature
+x = 1
+  ::
+    Int
+x = {a: 1} ::
+  { | (a :: Int) }
+
+
+-- row type
+-- no proper for ctor variant tag value (double_colon_inlined)
+injFoo :: forall r. Variant ( foo :: Int | r )
+injFoo = inj (Proxy :: Proxy "foo") P.ddd Cons (some)
+
+
+-- operators inside type signature ==>
+type Schema
+  = { widgets :: { id :: Int } ==> Array Widget --comment
+    }
+
+
+px = Proxy :: Proxy "fdsfsdf"
+
+
+-- quotes after type def
+px = Proxy :: Proxy """fdsfsdf
+  fdsfdsfsdf
+  """
+px = Proxy :: Proxy """fdsfsdffdsfdsfsdf"""
+px =
+  ({ x = Set.empty :: Set X { x :: Int } } /\ X)
+  where
+  y = 1
+
+
+--  double colons in string inside parens
+x = ((x :: Int) "func1 ::" <> "func1 ::" <> ((show 1) :: Proxy "x" ))
 -- code coloring after end of quotes
 text = (" ::" + global)
+text = (""" ::""" + global)
+
 
 -- signatures in ide tooltips
 SomeType :: (a :: Int)
@@ -433,6 +458,7 @@ fn a =
   in case a of
     "1" -> b + "1"
     _ -> b + a
+
 
 -- arrow first signature multiline
 _run
@@ -466,13 +492,6 @@ case' = if true
   else "true"
 
 
--- operators inside type signature ==>
-type Schema
-  = { widgets :: { id :: Int } ==> Array Widget --comment
-    }
-
-
-
 -- constants
 
 
@@ -483,23 +502,6 @@ decimal = 41.0
 
 
 hex = 0xE0
-
-
-px = Proxy :: Proxy "fdsfsdf"
-
-
--- quotes after type def
-px = Proxy :: Proxy """fdsfsdf
-  fdsfdsfsdf
-  """
-
-px = Proxy :: Proxy """fdsfsdffdsfdsfsdf"""
-
-
-px =
-  ({ x = Set.empty :: Set X { x :: Int } } /\ y)
-  where
-  y = 1
 
 
 -- quotes after type def

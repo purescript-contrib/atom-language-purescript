@@ -334,6 +334,13 @@ foreign import createSource ::
   Effect EventSource
 
 
+-- no proper after quote
+wow'X2 = 1
+
+wow_X = 1
+
+wow_2 = 1
+
 -- typed hole
 foo :: List Int -> List Int
 foo = map ?myHole
@@ -519,3 +526,12 @@ multiStringOneLine = """ "WOW" text """
 
 -- after mult-line string
 class Foo (a :: Symbol)
+
+
+replaceUnicode :: String -> String
+replaceUnicode text =
+  text
+  (Pattern ":: forall") (Replacement ":: ∀")
+
+
+--no proper after this

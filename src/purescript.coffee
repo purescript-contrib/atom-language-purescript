@@ -11,11 +11,13 @@ toString = (rx) ->
 
 list = (item,s,sep) ->
   #recursive regexp, caution advised
-  "(?<#{item}>(?:#{toString s})(?:\\s*(?:#{toString sep})\\s*\\g<#{item}>)?)"
+  # "(?<#{item}>(?:#{toString s})(?:\\s*(?:#{toString sep})\\s*\\g<#{item}>)?)"
+  "(?<#{item}>(?:#{toString s})(?:\\s*(?:#{toString sep})\\s*(?:#{toString s}))*)"
 
 listMaybe = (item,s,sep) ->
   #recursive regexp, caution advised
-  "(?<#{item}>(?:#{toString s})(?:\\s*(?:#{toString sep})\\s*\\g<#{item}>)?)?"
+  # "(?<#{item}>(?:#{toString s})(?:\\s*(?:#{toString sep})\\s*\\g<#{item}>)?)?"
+  "(?<#{item}>(?:#{toString s})(?:\\s*(?:#{toString sep})\\s*(?:#{toString s}))*)?"
 
 concat = (list...) ->
   r=''.concat (list.map (i) -> "(?:#{toString i})")...
@@ -910,6 +912,8 @@ purescriptGrammar =
             1: patterns: [{include: '#class_constraint'}]
             #2,3 are from classConstraint
             4: name: 'keyword.other.big-arrow'
+            #4,5 are from classConstraint being repeated * times
+            6: name: 'keyword.other.big-arrow'
         ,
           name: 'meta.class-constraints'
           match: /({classConstraint})\s*(=>|<=|⇐|⇒)/

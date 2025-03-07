@@ -809,7 +809,9 @@ purescriptGrammar =
         # begin: /\((?= \s*({functionNameOne}|"{functionNameOne}"|"{classNameOne}")\s*(::|∷))/
         # end: / \)/
         begin: /\((?=\s*({functionNameOne}|"{functionNameOne}"|"{classNameOne}")\s*(::|∷))/
-        end: /(?=^\S)/
+        # end: /(?=^\S)/
+        end: /{indentBlockEnd}/
+        
 
         #applyEndPatternsLast: true
         patterns: [

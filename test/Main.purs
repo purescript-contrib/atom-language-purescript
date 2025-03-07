@@ -313,6 +313,14 @@ type EntireRecordCodec = T "Str" ( a :: String , "B" :: Boolean )
 type NotRow a = Either Error (Array Int)
 
 
+-- Rows in a type declaration in a where block persisted row scope for full where block
+z = 4
+  where
+  bad :: Record ( x :: Int ) -> Int 
+  bad _ = y + z
+
+  something = ugly
+
 -- record with quoted fields
 type Quoted =
   { "A" :: Int -- comment

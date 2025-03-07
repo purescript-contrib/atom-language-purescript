@@ -58,6 +58,9 @@
     'include': '#function_type_declaration'
   }
   {
+    'include': '#function_type_declaration_arrow_first'
+  }
+  {
     'include': '#typed_hole'
   }
   {
@@ -97,13 +100,13 @@
     'include': '#markup_newline'
   }
   {
+    'include': '#string_double_colon_parens'
+  }
+  {
     'include': '#double_colon_parens'
   }
   {
     'include': '#double_colon_inlined'
-  }
-  {
-    'include': '#double_colon_orphan'
   }
   {
     'include': '#comments'
@@ -155,7 +158,7 @@
     'patterns': [
       {
         'name': 'keyword.operator.function.infix.purescript'
-        'match': '(`)(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.)?[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(`)'
+        'match': '(`)(?:[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)*\\.)?[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*.*(`)'
         'captures':
           '1':
             'name': 'punctuation.definition.entity.purescript'
@@ -238,7 +241,7 @@
     'patterns': [
       {
         'name': 'meta.foreign.data.purescript'
-        'begin': '^(\\s*)(foreign)\\s+(import)\\s+(data)(?:\\s+([\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)\\s*((?:::|∷)))?'
+        'begin': '^(\\s*)(foreign)\\s+(import)\\s+(data)\\s(?:\\s+([\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)\\s*((?:::|∷)))?'
         'end': '^(?!\\1[ \\t]|[ \\t]*$)'
         'contentName': 'meta.kind-signature.purescript'
         'beginCaptures':
@@ -482,7 +485,7 @@
           }
           {
             'name': 'constant.numeric.purescript'
-            'match': '\\d+'
+            'match': ' \\d+ '
           }
           {
             'match': '([\\p{S}\\p{P}&&[^(),;\\[\\]`{}_"\']]+)'
@@ -582,6 +585,25 @@
             'name': 'punctuation.definition.string.end.purescript'
       }
     ]
+  'string_double_colon_parens':
+    'patterns': [
+      {
+        'match': '\\((.*?)("(?:[ -\\[\\]-~]|(\\\\(?:NUL|SOH|STX|ETX|EOT|ENQ|ACK|BEL|BS|HT|LF|VT|FF|CR|SO|SI|DLE|DC1|DC2|DC3|DC4|NAK|SYN|ETB|CAN|EM|SUB|ESC|FS|GS|RS|US|SP|DEL|[abfnrtv\\\\\\"\'\\&]))|(\\\\o[0-7]+)|(\\\\x[0-9A-Fa-f]+)|(\\^[A-Z@\\[\\]\\\\\\^_]))*(::|∷)((?:[ -\\[\\]-~]|(\\\\(?:NUL|SOH|STX|ETX|EOT|ENQ|ACK|BEL|BS|HT|LF|VT|FF|CR|SO|SI|DLE|DC1|DC2|DC3|DC4|NAK|SYN|ETB|CAN|EM|SUB|ESC|FS|GS|RS|US|SP|DEL|[abfnrtv\\\\\\"\'\\&]))|(\\\\o[0-7]+)|(\\\\x[0-9A-Fa-f]+)|(\\^[A-Z@\\[\\]\\\\\\^_])))*")'
+        'captures':
+          '1':
+            'patterns': [
+              {
+                'include': '$self'
+              }
+            ]
+          '2':
+            'patterns': [
+              {
+                'include': '$self'
+              }
+            ]
+      }
+    ]
   'string_double_quoted':
     'patterns': [
       {
@@ -634,7 +656,7 @@
   'double_colon_parens':
     'patterns': [
       {
-        'match': '\\((?<paren>(?:[^()]|\\(\\g<paren>\\))*)(::|∷)(?<paren2>(?:[^()]|\\(\\g<paren2>\\))*)\\)'
+        'match': '\\((?<paren>(?:[^()]|\\(\\g<paren>\\))*)(::|∷)(?<paren2>(?:[^()}]|\\(\\g<paren2>\\))*)\\)'
         'captures':
           '1':
             'patterns': [
@@ -658,7 +680,7 @@
       {
         'patterns': [
           {
-            'match': '((?:::|∷))(.*)(?=<-|""")'
+            'match': '((?:::|∷))(.*?)(?=<-| """)'
             'captures':
               '1':
                 'name': 'keyword.other.double-colon.purescript'
@@ -675,17 +697,16 @@
       {
         'patterns': [
           {
-            'match': '((?:::|∷))(.*)'
-            'captures':
+            'begin': '((?:::|∷))'
+            'end': '(?=^(\\s|\\S))'
+            'beginCaptures':
               '1':
                 'name': 'keyword.other.double-colon.purescript'
-              '2':
-                'name': 'meta.type-signature.purescript'
-                'patterns': [
-                  {
-                    'include': '#type_signature'
-                  }
-                ]
+            'patterns': [
+              {
+                'include': '#type_signature'
+              }
+            ]
           }
         ]
       }
@@ -840,6 +861,32 @@
           '2':
             'name': 'entity.name.function.purescript'
           '3':
+            'name': 'keyword.other.double-colon.purescript'
+        'patterns': [
+          {
+            'include': '#double_colon'
+          }
+          {
+            'include': '#type_signature'
+          }
+          {
+            'include': '#record_types'
+          }
+          {
+            'include': '#row_types'
+          }
+        ]
+      }
+    ]
+  'function_type_declaration_arrow_first':
+    'patterns': [
+      {
+        'name': 'meta.function.type-declaration.purescript'
+        'begin': '^(\\s*)(?:\\s(::|∷)(?!.*<-))'
+        'end': '^(?!\\1[ \\t]|[ \\t]*$)'
+        'contentName': 'meta.type-signature.purescript'
+        'beginCaptures':
+          '2':
             'name': 'keyword.other.double-colon.purescript'
         'patterns': [
           {

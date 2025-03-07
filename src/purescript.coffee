@@ -74,6 +74,10 @@ purescriptGrammar =
       listMaybe('ctorArgs',/{ctorArgs}/,/\s+/)
     typeDecl: /.+?/
     indentChar: /[ \t]/
+    # In indent block here \1 means first captured group,
+    #
+    # So if the first capture block is (\s*) then end of indent block will be the line
+    # with less spaced then in captured block.
     indentBlockEnd: /^(?!\1{indentChar}|{indentChar}*$)/
     maybeBirdTrack: /^/
     doubleColon: ///(?: :: | ∷ )///
@@ -100,6 +104,8 @@ purescriptGrammar =
       include: '#foreign_import'
     ,
       include: '#function_type_declaration'
+    ,
+      include: '#function_type_declaration_arrow_first'
     ,
       include: '#typed_hole'
     ,
@@ -128,11 +134,13 @@ purescriptGrammar =
     ,
       include: '#markup_newline'
     ,
+      include: '#string_double_colon_parens'
+    ,
       include: '#double_colon_parens'
     ,
       include: '#double_colon_inlined'
-    ,
-      include: '#double_colon_orphan'
+    # ,
+    #   include: '#double_colon_orphan'
     ,
       include: '#comments'
     ,
@@ -171,7 +179,7 @@ purescriptGrammar =
     function_infix:
       patterns: [
         name: 'keyword.operator.function.infix'
-        match: /(`){functionName}(`)/
+        match: /(`){functionName}.*(`)/
         captures:
           1: name: 'punctuation.definition.entity'
           2: name: 'punctuation.definition.entity'
@@ -236,7 +244,7 @@ purescriptGrammar =
     foreign_import_data:
       patterns: [
         name: 'meta.foreign.data'
-        begin: /^(\s*)(foreign)\s+(import)\s+(data)(?:\s+({classNameOne})\s*({doubleColon}))?/
+        begin: /^(\s*)(foreign)\s+(import)\s+(data)\s(?:\s+({classNameOne})\s*({doubleColon}))?/
         end: /{indentBlockEnd}/
         contentName: 'meta.kind-signature'
         beginCaptures:
@@ -404,7 +412,7 @@ purescriptGrammar =
             include: '#data_ctor'
           ,
             name: 'constant.numeric'
-            match: /\d+/
+            match: / \d+ /
           ,
             match: /({operator})/
             captures:
@@ -496,7 +504,23 @@ purescriptGrammar =
           # {character} macro has 4 capture groups, here 3-6
           7: name: 'punctuation.definition.string.end'
       ]
-
+    # To match string that containt double colon as string, to play well with
+    # #double_colon_parens rule.
+    string_double_colon_parens:
+      patterns: [
+        match: [
+          '\\(',
+          '(.*?)'
+          '("{character}*(::|∷)({character})*")',
+        ].join('')
+        captures:
+          1: patterns: [
+              include: '$self'
+          ]
+          2: patterns: [
+              include: '$self'
+          ]
+      ]
     string_double_quoted:
       patterns: [
         name: 'string.quoted.double'
@@ -541,7 +565,7 @@ purescriptGrammar =
           '\\(',
           '(?<paren>(?:[^()]|\\(\\g<paren>\\))*)',
           '(::|∷)',
-          '(?<paren2>(?:[^()]|\\(\\g<paren2>\\))*)',
+          '(?<paren2>(?:[^()}]|\\(\\g<paren2>\\))*)',
           '\\)'
         ].join('')
         captures:
@@ -565,27 +589,23 @@ purescriptGrammar =
       #   ]
       # ,
         patterns: [
-          match: '({doubleColon})(.*)(?=<-|""")'
+          match: '({doubleColon})(.*?)(?=<-| """)'
           captures:
             1: name: 'keyword.other.double-colon'
             2: {name: 'meta.type-signature', patterns: [
               include: '#type_signature'
-
             ]}
         ]
       ,
         patterns: [
-          match: '({doubleColon})(.*)'
-          captures:
+          begin: '({doubleColon})'
+          end: /(?=^(\s|\S))/
+          beginCaptures:
             1: name: 'keyword.other.double-colon'
-            2: {
-              name: 'meta.type-signature'
-              patterns: [
-                include: "#record_types"
-                include: '#type_signature'
-              ]
-            }
-
+          patterns: [
+            include: "#record_types"
+            include: '#type_signature'
+          ]
         ]
       ]
     double_colon_orphan:
@@ -609,9 +629,9 @@ purescriptGrammar =
     # double_colon_orphan:
     #   patterns: [
     #     begin: ///
-    #       ^
     #       ( \s* )
     #       (?: ( :: | ∷ ) )
+    #       ( \s* )
     #       ///
     #     beginCaptures:
     #       2: name: 'keyword.other.double-colon'
@@ -740,7 +760,9 @@ purescriptGrammar =
         \s*
         (?: ( :: | ∷ ) (?! .* <- ) )
         ///
+
       end: /{indentBlockEnd}/
+      # end: /(?=^\S)/
       contentName: 'meta.type-signature'
       beginCaptures:
         2: name: 'entity.name.function'
@@ -755,6 +777,27 @@ purescriptGrammar =
           include: '#row_types'
       ]
 
+    function_type_declaration_arrow_first:
+      name: 'meta.function.type-declaration'
+      begin: ///
+        ^
+        ( \s* )
+        (?: \s ( :: | ∷ ) (?! .* <- ) )
+        ///
+      end: /{indentBlockEnd}/
+      # end: /(?=^\S)/
+      contentName: 'meta.type-signature'
+      beginCaptures:
+        2: name: 'keyword.other.double-colon'
+      patterns: [
+          include: '#double_colon'
+        ,
+          include: '#type_signature'
+        ,
+          include: '#record_types'
+        ,
+          include: '#row_types'
+      ]
     row_types:
       patterns: [
         name: 'meta.type.row'

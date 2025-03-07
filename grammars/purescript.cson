@@ -1026,8 +1026,6 @@
             ]
           '6':
             'name': 'keyword.other.big-arrow.purescript'
-          '6':
-            'name': 'keyword.other.big-arrow.purescript'
       }
       {
         'name': 'meta.class-constraints.purescript'

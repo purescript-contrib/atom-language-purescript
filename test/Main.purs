@@ -168,6 +168,24 @@ derive instance genericCmd
   :: Generic PhonerCmd _
 
 
+-- attached derive clauses
+newtype TodoId = TodoId UUID
+  derive (Newtype)
+  derive newtype (Eq, Ord, Show)
+  derive (ReadForeign, WriteForeign) via Int
+
+data Color = Red | Green | Blue
+  derive (Eq, Ord, Show)
+
+newtype Score = Score Int
+  derive newtype (Semiring, Ring)
+
+newtype Wrapper = Wrapper String
+  derive (Generic)
+  derive (Encode, Decode) via String
+  derive newtype (Eq)
+
+
 -- TODO: multi-line, double-colons
 derive instance genericCmd ::
   Generic PhonerCmd _

@@ -225,6 +225,23 @@ purescriptGrammar =
 
     derive_declaration:
       patterns: [
+        name: 'meta.declaration.derive.attached'
+        begin: /^\s*\b(derive)(\s+newtype)?\s*(\()/
+        end: /(\))(?:\s+(via)\b)?/
+        beginCaptures:
+          1: name: 'keyword.other'
+          2: name: 'keyword.other'
+          3: name: 'punctuation.paren.begin'
+        endCaptures:
+          1: name: 'punctuation.paren.end'
+          2: name: 'keyword.other'
+        patterns: [
+            include: '#type_signature'
+          ,
+            name: 'punctuation.separator.comma'
+            match: /,/
+        ]
+      ,
         name: 'meta.declaration.derive'
         begin: /^\s*\b(derive)(\s+newtype)?(\s+instance)?(?!')\b/
         end: /^(?=\S)/

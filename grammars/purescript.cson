@@ -214,6 +214,32 @@
   'derive_declaration':
     'patterns': [
       {
+        'name': 'meta.declaration.derive.attached.purescript'
+        'begin': '^\\s*\\b(derive)(\\s+newtype)?\\s*(\\()'
+        'end': '(\\))(?:\\s+(via)\\b)?'
+        'beginCaptures':
+          '1':
+            'name': 'keyword.other.purescript'
+          '2':
+            'name': 'keyword.other.purescript'
+          '3':
+            'name': 'punctuation.paren.begin.purescript'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.paren.end.purescript'
+          '2':
+            'name': 'keyword.other.purescript'
+        'patterns': [
+          {
+            'include': '#type_signature'
+          }
+          {
+            'name': 'punctuation.separator.comma.purescript'
+            'match': ','
+          }
+        ]
+      }
+      {
         'name': 'meta.declaration.derive.purescript'
         'begin': '^\\s*\\b(derive)(\\s+newtype)?(\\s+instance)?(?!\')\\b'
         'end': '^(?=\\S)'
